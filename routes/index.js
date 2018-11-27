@@ -2,8 +2,8 @@ const postRoutes = require("./posts");
 const userRoutes = require("./users");
 const path = require("path");
 
-const constructorMethod = app => {
-  app.use("/posts", postRoutes);
+const routes = app => {
+  app.use("/application", postRoutes);
   app.use("/users", userRoutes);
   app.get("/about", (req, res) => {
     res.sendFile(path.resolve("static/about.html"));
@@ -14,4 +14,4 @@ const constructorMethod = app => {
   });
 };
 
-module.exports = constructorMethod;
+module.exports = routes;
