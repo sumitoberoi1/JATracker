@@ -1,56 +1,60 @@
 <article>
-  <form action="/" method="POST" class="new-post-form">
-    <label for="company-name">
-      Company Name </label>
-    <input id="company-name" type="text" name="company-name" placeholder="Enter Company Name" value="{{applications.companyName}}"
-      class="full-width-input" />
-    <label for="role">
-      Job Role</label>
-    <input id="role" type="text" name="role" placeholder="Enter Job Role" value="{{applications.companyName}}" class="full-width-input" />
-    <label for="applyDate">Enter Applied Date</label>
-    <input id="applyDate" type="text" name="applyDate" placeholder="Enter date applied on" class="full-width-input" />
-    <label>
-      What number professor am I?
-      <input type="number" name="professor_ranking" placeholder="#1 professor in North America" class="full-width-input" />
-    </label>
-    <label for="post-body">
-      Post Body
-    </label>
-    <textarea id="post-body" name="body" rows="4" placeholder="Post Content" class="full-width-input">{{post.body}}</textarea>
-
-    <label for="poster">
-      Poster
-    </label>
-    <select class="full-width-input" name="posterId">
-      <option value="">Select User...</option>
-      <option value="ee9c1ebb-a589-4075-a9a9-e6ee38145f67">Phil</option>
-    </select>
-    <label>
-      <input type="radio" name="user-test" value="1" /> One
-    </label>
-    <label>
-      <input type="radio" name="user-test" value="2" /> Two
-    </label>
-
-    <div>
-      <label>
-        <input type="checkbox" name="checkbox-test" value="first" /> First
-      </label></div>
-    <div>
-      <label>
-        <input type="checkbox" name="checkbox-test" value="second" /> Second
-      </label></div>
-    <button type="submit">Create New Post</button>
-    <button type="reset">Clear Form</button>
-    <button type="button">Click me!</button>
-  </form>
-  {{#if hasErrors}}
-  <ul class="error-list">
-    {{#each errors}}
-    <li>
-      {{this}}
-    </li>
-    {{/each}}
-  </ul>
-  {{/if}}
+  <div class="container">
+    <h1>Create new Job Application</h1>
+    <form action="/" method="POST" class="md-form">
+      <div class="form-group">
+        <label for="company-name">
+          Company Name </label>
+        <input id="company-name" type="text" name="company-name" placeholder="Enter Company Name" value="{{applications.companyName}}"
+          class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="role">
+          Job Role</label>
+        <input id="role" type="text" name="role" placeholder="Enter Job Role" value="{{applications.companyName}}"
+          class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="applyDate">Enter Applied Date</label>
+        <input id="applyDate" type="text" name="applyDate" placeholder="Enter date applied on" class="form-control" />
+      </div>
+      <div class="custom-file">
+        <label for="resume" class="custom-file-label">Upload Resume used</label>
+        <input id="resume" type="file" name="resume" class="custom-file-input" />
+      </div>
+      <div class="custom-file">
+        <label for="cover-letter" class="custom-file-label">Upload Cover letter used
+        </label>
+        <div class="input-group">
+          <input id="cover-letter" type="file" name="cover-letter" class="custom-file-input" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="application-status">
+          Application Status
+        </label>
+        <select id="application-status" class="form-control">
+          <option value="Application Submitted">Application Submitted</option>
+          <option value="First Round">First Round</option>
+          <option value="Second Round">Second Round</option>
+          <option value="Third Round">Third Round</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="job-source">
+          Job Source</label>
+        <input id="job-source" type="text" name="job-source" placeholder="Source for job" value="{{applications.companyName}}"
+          class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="notes">
+          Notes
+        </label>
+        <textarea id="notes" name="notes" rows="4" placeholder="Any Other Notes" class="form-control">{{post.body}}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Create New Job Application</button>
+    </form>
+  </div>
 </article>
+<!-- add Error State -->
+<!-- add Clear form State -->
