@@ -1,6 +1,8 @@
 <article>
+  <div class="jumbotron text-center">
+    <h1>Create New Job Application</h1>
+  </div>
   <div class="container">
-    <h1>Create new Job Application</h1>
     <form action="/" method="POST" class="md-form">
       <div class="form-group">
         <label for="company-name">
@@ -18,17 +20,6 @@
         <label for="applyDate">Enter Applied Date</label>
         <input id="applyDate" type="text" name="applyDate" placeholder="Enter date applied on" class="form-control" />
       </div>
-      <div class="custom-file">
-        <label for="resume" class="custom-file-label">Upload Resume used</label>
-        <input id="resume" type="file" name="resume" class="custom-file-input" />
-      </div>
-      <div class="custom-file">
-        <label for="cover-letter" class="custom-file-label">Upload Cover letter used
-        </label>
-        <div class="input-group">
-          <input id="cover-letter" type="file" name="cover-letter" class="custom-file-input" />
-        </div>
-      </div>
       <div class="form-group">
         <label for="application-status">
           Application Status
@@ -45,6 +36,18 @@
           Job Source</label>
         <input id="job-source" type="text" name="job-source" placeholder="Source for job" value="{{applications.companyName}}"
           class="form-control" />
+      </div>
+      <div class="form-group">
+        <div class="custom-file">
+          <input id="resume" type="file" name="resume" class="custom-file-input" />
+          <label for="resume" class="custom-file-label">Upload Resume used</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="custom-file">
+          <input id="cover-letter" type="file" name="cover-letter" class="custom-file-input" />
+          <label for="cover-letter" class="custom-file-label">Upload Cover Letter used</label>
+        </div>
       </div>
       <div class="form-group">
         <label for="notes">
