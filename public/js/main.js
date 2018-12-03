@@ -1,8 +1,11 @@
 $(() => {
     $( "#applyDate" ).datepicker();
 });
-$('input[type="file"]').change(function(e){
-    console.log('here');
-    let fileName = e.target.files[0].name;
-    $('.custom-file-label').html(fileName);
+$('input[name="resume"]').change(function(e){
+    const fileName = e.target.files[0].name;
+    $(this).next('.custom-file-label').html(fileName);
+});
+$('input[name="cover-letter"]').change(function(e){
+    const fileName = e.target.files[0].name;
+    $(this).next('.custom-file-label').html(fileName);
 });
