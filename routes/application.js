@@ -3,7 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const applicationData = data.application;
 let active = {};
-router.get("/new",(req,res) => {
+router.get("/",(req,res) => {
     active = {newApplication:true}
     res.render("applications/new",{title:'Create New Application',active})
 });
@@ -39,4 +39,8 @@ router.post("/",async (req,res) => {
         res.status(500).json({error: e});
     }
 })
+router.put("/application/:id",(re,res) => {
+
+})
+
 module.exports = router
