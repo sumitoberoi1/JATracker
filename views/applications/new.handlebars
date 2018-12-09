@@ -5,9 +5,9 @@
   <div class="container">
     <form action="/application" method="POST" class="md-form">
       <div class="form-group">
-        <label for="company-name">
+        <label for="companyName">
           Company Name </label>
-        <input id="company-name" type="text" name="company-name" placeholder="Enter Company Name" value="{{applications.companyName}}"
+        <input id="companyName" type="text" name="companyName" placeholder="Enter Company Name" value="{{applications.companyName}}"
           class="form-control" />
       </div>
       <div class="form-group">
@@ -24,7 +24,7 @@
         <label for="application-status">
           Application Status
         </label>
-        <select id="application-status" class="form-control">
+        <select id="applicationStatus" class="form-control" name="applicationStatus">
           <option value="Application Submitted">Application Submitted</option>
           <option value="First Round">First Round</option>
           <option value="Second Round">Second Round</option>
@@ -32,9 +32,9 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="job-source">
+        <label for="jobSource">
           Job Source</label>
-        <input id="job-source" type="text" name="job-source" placeholder="Source for job" value="{{applications.companyName}}"
+        <input id="jobSource" type="text" name="jobSource" placeholder="Source for job" value="{{applications.companyName}}"
           class="form-control" />
       </div>
       <div class="form-group">
@@ -45,8 +45,8 @@
       </div>
       <div class="form-group">
         <div class="custom-file">
-          <input id="cover-letter" type="file" name="cover-letter" class="custom-file-input" />
-          <label for="cover-letter" class="custom-file-label">Upload Cover Letter used</label>
+          <input id="coverletter" type="file" name="coverletter" class="custom-file-input" />
+          <label for="coverletter" class="custom-file-label">Upload Cover Letter used</label>
         </div>
       </div>
       <div class="form-group">
@@ -55,7 +55,9 @@
         </label>
         <textarea id="notes" name="notes" rows="4" placeholder="Any Other Notes" class="form-control">{{post.body}}</textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Create New Job Application</button>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create New Job Application</button>
+      </div>
     </form>
   </div>
 </article>
