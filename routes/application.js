@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const applicationData = data.application;
+let active = {};
 router.get("/new",(req,res) => {
-    res.render("applications/new")
+    active = {newApplication:true}
+    res.render("applications/new",{title:'Create New Application',active})
 });
 router.post("/",async (req,res) => {
     const applicationPostData = req.body;
