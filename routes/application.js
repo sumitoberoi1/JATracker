@@ -3,9 +3,14 @@ const router = express.Router();
 const data = require("../data");
 const applicationData = data.application;
 let active = {};
-router.get("/",(req,res) => {
+router.get("/new",(req,res) => {
     active = {newApplication:true}
     res.render("applications/new",{title:'Create New Application',active})
+});
+router.get("/:id",async (req,res) => {
+    const id = req.params.id
+    const application = await applicationData.getApplicationByID(id)
+    res.render("applications/application",{title:'My Application',application:application})
 });
 router.post("/",async (req,res) => {
     const applicationPostData = req.body;
