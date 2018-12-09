@@ -1,11 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const logger = require("morgan")
 const app = express();
 const static = express.static(__dirname + "/public");
 
 const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
-
+app.use(logger("short"));
 app.use("/public", static);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
