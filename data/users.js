@@ -1,97 +1,180 @@
+const mongodb = require("mongodb");
 const mongoCollections = require("../config/mongoCollections");
+const uuid = require('uuid/v4');
 const users = mongoCollections.users;
-const uuid = require("node-uuid");
+const bcrypt = require('bcrypt');
 
-let exportedMethods = {
-  getAllUsers() {
-    return users().then(userCollection => {
-      return userCollection.find({}).toArray();
-    });
-  },
-  // This is a fun new syntax that was brought forth in ES6, where we can define
-  // methods on an object with this shorthand!
-  getUserById(id) {
-    return users().then(userCollection => {
-      return userCollection.findOne({ _id: id }).then(user => {
-        if (!user) throw "User not found";
+const saltRounds = 10;
 
-        return user;
-      });
-    });
-  },
-  addUser(firstName, lastName) {
-    return users().then(userCollection => {
-      let newUser = {
-        firstName: firstName,
-        lastName: lastName,
-        _id: uuid.v4(),
-        posts: []
-      };
+async function getUserByID(_id) 
+{
+    if (!_id || typeof _id != 'string')
+    {
+		throw 'id not vaild';
+    }
+	
+	let userCollection = await users();
 
-      return userCollection
-        .insertOne(newUser)
-        .then(newInsertInformation => {
-          return newInsertInformation.insertedId;
-        })
-        .then(newId => {
-          return this.getUserById(newId);
-        });
-    });
-  },
-  removeUser(id) {
-    return users().then(userCollection => {
-      return userCollection.removeOne({ _id: id }).then(deletionInfo => {
-        if (deletionInfo.deletedCount === 0) {
-          throw `Could not delete user with id of ${id}`;
-        }
-      });
-    });
-  },
-  updateUser(id, updatedUser) {
-    return this.getUserById(id).then(currentUser => {
-      let updatedUser = {
-        firstName: updatedUser.firstName,
-        lastName: updatedUser.lastName
-      };
+	let user = await userCollection.findOne({_id: _id});
+	return user;
+}
 
-      let updateCommand = {
-        $set: updatedUser
-      };
-
-      return userCollection.updateOne({ _id: id }, updateCommand).then(() => {
-        return this.getUserById(id);
-      });
-    });
-  },
-  addPostToUser(userId, postId, postTitle) {
-    return this.getUserById(id).then(currentUser => {
-      return userCollection.updateOne(
-        { _id: id },
+async function getUserByUsername(username) 
+{
+    try 
+    {
+        if (!username || typeof username != 'string')
         {
-          $addToSet: {
-            posts: {
-              id: postId,
-              title: postTitle
-            }
-          }
+            throw "username not vaild";
         }
-      );
-    });
-  },
-  removePostFromUser(userId, postId) {
-    return this.getUserById(id).then(currentUser => {
-      return userCollection.updateOne(
-        { _id: id },
+		
+		let userCollection = await users();
+
+		let user = await userCollection.findOne({username: username}, {fields: {hashedpassword: false, sessionIDs: false}});
+		return user;
+    } 
+    catch (e)
+    {
+		throw e;
+	}
+}
+
+async function login(username, password) 
+{
+    if (!username || typeof username != 'string' || !password || typeof password != 'string')
+    {
+		throw "Username or passward not valid";
+    }
+    if (username.length === 0)
+    {
+        throw "Username is empty"
+    }
+    if (password.length === 0)
+    {
+        throw "Passward is empty"
+    }
+	let userCollection = await users();
+	let user = undefined;
+    try 
+    {
+		user = await userCollection.findOne({username: username });
+    } 
+    catch (e) 
+    {
+		return false;
+	}
+
+    if (user && await bcrypt.compare(password, user.hashedpassword))
+    {
+		return user;
+    }
+    else
+    {
+		return false;
+    }
+}
+
+async function signUp(username, password, Re_enter_password, email, ) 
+{
+    if (!username || typeof username != 'string' || !password || typeof password != 'string')
+    {
+		throw "Username or password not valid";
+    }
+    if (username.length === 0)
+    {
+        throw "Username is empty"
+    }
+    if (password.length === 0)
+    {
+        throw "Passward is empty"
+    }
+    if ((await getUserByUsername(username)) != undefined)
+    {
+        throw "Username already exist"
+
+    }
+    if (password !== Re_enter_password)
+    {
+        throw "Passwords must match"
+    }
+
+	let hashedpassword = await bcrypt.hash(password, saltRounds);
+
+	let userCollection = await users();
+
+    let newUser = 
+    {
+		_id: uuid(),
+        username: username,
+        passward: password,
+        hashedpassword: hashedpassword,
+        email: email,
+		sessionIDs: []
+	};
+
+	await userCollection.insert(newUser)
+	return newUser;
+}
+
+//Gets all of the ratings that have been submitted by the user.
+async function getUserRatings(username) 
+{
+	//MongoDB stuff
+}
+
+async function getUserBySessionID(sID) 
+{
+    try 
+    {
+        if (!sID)
         {
-          $pull: {
-            posts: {
-              id: postId
-            }
-          }
+			return undefined;
         }
-      );
-    });
-  }
+		
+		let userCollection = await users();
+		let user = await userCollection.findOne({sessionIDs: sID});
+
+		return user;
+    } 
+    catch (e) 
+    {
+		throw e;
+	}
+}
+
+async function addUserSessionID(_id, sID) 
+{
+	let userCollection = await users();
+
+	return await userCollection.update({_id: _id}, {$push: {sessionIDs: sID}});
+}
+
+async function cleanSessionID(sID) 
+{
+    try 
+    {
+		let userCollection = await users();
+		let currentUser = await getUserByUsername(username);
+
+		let indexOfsID = currentUser.sessionIDs.indexOf(sID);
+		let currentsIDs = currentUser.sessionIDs;
+		currentsIDs.splice(indexOfsID, 1);
+
+		await userCollection.update({username: username}, {$set: {sessionIDs: currentsIDs}});
+		return await userCollection.findOne({ username: username });
+    } 
+    catch (e) 
+    {
+		throw e;
+	}
+}
+
+module.exports = {
+	getUserByID,
+	getUserByUsername,
+	login,
+	getUserBySessionID,
+	addUserSessionID,
+	cleanSessionID,
+	signUp
 };
-
-module.exports = exportedMethods;

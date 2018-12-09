@@ -1,4 +1,3 @@
-
 module.exports = {
-  application: require("./application")
-};
+	users: require("./users"),
+}

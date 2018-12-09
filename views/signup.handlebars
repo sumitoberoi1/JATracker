@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>JOB TRACKING WEB APPLICATION</title>
+</head>
+
+
+{{#if error}}
+<div id="form-error" class="form-error">
+  <h3>Error:</h3>
+  {{ error }}
+</div>
+{{/if}}
+
+<article>
+  <header>
+    <h2>Sign Up.</h2>
+  </header>
+
+  <form id="signup-form" action="/signup" method="post">
+    <table class="login">
+      <tr>
+        <td>
+          <label for="Createusername">Username:</label>
+        </td>
+        <td>
+          <input type="text" name="username" id="Createusername">
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>
+          <label for="Createpassword">Password:</label>
+        </td>
+        <td>
+          <input type="password" name="password" id="Createpassword">
+        </td>
+        <td>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label for="CreateRe_enter_password">Re-enter Password:</label>
+        </td>
+        <td>
+          <input type="password" name="Re_enter_password" id="CreateRe_enter_password">
+        </td>
+        <td>
+        </td>
+      </tr>
+
+        <tr>
+        <td>
+          <label for="Createemail">Email:</label>
+        </td>
+        <td>
+          <input type="email" name="email" id="Createemail">
+        </td>
+        <td>
+          <input type="submit" value="Sign Up">
+        </td>
+      </tr>
+    </table>
+  </form>
+</article>
+
+</html>
