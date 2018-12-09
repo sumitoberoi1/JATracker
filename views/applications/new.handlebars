@@ -3,22 +3,23 @@
     <h1>Create New Job Application</h1>
   </div>
   <div class="container">
-    <form action="/application" method="POST" class="md-form">
+    <form action="/application" method="POST" class="md-form" id="application -submission">
       <div class="form-group">
         <label for="companyName">
           Company Name </label>
         <input id="companyName" type="text" name="companyName" placeholder="Enter Company Name" value="{{applications.companyName}}"
-          class="form-control" />
+          class="form-control" required />
       </div>
       <div class="form-group">
         <label for="role">
           Job Role</label>
         <input id="role" type="text" name="role" placeholder="Enter Job Role" value="{{applications.companyName}}"
-          class="form-control" />
+          class="form-control" required />
       </div>
       <div class="form-group">
-        <label for="applyDate">Enter Applied Date</label>
-        <input id="applyDate" type="text" name="applyDate" placeholder="Enter date applied on" class="form-control" />
+        <label for="applyDate">Enter Applied Date or Date you will apply On</label>
+        <input id="applyDate" type="date" name="applyDate" placeholder="Enter date applied on" class="form-control"
+          required />
       </div>
       <div class="form-group">
         <label for="application-status">
@@ -35,7 +36,7 @@
         <label for="jobSource">
           Job Source</label>
         <input id="jobSource" type="text" name="jobSource" placeholder="Source for job" value="{{applications.companyName}}"
-          class="form-control" />
+          class="form-control" required />
       </div>
       <div class="form-group">
         <div class="custom-file">

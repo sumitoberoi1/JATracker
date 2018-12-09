@@ -9,7 +9,6 @@ router.get("/new",(req,res) => {
 });
 router.post("/",async (req,res) => {
     const applicationPostData = req.body;
-    console.log(`Req body ${JSON.stringify(req.body)}`);
     const {
         companyName,
         role,

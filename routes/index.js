@@ -8,7 +8,10 @@ const routes = app => {
   app.get("/about", (req, res) => {
     res.sendFile(path.resolve("static/about.html"));
   });
-
+  app.use("*",(req,res) => {
+    res.status = 404
+    res.render("error/404")
+  })
 };
 
 module.exports = routes;
