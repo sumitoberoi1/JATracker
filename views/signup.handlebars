@@ -1,0 +1,34 @@
+<article>
+    <div class="signupForm">
+        <form method="post" action="/signup" class="form-signin">
+            <header>
+                <h2>Sign Up</h2>
+            </header>
+            {{#if error}}
+                <div class="alert alert-danger" role="alert">
+                    {{{error}}}
+                </div>
+            {{/if}}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" type="text" name="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" type="password" name="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <label for="repeatedPassword">Confirm Password</label>
+                <input class="form-control" type="password" name="repeatedPassword" id="repeatedPassword" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="email" name="email" id="email" required>
+            </div>
+
+            <button id="signup"type="submit" class="btn btn-lg btn-primary btn-block">Sign up</button>
+
+        </form>
+    </div>
+</article>

@@ -1,97 +1,46 @@
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
-const uuid = require("node-uuid");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const uuid = require('uuid/v4');
 
-let exportedMethods = {
-  getAllUsers() {
-    return users().then(userCollection => {
-      return userCollection.find({}).toArray();
-    });
-  },
-  // This is a fun new syntax that was brought forth in ES6, where we can define
-  // methods on an object with this shorthand!
-  getUserById(id) {
-    return users().then(userCollection => {
-      return userCollection.findOne({ _id: id }).then(user => {
-        if (!user) throw "User not found";
 
-        return user;
-      });
-    });
-  },
-  addUser(firstName, lastName) {
-    return users().then(userCollection => {
-      let newUser = {
-        firstName: firstName,
-        lastName: lastName,
-        _id: uuid.v4(),
-        posts: []
-      };
-
-      return userCollection
-        .insertOne(newUser)
-        .then(newInsertInformation => {
-          return newInsertInformation.insertedId;
-        })
-        .then(newId => {
-          return this.getUserById(newId);
-        });
-    });
-  },
-  removeUser(id) {
-    return users().then(userCollection => {
-      return userCollection.removeOne({ _id: id }).then(deletionInfo => {
-        if (deletionInfo.deletedCount === 0) {
-          throw `Could not delete user with id of ${id}`;
-        }
-      });
-    });
-  },
-  updateUser(id, updatedUser) {
-    return this.getUserById(id).then(currentUser => {
-      let updatedUser = {
-        firstName: updatedUser.firstName,
-        lastName: updatedUser.lastName
-      };
-
-      let updateCommand = {
-        $set: updatedUser
-      };
-
-      return userCollection.updateOne({ _id: id }, updateCommand).then(() => {
-        return this.getUserById(id);
-      });
-    });
-  },
-  addPostToUser(userId, postId, postTitle) {
-    return this.getUserById(id).then(currentUser => {
-      return userCollection.updateOne(
-        { _id: id },
-        {
-          $addToSet: {
-            posts: {
-              id: postId,
-              title: postTitle
-            }
-          }
-        }
-      );
-    });
-  },
-  removePostFromUser(userId, postId) {
-    return this.getUserById(id).then(currentUser => {
-      return userCollection.updateOne(
-        { _id: id },
-        {
-          $pull: {
-            posts: {
-              id: postId
-            }
-          }
-        }
-      );
-    });
+async function getUserByUsername(username) 
+{
+  try 
+  {
+    if (!username || typeof username != 'string') {
+        throw "username not vaild";
+    }
+    let userCollection = await users();
+    let user = await userCollection.findOne({username: username});
+    return user;
+  } 
+  catch (e) {
+  throw e;
   }
-};
+}
 
-module.exports = exportedMethods;
+
+async function signUp(username, password, email) 
+{
+  let hashedPassword = await bcrypt.hash(password, saltRounds);
+	let userCollection = await users();
+  let newUser = 
+  {
+    _id: uuid(),
+    username: username,
+    hashedPassword: hashedPassword,
+    email: email
+  };
+  console.log("new user:" + newUser)
+  const createdNewUser = await userCollection.insertOne(newUser);
+  if (createdNewUser.insertedCount === 0) throw "Fail to create new user!";
+  return createdNewUser;
+}
+
+
+module.exports = {
+	getUserByUsername,
+  signUp,
+};
