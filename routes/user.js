@@ -7,7 +7,7 @@ router.get("/profile", (req, res) => {
   console.log("AuthCookie " + req.cookies.AuthCookie)
   console.log("session.user " + req.session.user)
 
-  if(!req.cookies.AuthCookie && !req.session.user){
+  if(!req.cookies.AuthCookie || !req.session.user){
     res.clearCookie("AuthCookie");
     res.redirect('/login');
     return;
