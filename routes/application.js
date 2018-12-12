@@ -44,8 +44,8 @@ router.post("/",async (req,res) => {
         res.status(500).json({error: e});
     }
 })
-router.put("/application/:id",(re,res) => {
-
+router.put("/application/:id",async (req,res) => {
+   
 })
 
 module.exports = router
