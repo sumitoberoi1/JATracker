@@ -7,11 +7,18 @@ router.get("/new",(req,res) => {
     active = {newApplication:true}
     res.render("applications/new",{title:'Create New Application',active})
 });
+
 router.get("/:id",async (req,res) => {
     const id = req.params.id
     const application = await applicationData.getApplicationByID(id)
     res.render("applications/application",{title:'My Application',application:application})
 });
+
+router.get("/all",(req,res) => {
+
+});
+
+
 router.post("/",async (req,res) => {
     const applicationPostData = req.body;
     const {
@@ -34,7 +41,7 @@ router.post("/",async (req,res) => {
         // errorMessage = `Invalid Steps`
         // } else {
         const newApplication = await applicationData.createApplication(applicationPostData);
-        res.json(newApplication);
+        res.redirect(`/application/${newApplication._id}`)
         return
         // res.status(500).json({
         // error: errorMessage
@@ -44,8 +51,6 @@ router.post("/",async (req,res) => {
         res.status(500).json({error: e});
     }
 })
-router.put("/application/:id",async (req,res) => {
-   
-})
+
 
 module.exports = router
