@@ -9,10 +9,11 @@ router.get("/new",(req,res) => {
     res.render("applications/new",{title:'Create New Application',active})
 });
 
-router.get("/edit/:id",(req,res) => {
-    // const id = req.params.id
-    // const application = await applicationData.getApplicationByID(id)
-    // res.render("applications/new",{title:'Edit Application',application:})
+router.get("/edit/:id",async(req,res) => {
+    const id = req.params.id
+    const application = await applicationData.getApplicationByID(id)
+    console.log(`Application ${JSON.stringify(application)}`)
+    res.render("applications/new",{title:'Edit Application',application:application})
 });
 
 router.get("/:id",async (req,res) => {

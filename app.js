@@ -11,6 +11,7 @@ const helmet = require("helmet");
 app.use(logger("short"));
 app.use("/public", static);
 app.use(helmet.xssFilter());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -22,9 +23,15 @@ app.use(session({
       maxAge: 3600000 
   }
 }));
+const viewEngine = exphbs({
+  // Specify helpers which are only registered on this instance.
+  helpers: {
+      concat: function(str1,str2) { return str1 + str2}
+  },
+  defaultLayout: "main"
+});
 
-
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", viewEngine);
 app.set("view engine", "handlebars");
 configRoutes(app);
 
