@@ -28,6 +28,10 @@ const getApplicationByID = async (id) => {
     if (!application) throw "Application not found";
     return application;
 }
+
+const editApplication = async (id) => {
+    
+}
 module.exports = {
     createApplication,
     getApplicationByID
