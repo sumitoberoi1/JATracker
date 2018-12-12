@@ -28,6 +28,7 @@ router.get("/", async (req, res) => {
       const applicatons= await applicationData.getAllApplications();
       res.render("applications/allApplications",{title:'All Applications',applications:applicatons})
     } catch (e) {
+        console.log(`Error ${e}`)
       res.status(500).json({
         error: e
       });
