@@ -3,20 +3,36 @@ const router = express.Router();
 const data = require("../data");
 const applicationData = data.application;
 let active = {};
+
 router.get("/new",(req,res) => {
     active = {newApplication:true}
     res.render("applications/new",{title:'Create New Application',active})
 });
 
+router.get("/edit/:id",(req,res) => {
+    // const id = req.params.id
+    // const application = await applicationData.getApplicationByID(id)
+    // res.render("applications/new",{title:'Edit Application',application:})
+});
+
 router.get("/:id",async (req,res) => {
     const id = req.params.id
     const application = await applicationData.getApplicationByID(id)
+    console.log(`Application ${JSON.stringify(application)}`)
     res.render("applications/application",{title:'My Application',application:application})
 });
 
-router.get("/all",(req,res) => {
 
-});
+router.get("/", async (req, res) => {
+    try {
+      const applicatons= await applicationData.getAllApplications();
+      res.render("applications/allApplications",{title:'All Applications',applications:applicatons})
+    } catch (e) {
+      res.status(500).json({
+        error: e
+      });
+    }
+  });
 
 
 router.post("/",async (req,res) => {

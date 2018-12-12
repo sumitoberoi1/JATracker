@@ -3,12 +3,12 @@ const applications = mongoCollections.applications;
 const uuid = require('uuid/v4');
 const createApplication = async (applicationData) => {
     const applicationCollection = await applications();
-    const {companyName,jobrole,appliedDate,applicationStatus,
+    const {companyName,role,applyDate,applicationStatus,
         jobSource,resume,coverletter,notes} = applicationData
     const newApplication = {
-        companyName: companyName,
-        jobrole: jobrole,
-        appliedDate: appliedDate,
+        c: companyName,
+        jobrole: role,
+        appliedDate: applyDate,
         applicationStatus:applicationStatus,
         jobSource:jobSource,
         resume:resume,
@@ -32,7 +32,13 @@ const getApplicationByID = async (id) => {
 const editApplication = async (id) => {
     
 }
+
+const getAllApplications = async() => {
+    const applicationCollection = await applications();
+    return await applicationCollection.find({}).toArray();
+}
 module.exports = {
     createApplication,
-    getApplicationByID
+    getApplicationByID,
+    getAllApplications
 }
