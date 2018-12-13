@@ -44,9 +44,17 @@ const getAllApplications = async() => {
     const applicationCollection = await applications();
     return await applicationCollection.find({}).toArray();
 }
+const deleteApplication = async(id) => {
+    const applicationCollection = await applications();
+    const deletionInfo = await applicationCollection.removeOne({ _id: id });
+    if (deletionInfo.deletedCount === 0) {
+        throw `Could not delete post with id of ${id}`;
+    } 
+}
 module.exports = {
     createApplication,
     getApplicationByID,
     getAllApplications,
-    editApplication
+    editApplication,
+    deleteApplication
 }

@@ -45,13 +45,27 @@ router.get("/:id",async (req,res) => {
     res.render("applications/application",{title:'My Application',application:application})
 });
 
+router.delete("/:id",async (req,res) => {
+    const id = req.params.id
+    try {
+        const application = await applicationData.getApplicationByID(id)
+        if (application) {
+            await applicationData.deleteApplication(id)
+            res.render("applications/allApplications",{title:'All Applications',applications:applications})
+        }
+    } catch (e) {
+        console.log(`Error in deleting application ${e}`)
+        res.status(500).json({error: e});
+    }
+})
+
 
 router.get("/", async (req, res) => {
     try {
       const applications= await applicationData.getAllApplications();
       res.render("applications/allApplications",{title:'All Applications',applications:applications})
     } catch (e) {
-        console.log(`Error ${e}`)
+    console.log(`Error ${e}`)
       res.status(500).json({
         error: e
       });
