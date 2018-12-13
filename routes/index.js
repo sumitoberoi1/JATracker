@@ -4,17 +4,34 @@ const signUpRoute = require("./signup");
 const logoutRoute = require("./logout");
 const applicationRoutes = require("./application")
 const path = require("path");
+const userData = require("../data/users");
 
 const routes = app => {
-  app.get('/', function (req, res) {
-    console.log()
-    if (!req.cookies.AuthCookie) {
-      console.log("are you here")
+  app.get('/', async function (req, res) {
+    if (req.cookies.AuthCookie) {
+      if (!req.session.user) {
+          let user = null;
+          try 
+          {
+              user = await userData.getUserByID(req.cookies.AuthCookie);
+              console.log("returned user" + user)
+              req.session.user = user;
+          } 
+          catch (e) 
+          {
+              res.render("login", {error: e});
+              return;
+          }
+      }
+      console.log("AuthCookie" + req.cookies.AuthCookie)
+      console.log("req.session.user" + req.session.user)
+      res.redirect('/user/view_profile');
+    }
+    else {
       res.redirect('/login');
-    } else {
-      res.redirect('/user/profile');
     }
   });
+
   app.use("/login", loginRoute);
   app.use("/signup", signUpRoute);
   app.use("/logout", logoutRoute);

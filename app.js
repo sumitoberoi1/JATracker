@@ -7,10 +7,9 @@ var session = require('express-session');
 const cookieParser = require("cookie-parser");
 const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
-const helmet = require("helmet");
+
 app.use(logger("short"));
 app.use("/public", static);
-app.use(helmet.xssFilter());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

@@ -1,0 +1,66 @@
+<article>
+  <div class="jumbotron text-center">
+    <h1>View Profile</h1>
+  </div>
+  <div class="container">
+    <form class="md-form" id="application-submission">
+        <div class="form-group">
+          <label for="fullName">
+            Full Name: {{profile.fullName}} </label>
+        </div>
+        <div class="form-group">
+          <label for="school">
+            School: {{profile.school}}</label>
+        </div>
+        <div class="form-group">
+          <label for="skills">Skills: {{profile.skills}}</label>
+        </div>
+        <div class="form-group">
+          <p for="presentJob">Present Job :{{profile.presentJob}}</p>
+        </div>
+
+        <div class="form-group">
+            <p for="resume">Path to Resume :{{profile.resume}}</p>
+        </div>
+
+        <div class="form-group">
+            <p for="coverLetter">Path to Cover Letter :{{profile.coverLetter}}</p>
+        </div>
+      </form>
+      <br/>
+      
+
+      {{!-- work experience --}}
+      <h5>Work Experience</h3>
+      <p>
+          {{#unless profile.workExperience}}
+          <p>Add Work Experience by clicking EDIT Profile...</p>
+          {{/unless}} 
+          {{#each profile.workExperience}}
+          <p>{{this.jobTittle}}</p>
+          <p>{{this.employer}}</p>
+          <p>{{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
+          <p>{{#if this.location}} {{this.location}}{{/if}}</p>
+          <p>{{#if this.description}} {{this.description}}{{/if}}</p>
+          {{/each}}
+      </p>
+      
+      <br/>
+
+      <h5>Projects</h5>
+      <p>
+          {{#unless profile.projects}}
+          <p>Add Projects by clicking EDIT Profile...</p>
+          {{/unless}} 
+          {{#each profile.projects}}
+          <p>{{this.name}}</p>
+          <p>{{this.position}}</p>
+          <p>{{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
+          <p>{{#if this.description}} {{this.description}}{{/if}}</p>
+          {{/each}}
+      </p>
+      <br/>
+      <a class='ng-button' href="/user/edit_profile">Edit Profile</a>
+       
+  </div>
+</article>

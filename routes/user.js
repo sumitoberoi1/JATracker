@@ -1,133 +1,183 @@
 const express = require("express");
 const router = express.Router();
-const data = require("../data");
-const userData = data.users;
+const userData = require("../data/users");
+const uuid = require('uuid/v4');
 
-router.get("/profile", (req, res) => {
-  console.log("AuthCookie " + req.cookies.AuthCookie)
-  console.log("session.user " + req.session.user)
-
-  if(!req.cookies.AuthCookie || !req.session.user){
+router.get("/edit_profile", async (req, res) => {
+  if(!req.cookies.AuthCookie){
     res.clearCookie("AuthCookie");
     res.redirect('/login');
     return;
   }
-  active = {profile:true}
-  res.render("user/profile",{title:'View/Edit Profile', active})
+  else {
+    if (!req.session.user) {
+      let user = null;
+      try 
+      {
+        console.log("auth" + req.cookies.AuthCookie)
+        user = await userData.getUserByID(req.cookies.AuthCookie);
+        console.log(user)
+      } 
+      catch (e) 
+      {
+          res.render("login", {error: e});
+          return;
+      }
+      req.session.user = user;
+    }
+    active = {profile:true}
+    let profile = req.session.user.profile;
+    res.render("user/edit_profile",{title:'Edit Profile', active, profile: profile})
+  }
 });
 
-router.post("/edit_profile", (req, res) => {
-  userData.getUserById(req.user._id).then((currentUser) => {
-    res.render("user/edit_profile", currentUser);
+router.get("/view_profile", async (req, res) => {
+  if(!req.cookies.AuthCookie){
+    res.redirect('/login');
+    return;
+  }
+  else {
+    if (!req.session.user) {
+      let user = null;
+      try 
+      {
+        user = await userData.getUserByID(req.cookies.AuthCookie);
+        console.log(user)
+      } 
+      catch (e) 
+      {
+          res.render("login", {error: e});
+          return;
+      }
+      req.session.user = user;
+    }
+
+    active = {profile:true}
+    let profile = req.session.user.profile;
+    res.render("user/view_profile", {title:'View Profile', active, profile: profile})
+  }
 });
 
+router.get("/work_experience", async (req, res) => {
+  if(!req.cookies.AuthCookie){
+    res.redirect('/login');
+    return;
+  }
+  else {
+    if (!req.session.user) {
+      let user = null;
+      try 
+      {
+        user = await userData.getUserByID(req.cookies.AuthCookie);
+        console.log(user)
+      } 
+      catch (e) 
+      {
+          res.render("login", {error: e});
+          return;
+      }
+      req.session.user = user;
+    }
+    res.render("user/work_experience", {title:'Work Experience'})
+  }
 });
 
-router.get("user/profile/new_work_experience", (req, res) => {
+router.get("/project", async (req, res) => {
+  if(!req.cookies.AuthCookie){
+    res.redirect('/login');
+    return;
+  }
+  else {
+    if (!req.session.user) {
+      let user = null;
+      try 
+      {
+        user = await userData.getUserByID(req.cookies.AuthCookie);
+        console.log(user)
+      } 
+      catch (e) 
+      {
+          res.render("login", {error: e});
+          return;
+      }
+      req.session.user = user;
+    }
+    res.render("user/project", {title:'Work Experience'})
+  }
 });
 
-// router.get("/:id", (req, res) => {
-//   userData
-//     .getUserById(req.params.id)
-//     .then(user => {
-//       res.json(user);
-//     })
-//     .catch(() => {
-//       res.status(404).json({ error: "User not found" });
-//     });
-// });
+router.post("/edit_profile", async (req, res) => {
+  let InfoToUpdate = {};
+  InfoToUpdate.fullName = req.body.fullName;
+  InfoToUpdate.school = req.body.school;
+  InfoToUpdate.skills = req.body.skills;
+  InfoToUpdate.presentJob = req.body.presentJob;
+  InfoToUpdate.resume = req.body.resume;
+  InfoToUpdate.coverLetter = req.body.coverLetter;
 
-// router.get("/", (req, res) => {
-//   userData.getAllUsers().then(
-//     userList => {
-//       res.json(userList);
-//     },
-//     () => {
-//       // Something went wrong with the server!
-//       res.sendStatus(500);
-//     }
-//   );
-// });
+  try 
+  {
+    // console.log('user:', InfoToUpdate)
+    user = await userData.updateUser(req.session.user._id, InfoToUpdate);
+    // console.log("check here" + JSON.stringify(user))
+    req.session.user = user;
+    res.redirect('/user/view_profile');
+  } 
+  catch (e) 
+  {
+    res.status(500).render("error/404", {e});
+    return;
+  }
+  
+});
 
-// router.post("/", (req, res) => {
-//   let userInfo = req.body;
+router.post("/work_experience", async (req, res) => {
+  let newWorkexperience = {}
+  newWorkexperience.workID = uuid()
+  newWorkexperience.jobTittle = req.body.jobTittle;
+  newWorkexperience.employer = req.body.employer;
+  newWorkexperience.startDate = req.body.startDate;
+  newWorkexperience.endDate = req.body.endDate;
+  newWorkexperience.location = req.body.location;
+  newWorkexperience.description = req.body.description;
+  // console.log('newWorkexperience:', newWorkexperience)
 
-//   if (!userInfo) {
-//     res.status(400).json({ error: "You must provide data to create a user" });
-//     return;
-//   }
+  try
+  {
+    user = await userData.addWorkexperience(req.session.user._id, newWorkexperience);
+    console.log('id:', req.session.user._id)
+    req.session.user = user
+    res.redirect('/user/edit_profile');
+  }
+  catch (e) 
+  {
+    res.status(500).render("error/404", {e});
+    return;
+  }
+});
 
-//   if (!userInfo.firstName) {
-//     res.status(400).json({ error: "You must provide a first name" });
-//     return;
-//   }
+router.post("/project", async (req, res) => {
+  let newProject = {}
+  newProject.projectID = uuid()
+  newProject.name = req.body.name;
+  newProject.position = req.body.position;
+  newProject.startDate = req.body.startDate;
+  newProject.endDate = req.body.endDate;
+  newProject.description = req.body.description;
+  // console.log('newWorkexperience:', newWorkexperience)
 
-//   if (!userInfo.lastName) {
-//     res.status(400).json({ error: "You must provide a last name" });
-//     return;
-//   }
-
-//   userData.addUser(userInfo.firstName, userInfo.lastName).then(
-//     newUser => {
-//       res.json(newUser);
-//     },
-//     () => {
-//       res.sendStatus(500);
-//     }
-//   );
-// });
-
-// router.put("/:id", (req, res) => {
-//   let userInfo = req.body;
-
-//   if (!userInfo) {
-//     res.status(400).json({ error: "You must provide data to update a user" });
-//     return;
-//   }
-
-//   if (!userInfo.firstName) {
-//     res.status(400).json({ error: "You must provide a first name" });
-//     return;
-//   }
-
-//   if (!userInfo.lastName) {
-//     res.status(400).json({ error: "You must provide a last name" });
-//     return;
-//   }
-
-//   let getUser = userData
-//     .getUser(req.params.id)
-//     .then(() => {
-//       return userData.updateUser(req.params.id, userInfo).then(
-//         updatedUser => {
-//           res.json(updatedUser);
-//         },
-//         () => {
-//           res.sendStatus(500);
-//         }
-//       );
-//     })
-//     .catch(() => {
-//       res.status(404).json({ error: "User not found" });
-//     });
-// });
-
-// router.delete("/:id", (req, res) => {
-//   let user = userData
-//     .getUserById(req.params.id)
-//     .then(() => {
-//       return userData
-//         .removePost(req.params.id)
-//         .then(() => {
-//           res.sendStatus(200);
-//         })
-//         .catch(() => {
-//           res.sendStatus(500);
-//         });
-//     })
-//     .catch(() => {
-//       res.status(404).json({ error: "User not found" });
-//     });
-// });
+  try
+  {
+    user = await userData.addProject(req.session.user._id, newProject);
+    console.log('id:', req.session.user._id)
+    req.session.user = user
+    res.redirect('/user/edit_profile');
+  }
+  catch (e) 
+  {
+    res.status(500).render("error/404", {e});
+    return;
+  }
+});
 
 module.exports = router;

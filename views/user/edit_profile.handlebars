@@ -1,0 +1,96 @@
+<article>
+  <div class="jumbotron text-center">
+    <h1>Edit Profile</h1>
+  </div>
+  <div class="container">
+    <form action="/user/edit_profile" method="POST" class="md-form" id="application-submission">
+        <div class="form-group">
+          <label for="fullName">
+            Full Name </label>
+          <input id="fullName" type="text" name="fullName" placeholder="Enter Full Name" value="{{profile.fullName}}"
+            class="form-control" required/>
+        </div>
+        <div class="form-group">
+          <label for="school">
+            School</label>
+          <input id="school" type="text" name="school" placeholder="Enter School" value="{{profile.school}}"
+            class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="skills">Skills</label>
+          <input id="skills" type="text" name="skills" placeholder="Enter Skills (Separated by commas)" value="{{profile.skills}}"
+            class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="presentJob">Present Job</label>
+          <input id="presentJob" type="text" name="presentJob" placeholder="Enter Present Job" value="{{profile.presentJob}}"
+            class="form-control" />
+        </div>
+
+        <div class="custom-file">
+          <input id="resume" type="file" name="resume" class="custom-file-input" />
+          <label for="resume" class="custom-file-label">{{#if profile.resume}}{{profile.resume}}
+                                                                {{else}}Upload Your Resume{{/if}}</label>
+        </div>
+        <br/>
+        <br/>
+
+        <div class="custom-file">
+          <input id="coverLetter" type="file" name="resume" class="custom-file-input" />
+          <label for="coverLetter" class="custom-file-label">{{#if profile.coverLetter}}{{profile.coverLetter}}
+                                                                {{else}}Upload Your Coverletter{{/if}}</label>
+        </div>
+        <br/>
+        <br/>
+
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block">Save</button>
+        </div>
+      </form>
+      <br/>
+      
+
+      {{!-- work experience --}}
+      <h7>Work Experience</h7>
+      <p>
+          {{#unless profile.workExperience}}
+          {{/unless}} 
+          {{#each profile.workExperience}}
+          <p>{{this.jobTittle}}</p>
+          <p>{{this.employer}}</p>
+          <p>{{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
+          <p>{{#if this.location}} {{this.location}}{{/if}}</p>
+          <p>{{#if this.description}} {{this.description}}{{/if}}</p>
+          {{/each}}
+      </p>
+
+      <a id="workExperience" type="button" class="btn bg-blue" onclick="show_work_form()" href="/user/work_experience">
+        <i class="fa fa-plus"></i>
+        Add Work Experience</a>
+      <br/>
+      <br/>
+
+      <h7>Projects</h7>
+      <p>
+          {{#unless profile.projects}}
+          {{/unless}} 
+          {{#each profile.projects}}
+          <p>{{this.name}}</p>
+          <p>{{this.position}}</p>
+          <p>{{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
+          <p>{{#if this.description}} {{this.description}}{{/if}}</p>
+          {{/each}}
+      </p>
+      <a id="workExperience" type="button" class="btn bg-blue" href="/user/project">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Add Project</button>
+      <br/>
+      </div>
+      <br/>
+      <br/>
+
+      <a class='ng-button' href="/user/view_profile">View My Profile</a>
+
+  </div>
+</article>
