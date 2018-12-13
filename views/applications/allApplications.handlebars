@@ -4,6 +4,7 @@
     </div>
 
     <div class="container">
+        {{#if applications}}
         <ul class="list-group">
             {{#each applications}}
             <li class="list-group-item">
@@ -28,5 +29,16 @@
             </li>
             {{/each}}
         </ul>
+        {{else}}
+        <div class="card">
+            <div class="card-body">
+                <p class="text-center"> <small> No Application is found .
+                        Please click on button below to create a new application </p> </small </div> <div class="form-group">
+
+                <p class="text-center"> <a class="btn btn-primary btn-xs" href="/application/new" role="button">Create
+                        New Job Application</a> </p>
+            </div>
+        </div>
+        {{/if}}
     </div>
 </article>

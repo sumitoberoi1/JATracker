@@ -1,0 +1,41 @@
+[
+    {
+        "_id": "6ca626c6-eaae-4d40-a95c-0829dcb4f001",
+        "title": "recipe1",
+        "ingredients": [
+            {
+                "name": "dish1",
+                "amount": "1"
+            }
+        ],
+        "steps": [
+            "Step1"
+        ]
+    },
+    {
+        "_id": "f56568e6-7da8-4221-b1ad-59ad1f003612",
+        "title": "recipe2",
+        "ingredients": [
+            {
+                "name": "dish2",
+                "amount": "2"
+            }
+        ],
+        "steps": [
+            "Step2"
+        ]
+    },
+    {
+        "_id": "e6eb85d8-9c75-4bc8-a762-4808adc77707",
+        "title": "recipe3",
+        "ingredients": [
+            {
+                "name": "dish3",
+                "amount": "3"
+            }
+        ],
+        "steps": [
+            "Step13"
+        ]
+    }
+]

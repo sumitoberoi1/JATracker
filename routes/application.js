@@ -48,21 +48,16 @@ router.get("/:id",async (req,res) => {
 
 router.get("/", async (req, res) => {
     try {
-      const applicatons= await applicationData.getAllApplications();
-      res.render("applications/allApplications",{title:'All Applications',applications:applicatons})
-     if(!Array.isArray(applicatons) || !applicatons.length) {
-        res.render("applications/noApplication",{title:'All Applications',applications:applicatons})    
-     }
-     else{
-      res.render("applications/allApplications",{title:'All Applications',applications:applicatons})
-     }
+      const applications= await applicationData.getAllApplications();
+      res.render("applications/allApplications",{title:'All Applications',applications:applications})
     } catch (e) {
         console.log(`Error ${e}`)
       res.status(500).json({
         error: e
       });
     }
-  });
+});
+
 router.post("/",
 multerObject,async (req,res) => {
     const applicationPostData = req.body;
