@@ -13,7 +13,7 @@
       <div class="form-group">
         <label for="role">
           Job Role</label>
-        <input id="role" type="text" name="role" placeholder="Enter Job Role" value="{{application.role}}" class="form-control"
+        <input id="role" type="text" name="role" placeholder="Enter Job Role" value="{{application.jobrole}}" class="form-control"
           required />
       </div>
       <div class="form-group">
@@ -56,7 +56,9 @@
         <textarea id="notes" name="notes" rows="4" placeholder="Any Other Notes" class="form-control">{{application.notes}}</textarea>
       </div>
       {{#if application}}
-      <h1>{{firstName}} {{lastName}}</h1>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Edit Application</button>
+      </div>
       {{else}}
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block">Create New Job Application</button>

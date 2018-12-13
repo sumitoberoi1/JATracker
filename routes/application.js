@@ -19,6 +19,14 @@ const multerConfig = {
         }
       })
 }
+const multerObject = multer(multerConfig).fields([
+    {
+    name: 'resume', maxCount: 1
+    }, 
+    {
+    name: 'coverletter', maxCount: 1
+}])
+
 router.get("/new",(req,res) => {
     active = {newApplication:true}
     res.render("applications/new",{title:'Create New Application',active})
@@ -27,14 +35,13 @@ router.get("/new",(req,res) => {
 router.get("/edit/:id",async(req,res) => {
     const id = req.params.id
     const application = await applicationData.getApplicationByID(id)
-    console.log(`Application ${JSON.stringify(application)}`)
+    console.log(`Application to Edit ${JSON.stringify(application)}`)
     res.render("applications/new",{title:'Edit Application',application:application})
 });
 
 router.get("/:id",async (req,res) => {
     const id = req.params.id
     const application = await applicationData.getApplicationByID(id)
-    console.log(`Application ${JSON.stringify(application)}`)
     res.render("applications/application",{title:'My Application',application:application})
 });
 
@@ -50,16 +57,8 @@ router.get("/", async (req, res) => {
       });
     }
   });
-
-
 router.post("/",
-multer(multerConfig).fields([
-    {
-    name: 'resume', maxCount: 1
-    }, 
-    {
-    name: 'coverletter', maxCount: 1
-    }]),async (req,res) => {
+multerObject,async (req,res) => {
     const applicationPostData = req.body;
     const {
         companyName,
@@ -90,7 +89,7 @@ multer(multerConfig).fields([
             }
         }
         console.log(`Application Data ${JSON.stringify(appplicationToSaveData)}`)
-        const newApplication = await applicationData.createApplication(applicationPostData);
+        const newApplication = await applicationData.createApplication(appplicationToSaveData);
         res.redirect(`/application/${newApplication._id}`)
         return
         // res.status(500).json({
@@ -101,6 +100,38 @@ multer(multerConfig).fields([
         res.status(500).json({error: e});
     }
 })
+
+
+router.put("/:id",multerObject,async (req, res) => {
+    const id = req.params.id
+    try {
+        const application = await applicationData.getApplicationByID(id)
+        const applicationEditData = req.body
+        const {
+            companyName,
+            role,
+            applyDate,
+            applicationStatus,
+            jobSource,
+            notes
+        } = applicationEditData;
+        const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
+        if (req.files) {
+            if (req.files.resume && req.files.resume.length > 0) {
+                appplicationToSaveData.resume = req.files.resume[0]
+            }
+            if (req.files.coverletter && req.files.coverletter.length > 0) {
+                appplicationToSaveData.coverletter = req.files.coverletter[0]
+            }
+        }
+        const editApplication = await applicationData.editApplication(id,appplicationToSaveData)
+        res.redirect(`/application/${editApplication._id}`)
+        return
+    } catch (e) {
+        res.status(404).json({error: e});
+    }
+})
+
 
 
 module.exports = router

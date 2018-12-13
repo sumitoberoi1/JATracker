@@ -6,7 +6,7 @@ const createApplication = async (applicationData) => {
     const {companyName,role,applyDate,applicationStatus,
         jobSource,resume,coverletter,notes} = applicationData
     const newApplication = {
-        c: companyName,
+        companyName: companyName,
         jobrole: role,
         appliedDate: applyDate,
         applicationStatus:applicationStatus,
@@ -16,7 +16,7 @@ const createApplication = async (applicationData) => {
         notes:notes,
         _id: uuid()
     };
-    console.log(`New Application Data ${JSON.stringify(newApplication)}`)
+    console.log(`New Application Data ${JSON.stringify(applicationData)}`)
     const newApplicationMongo = await applicationCollection.insertOne(newApplication);
     const newId = newApplicationMongo.insertedId;
     return await getApplicationByID(newId);
@@ -30,8 +30,15 @@ const getApplicationByID = async (id) => {
     return application;
 }
 
-const editApplication = async (id) => {
-    
+const editApplication = async (id, updatedApplicationData) => {
+    const query = {
+        _id: id
+    };
+    const applicationCollection = await applications();
+    await applicationCollection.updateOne(query, {
+        $set: updatedRecipeData
+    });
+    return await getRecipeByID(id);
 }
 
 const getAllApplications = async() => {
@@ -41,5 +48,6 @@ const getAllApplications = async() => {
 module.exports = {
     createApplication,
     getApplicationByID,
-    getAllApplications
+    getAllApplications,
+    editApplication
 }
