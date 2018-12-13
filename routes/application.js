@@ -2,8 +2,23 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const applicationData = data.application;
+const multer = require("multer")
+const path = require("path")
 let active = {};
 
+
+const multerConfig = {
+    storage: multer.diskStorage({
+        destination: function(req, file, next){
+          next(null, __dirname + '/../userFiles');
+        },
+        filename: function(req, file, next){
+          console.log(file);
+          const ext = file.mimetype.split('/')[1];
+          next(null, file.fieldname + '-' + Date.now() + '.'+ext);
+        }
+      })
+}
 router.get("/new",(req,res) => {
     active = {newApplication:true}
     res.render("applications/new",{title:'Create New Application',active})
@@ -37,7 +52,14 @@ router.get("/", async (req, res) => {
   });
 
 
-router.post("/",async (req,res) => {
+router.post("/",
+multer(multerConfig).fields([
+    {
+    name: 'resume', maxCount: 1
+    }, 
+    {
+    name: 'coverletter', maxCount: 1
+    }]),async (req,res) => {
     const applicationPostData = req.body;
     const {
         companyName,
@@ -45,8 +67,6 @@ router.post("/",async (req,res) => {
         applyDate,
         applicationStatus,
         jobSource,
-        resume,
-        coverletter,
         notes
     } = applicationPostData;
     try {
@@ -58,6 +78,18 @@ router.post("/",async (req,res) => {
         // } else if (!errorChecking.dataValidArray(steps)) {
         // errorMessage = `Invalid Steps`
         // } else {
+        const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
+        if (req.files) {
+            if (req.files.resume && req.files.resume.length > 0) {
+                console.log(`In resume`)
+                appplicationToSaveData.resume = req.files.resume[0]
+            }
+            if (req.files.coverletter && req.files.coverletter.length > 0) {
+                console.log(`In coverletter`)
+                appplicationToSaveData.coverletter = req.files.coverletter[0]
+            }
+        }
+        console.log(`Application Data ${JSON.stringify(appplicationToSaveData)}`)
         const newApplication = await applicationData.createApplication(applicationPostData);
         res.redirect(`/application/${newApplication._id}`)
         return

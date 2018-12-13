@@ -3,7 +3,7 @@
     <h1>{{title}}</h1>
   </div>
   <div class="container">
-    <form action="/application" method="POST" class="md-form" id="application-submission">
+    <form action="/application" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data">
       <div class="form-group">
         <label for="companyName">
           Company Name </label>
@@ -55,9 +55,14 @@
         </label>
         <textarea id="notes" name="notes" rows="4" placeholder="Any Other Notes" class="form-control">{{application.notes}}</textarea>
       </div>
+      {{#if application}}
+      <h1>{{firstName}} {{lastName}}</h1>
+      {{else}}
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block">Create New Job Application</button>
       </div>
+      {{/if}}
+
     </form>
   </div>
 </article>

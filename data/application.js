@@ -16,6 +16,7 @@ const createApplication = async (applicationData) => {
         notes:notes,
         _id: uuid()
     };
+    console.log(`New Application Data ${JSON.stringify(newApplication)}`)
     const newApplicationMongo = await applicationCollection.insertOne(newApplication);
     const newId = newApplicationMongo.insertedId;
     return await getApplicationByID(newId);
