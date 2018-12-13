@@ -1,18 +1,45 @@
 const mongoCollections = require("../config/mongoCollections");
 const applications = mongoCollections.applications;
 const uuid = require('uuid/v4');
-const createApplication = () => {
-    const recipeCollection = await applications();
-        const newApplication = {
-            title: title,
-            ingredients: ingredients,
-            steps: steps,
-            _id: uuid()
-        };
-        const newInsertInformation = await recipeCollection.insertOne(newRecipe);
-        const newId = newInsertInformation.insertedId;
-        return await getRecipeByID(newId);
+const createApplication = async (applicationData) => {
+    const applicationCollection = await applications();
+    const {companyName,role,applyDate,applicationStatus,
+        jobSource,resume,coverletter,notes} = applicationData
+    const newApplication = {
+        c: companyName,
+        jobrole: role,
+        appliedDate: applyDate,
+        applicationStatus:applicationStatus,
+        jobSource:jobSource,
+        resume:resume,
+        coverletter:coverletter,
+        notes:notes,
+        _id: uuid()
+    };
+    console.log(`New Application Data ${JSON.stringify(newApplication)}`)
+    const newApplicationMongo = await applicationCollection.insertOne(newApplication);
+    const newId = newApplicationMongo.insertedId;
+    return await getApplicationByID(newId);
+}
+const getApplicationByID = async (id) => {
+    const applicationCollection = await applications();
+    const application = await applicationCollection.findOne({
+        _id: id
+    });
+    if (!application) throw "Application not found";
+    return application;
+}
+
+const editApplication = async (id) => {
+    
+}
+
+const getAllApplications = async() => {
+    const applicationCollection = await applications();
+    return await applicationCollection.find({}).toArray();
 }
 module.exports = {
-    createApplication
+    createApplication,
+    getApplicationByID,
+    getAllApplications
 }

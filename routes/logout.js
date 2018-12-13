@@ -2,12 +2,16 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-	res.cookie("AuthCookie", "", {
-		expires: new Date()
-	});
-	res.clearCookie("AuthCookie");
-
-	res.render("logout");
+    req.session.destroy(function(err) {
+        // cannot access session here
+        if(err) {
+            return next(err);
+        }
+        else {
+            res.clearCookie('AuthCookie');
+            res.render("login");
+        }
+     })
 });
 
 module.exports = router;

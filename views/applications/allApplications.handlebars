@@ -1,0 +1,31 @@
+<article>
+    <div class="jumbotron text-center">
+        <h1>All Applications </h1>
+    </div>
+
+    <div class="container">
+        <ul class="list-group">
+            {{#each applications}}
+            <li class="list-group-item">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">{{companyName}}</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-subtitle mb-2 text-mutedcard-subtitle mb-2 text-muted">Role:
+                            {{jobrole}}</h3>
+                        <p class="card-text">Status: {{applicationStatus}}</p>
+                        <p class="card-text">Source: {{jobSource}}</p>
+                        <p>Applied On/To Apply Date: {{appliedDate}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#!" class="card-link">Resume</a>
+                        <a href="#!" class="card-link">Cover Letter</a>
+                        <a href={{concat "/application/edit/" _id }} class="card-link">Edit Application</a>
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</article>

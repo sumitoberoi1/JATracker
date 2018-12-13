@@ -1,71 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <title>JOB TRACKING WEB APPLICATION</title>
-</head>
-
-
-{{#if error}}
-<div id="form-error" class="form-error">
-  <h3>Error:</h3>
-  {{ error }}
-</div>
-{{/if}}
-
 <article>
-  <header>
-    <h2>Sign Up.</h2>
-  </header>
+    <div class="signupForm">
+        <form method="post" action="/signup" class="form-signin">
+            <header>
+                <h2>Sign Up</h2>
+            </header>
+            {{#if error}}
+                <div class="alert alert-danger" role="alert">
+                    {{{error}}}
+                </div>
+            {{/if}}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" type="text" name="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" type="password" name="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <label for="repeatedPassword">Confirm Password</label>
+                <input class="form-control" type="password" name="repeatedPassword" id="repeatedPassword" required>
+            </div>
 
-  <form id="signup-form" action="/signup" method="post">
-    <table class="login">
-      <tr>
-        <td>
-          <label for="Createusername">Username:</label>
-        </td>
-        <td>
-          <input type="text" name="username" id="Createusername">
-        </td>
-        <td></td>
-      </tr>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="email" name="email" id="email" required>
+            </div>
 
-      <tr>
-        <td>
-          <label for="Createpassword">Password:</label>
-        </td>
-        <td>
-          <input type="password" name="password" id="Createpassword">
-        </td>
-        <td>
-        </td>
-      </tr>
+            <button id="signup"type="submit" class="btn btn-lg btn-primary btn-block">Sign up</button>
 
-      <tr>
-        <td>
-          <label for="CreateRe_enter_password">Re-enter Password:</label>
-        </td>
-        <td>
-          <input type="password" name="Re_enter_password" id="CreateRe_enter_password">
-        </td>
-        <td>
-        </td>
-      </tr>
-
-        <tr>
-        <td>
-          <label for="Createemail">Email:</label>
-        </td>
-        <td>
-          <input type="email" name="email" id="Createemail">
-        </td>
-        <td>
-          <input type="submit" value="Sign Up">
-        </td>
-      </tr>
-    </table>
-  </form>
+        </form>
+    </div>
 </article>
-
-</html>
