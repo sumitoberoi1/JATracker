@@ -19,9 +19,6 @@ app.use(session({
   secret: 'secret',
   resave: true,
   saveUninitialized: false,
-  cookie: {
-      maxAge: 3600000 
-  }
 }));
 const viewEngine = exphbs({
   // Specify helpers which are only registered on this instance.

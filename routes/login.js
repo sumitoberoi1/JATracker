@@ -3,9 +3,22 @@ const userData = require("../data/users");
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    if (req.cookies.AuthCookie || req.session.user) {
-        res.redirect('/user/profile');
+router.get("/", async (req, res) => {
+    if (req.cookies.AuthCookie) {
+        if (!req.session.user) {
+            let user = null;
+            try 
+            {
+                user = await userData.getUserByID(req.cookies.AuthCookie);
+            } 
+            catch (e) 
+            {
+                res.render("login", {error: e});
+                return;
+            }
+            req.session.user = user;
+        }
+        res.redirect('/user/edit_profile');
     }
     else {
         res.render('login');
@@ -36,7 +49,7 @@ router.post("/", async (req, res) => {
       expiresAt.setHours(expiresAt.getHours() + 1);
       res.cookie("AuthCookie", user["_id"], { expires: expiresAt });
       req.session.user = user;
-      res.redirect('/user/profile');
+      res.redirect('/user/view_profile');
     }
     else {
       res.render("login", {error: "Incorrect login and/or password."});
