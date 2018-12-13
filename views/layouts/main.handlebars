@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -28,37 +28,30 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 {{#if session.user}}
-                    <li class="nav-item">
-                        <a class="nav-link {{#if active.profile}} active {{/if}}" href="/user/profile">My Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/application/all">Applications <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{#if active.newApplication}} active {{/if}}" href="/application/new">Create
-                            New Application</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"> Welcome {{session.user.username}}</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link {{#if active.profile}} active {{/if}}" href="/user/view_profile">View/Edit Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/application/all">Applications <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{#if active.newApplication}} active {{/if}}" href="/application/new">Create
+                        New Application</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"> Welcome {{session.user.username}}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
                 {{else}}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/signup">Signup</a>
-                    
-                    </li>
                 {{/if}}
 
 
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li>
-                    <a class="nav-link" href="/profile"><i class="fa fa-user"></i></a>
+                    <a class="nav-link" href="/profile"><i class="fa fa-user"></i> Your Profile</a>
                 </li>
             </ul>
         </div>
@@ -67,6 +60,8 @@
         {{{body}}}
     </main>
     <script src="/public/js/main.js"></script>
+    <script src="/public/js/tota11y.min.js"></script>
+    <script src="/public/js/nodep-date-input-polyfill.dist.js"></script>
 </body>
 
 </html>
