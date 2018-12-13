@@ -52,39 +52,52 @@
       
 
       {{!-- work experience --}}
-      <h7>Work Experience</h7>
-      <p>
-          {{#unless profile.workExperience}}
-          {{/unless}} 
-          {{#each profile.workExperience}}
-          <p>{{this.jobTittle}}</p>
-          <p>{{this.employer}}</p>
-          <p>{{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
-          <p>{{#if this.location}} {{this.location}}{{/if}}</p>
-          <p>{{#if this.description}} {{this.description}}{{/if}}</p>
-          {{/each}}
-      </p>
-
+    <div class="container">
+    {{#unless profile.workExperience}}
+      <p>Add Work Experience by clicking EDIT Profile...</p>
+    {{/unless}}
+      <div class="card">
+      {{#each profile.workExperience}}
+            <div class="card-header">
+                <h2 class="card-title">{{this.jobTittle}}</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Job Title: {{this.jobTittle}}</h3>
+                <p class="card-text">Employer: {{this.employer}}</p>
+                <p class="card-text">Date: {{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
+                <p class="card-text">Location: {{#if this.location}} {{this.location}}{{/if}}</p>
+                <p class="card-text">Description: {{#if this.description}} {{this.description}}{{/if}}</p>
+            </div>
+            {{/each}}
+    </div>
       <a id="workExperience" type="button" class="btn bg-blue" onclick="show_work_form()" href="/user/work_experience">
         <i class="fa fa-plus"></i>
         Add Work Experience</a>
+        </div>
       <br/>
       <br/>
 
-      <h7>Projects</h7>
-      <p>
-          {{#unless profile.projects}}
-          {{/unless}} 
-          {{#each profile.projects}}
-          <p>{{this.name}}</p>
-          <p>{{this.position}}</p>
-          <p>{{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
-          <p>{{#if this.description}} {{this.description}}{{/if}}</p>
-          {{/each}}
-      </p>
+    <br/>
+        <div class="container">
+    {{#unless profile.workExperience}}
+      <p>Add Project by clicking EDIT Profile...</p>
+    {{/unless}}
+      <div class="card">
+      {{#each profile.projects}}
+            <div class="card-header">
+                <h2 class="card-title">{{this.name}}</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Name: {{this.name}}</h3>
+                <p class="card-text">position: {{this.position}}</p>
+                <p class="card-text">Date: {{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
+                <p class="card-text">Description: {{#if this.description}} {{this.description}}{{/if}}</p>
+            </div>
+            {{/each}}
+        </div>
       <a id="workExperience" type="button" class="btn bg-blue" href="/user/project">
         <i class="fa fa-plus" aria-hidden="true"></i>
-        Add Project</button>
+        Add Project</a>
       <br/>
       </div>
       <br/>

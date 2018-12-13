@@ -3,64 +3,62 @@
     <h1>View Profile</h1>
   </div>
   <div class="container">
-    <form class="md-form" id="application-submission">
-        <div class="form-group">
-          <label for="fullName">
-            Full Name: {{profile.fullName}} </label>
+    <div class="container p-5">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Profile</h2>
+            <h2 class="card-title">{{this.jobTittle}}</h2>
+          </div>
+            <div class="card-body">
+                <p class="card-text">Full Name: {{#if profile.fullName}} {{profile.fullName}}{{/if}}</p>
+                <p class="card-text">School: {{#if profile.school}} {{profile.school}}{{/if}}</p>
+                <p class="card-text">Skills: {{#if profile.skills}} {{profile.skills}}{{/if}}</p>
+                <p class="card-text">Present Job: {{#if profile.presentJob}} {{profile.presentJob}}{{/if}}</p>
+                <p class="card-text">Path to Resume: {{#if profile.resume}} {{profile.resume}}{{/if}}</p>
+                <p class="card-text">Path to Cover Letter: {{#if profile.coverLetter}} {{profile.coverLetter}}{{/if}}</p>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="school">
-            School: {{profile.school}}</label>
-        </div>
-        <div class="form-group">
-          <label for="skills">Skills: {{profile.skills}}</label>
-        </div>
-        <div class="form-group">
-          <p for="presentJob">Present Job :{{profile.presentJob}}</p>
-        </div>
-
-        <div class="form-group">
-            <p for="resume">Path to Resume :{{profile.resume}}</p>
-        </div>
-
-        <div class="form-group">
-            <p for="coverLetter">Path to Cover Letter :{{profile.coverLetter}}</p>
-        </div>
-      </form>
       <br/>
-      
-
-      {{!-- work experience --}}
-      <h5>Work Experience</h3>
-      <p>
-          {{#unless profile.workExperience}}
-          <p>Add Work Experience by clicking EDIT Profile...</p>
-          {{/unless}} 
-          {{#each profile.workExperience}}
-          <p>{{this.jobTittle}}</p>
-          <p>{{this.employer}}</p>
-          <p>{{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
-          <p>{{#if this.location}} {{this.location}}{{/if}}</p>
-          <p>{{#if this.description}} {{this.description}}{{/if}}</p>
-          {{/each}}
-      </p>
-      
-      <br/>
-
-      <h5>Projects</h5>
-      <p>
-          {{#unless profile.projects}}
-          <p>Add Projects by clicking EDIT Profile...</p>
-          {{/unless}} 
-          {{#each profile.projects}}
-          <p>{{this.name}}</p>
-          <p>{{this.position}}</p>
-          <p>{{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
-          <p>{{#if this.description}} {{this.description}}{{/if}}</p>
-          {{/each}}
-      </p>
-      <br/>
-      <a class='ng-button' href="/user/edit_profile">Edit Profile</a>
+    <div class="container p-5">
+    {{#unless profile.workExperience}}
+      <p>Add Work Experience by clicking EDIT Profile...</p>
+    {{/unless}}
+      <div class="card">
+      {{#each profile.workExperience}}
+            <div class="card-header">
+                <h2 class="card-title">{{this.jobTittle}}</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Job Title: {{this.jobTittle}}</h3>
+                <p class="card-text">Employer: {{this.employer}}</p>
+                <p class="card-text">Date: {{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
+                <p class="card-text">Location: {{#if this.location}} {{this.location}}{{/if}}</p>
+                <p class="card-text">Description: {{#if this.description}} {{this.description}}{{/if}}</p>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <br/>
+        <div class="container p-5">
+    {{#unless profile.workExperience}}
+      <p>Add Project by clicking EDIT Profile...</p>
+    {{/unless}}
+      <div class="card">
+      {{#each profile.projects}}
+            <div class="card-header">
+                <h2 class="card-title">{{this.name}}</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Name: {{this.name}}</h3>
+                <p class="card-text">position: {{this.position}}</p>
+                <p class="card-text">Date: {{this.startDate}}{{#if this.endDate}}-{{this.endDate}}{{/if}}</p>
+                <p class="card-text">Description: {{#if this.description}} {{this.description}}{{/if}}</p>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <a class='ng-button' href="/user/edit_profile">Edit Profile</a>
        
   </div>
 </article>
