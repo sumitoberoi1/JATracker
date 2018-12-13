@@ -19,7 +19,6 @@ const multerConfig = {
         }
       })
 }
-<<<<<<< HEAD
 const multerObject = multer(multerConfig).fields([
     {
     name: 'resume', maxCount: 1
@@ -28,8 +27,6 @@ const multerObject = multer(multerConfig).fields([
     name: 'coverletter', maxCount: 1
 }])
 
-=======
->>>>>>> origin/nitish
 router.get("/new",(req,res) => {
     active = {newApplication:true}
     res.render("applications/new",{title:'Create New Application',active})
@@ -38,21 +35,13 @@ router.get("/new",(req,res) => {
 router.get("/edit/:id",async(req,res) => {
     const id = req.params.id
     const application = await applicationData.getApplicationByID(id)
-<<<<<<< HEAD
-    console.log(`Application to Edit ${JSON.stringify(application)}`)
-=======
-    console.log(`Application ${JSON.stringify(application)}`)
->>>>>>> origin/nitish
+
     res.render("applications/new",{title:'Edit Application',application:application})
 });
 
 router.get("/:id",async (req,res) => {
     const id = req.params.id
     const application = await applicationData.getApplicationByID(id)
-<<<<<<< HEAD
-=======
-    console.log(`Application ${JSON.stringify(application)}`)
->>>>>>> origin/nitish
     res.render("applications/application",{title:'My Application',application:application})
 });
 
@@ -60,18 +49,13 @@ router.get("/:id",async (req,res) => {
 router.get("/", async (req, res) => {
     try {
       const applicatons= await applicationData.getAllApplications();
-<<<<<<< HEAD
       res.render("applications/allApplications",{title:'All Applications',applications:applicatons})
-=======
-     if(!Array.isArray(applicatons) || !applicatons.length)
-     
-     {
+     if(!Array.isArray(applicatons) || !applicatons.length) {
         res.render("applications/noApplication",{title:'All Applications',applications:applicatons})    
      }
      else{
       res.render("applications/allApplications",{title:'All Applications',applications:applicatons})
      }
->>>>>>> origin/nitish
     } catch (e) {
         console.log(`Error ${e}`)
       res.status(500).json({
@@ -79,21 +63,8 @@ router.get("/", async (req, res) => {
       });
     }
   });
-<<<<<<< HEAD
 router.post("/",
 multerObject,async (req,res) => {
-=======
-
-
-router.post("/",
-multer(multerConfig).fields([
-    {
-    name: 'resume', maxCount: 1
-    }, 
-    {
-    name: 'coverletter', maxCount: 1
-    }]),async (req,res) => {
->>>>>>> origin/nitish
     const applicationPostData = req.body;
     const {
         companyName,
@@ -124,11 +95,7 @@ multer(multerConfig).fields([
             }
         }
         console.log(`Application Data ${JSON.stringify(appplicationToSaveData)}`)
-<<<<<<< HEAD
         const newApplication = await applicationData.createApplication(appplicationToSaveData);
-=======
-        const newApplication = await applicationData.createApplication(applicationPostData);
->>>>>>> origin/nitish
         res.redirect(`/application/${newApplication._id}`)
         return
         // res.status(500).json({
@@ -138,14 +105,12 @@ multer(multerConfig).fields([
          console.log(`Error in creating application ${e}`)
         res.status(500).json({error: e});
     }
-<<<<<<< HEAD
 })
 
 
 router.put("/:id",multerObject,async (req, res) => {
     const id = req.params.id
     try {
-        const application = await applicationData.getApplicationByID(id)
         const applicationEditData = req.body
         const {
             companyName,
@@ -174,9 +139,4 @@ router.put("/:id",multerObject,async (req, res) => {
 
 
 
-=======
-})
-
-
->>>>>>> origin/nitish
 module.exports = router
