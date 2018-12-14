@@ -3,10 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const applicationData = data.application;
 const multer = require("multer")
-const path = require("path")
 let active = {};
-
-
 const multerConfig = {
     storage: multer.diskStorage({
         destination: function(req, file, next){
@@ -35,7 +32,6 @@ router.get("/new",(req,res) => {
 router.get("/edit/:id",async(req,res) => {
     const id = req.params.id
     const application = await applicationData.getApplicationByID(id)
-
     res.render("applications/new",{title:'Edit Application',application:application})
 });
 
@@ -74,6 +70,7 @@ router.get("/", async (req, res) => {
 
 router.post("/",
 multerObject,async (req,res) => {
+    console.log(`I came here in POST`)
     const applicationPostData = req.body;
     const {
         companyName,
@@ -119,6 +116,8 @@ multerObject,async (req,res) => {
 
 router.put("/:id",multerObject,async (req, res) => {
     const id = req.params.id
+    const application = await applicationData.getApplicationByID(id)
+    console.log(`Here in applicatioonnEDIt`)
     try {
         const applicationEditData = req.body
         const {
@@ -133,9 +132,13 @@ router.put("/:id",multerObject,async (req, res) => {
         if (req.files) {
             if (req.files.resume && req.files.resume.length > 0) {
                 appplicationToSaveData.resume = req.files.resume[0]
+            } else if (application.resume) {
+                appplicationToSaveData.resume = application.resume
             }
             if (req.files.coverletter && req.files.coverletter.length > 0) {
                 appplicationToSaveData.coverletter = req.files.coverletter[0]
+            } else if (application.coverletter) {
+                appplicationToSaveData.coverletter = application.coverletter
             }
         }
         const editApplication = await applicationData.editApplication(id,appplicationToSaveData)
