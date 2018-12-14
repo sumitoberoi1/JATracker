@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
             }
             req.session.user = user;
         }
-        res.redirect('/user/edit_profile');
+        res.redirect('/application');
     }
     else {
         res.render('login',{layout:false, title:'Login'});
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
     if (passwordsMatch) {
       res.cookie("AuthCookie", user["_id"]);
       req.session.user = user;
-      res.redirect('/user/view_profile');
+      res.redirect('/application');
     }
     else {
       loginData.error = "Incorrect login and/or password."

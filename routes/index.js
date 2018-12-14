@@ -25,7 +25,7 @@ const routes = app => {
       }
       console.log("AuthCookie" + req.cookies.AuthCookie)
       console.log("req.session.user" + JSON.stringify(req.session.user))
-      res.redirect('/user/view_profile');
+      res.redirect('/application');
     }
     else {
       res.redirect('/login');
