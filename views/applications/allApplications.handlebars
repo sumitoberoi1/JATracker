@@ -1,0 +1,46 @@
+<article>
+    <div class="jumbotron text-center">
+        <h1>All Applications </h1>
+    </div>
+
+<div class="container">
+<form class="form-inline">
+  <i class="fa fa-search" aria-hidden="true"></i>
+  <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
+
+
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <input class="form-control" id="myInput" type="text" placeholder="Search..">
+      <li><a href="#">A-Z</a></li>
+      <li><a href="#">Most Recent</a></li>
+ 
+    </ul>
+  </div>
+  </form>
+</div>
+<div class="clearfix"></div>
+    <div class="container">
+        {{#if applications}}
+        <ul class="list-group">
+            {{#each applications}}
+            <li class="list-group-item">
+                {{> applicationPartial}}
+            </li>
+            {{/each}}
+        </ul>
+        {{else}}
+        <div class="card">
+            <div class="card-body">
+                <p class="text-center"> <small> No Application is found .
+                        Please click on button below to create a new application </p> </small </div> <div class="form-group">
+
+                <p class="text-center"> <a class="btn btn-primary btn-xs" href="/application/new" role="button">Create
+                        New Job Application</a> </p>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</article>

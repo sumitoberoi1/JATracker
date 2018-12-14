@@ -1,30 +1,30 @@
 <article>
   <div class="jumbotron text-center">
-    <h1>Create New Job Application</h1>
+    <h1>{{title}}</h1>
   </div>
   <div class="container">
-    <form action="/application" method="POST" class="md-form">
+    <form action="/application" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data">
       <div class="form-group">
-        <label for="company-name">
+        <label for="companyName">
           Company Name </label>
-        <input id="company-name" type="text" name="company-name" placeholder="Enter Company Name" value="{{applications.companyName}}"
-          class="form-control" />
+        <input id="companyName" type="text" name="companyName" placeholder="Enter Company Name" value="{{application.companyName}}"
+          class="form-control" required />
       </div>
       <div class="form-group">
         <label for="role">
           Job Role</label>
-        <input id="role" type="text" name="role" placeholder="Enter Job Role" value="{{applications.companyName}}"
-          class="form-control" />
+        <input id="role" type="text" name="role" placeholder="Enter Job Role" value="{{application.jobrole}}" class="form-control"
+          required />
       </div>
       <div class="form-group">
-        <label for="applyDate">Enter Applied Date</label>
-        <input id="applyDate" type="text" name="applyDate" placeholder="Enter date applied on" class="form-control" />
+        <label for="applyDate">Enter Applied Date or Date you will apply On</label>
+        <input id="applyDate" type="date" name="applyDate" class="form-control" required value="{{application.appliedDate}}" />
       </div>
       <div class="form-group">
-        <label for="application-status">
+        <label for="applicationStatus">
           Application Status
         </label>
-        <select id="application-status" class="form-control">
+        <select id="applicationStatus" class="form-control" name="applicationStatus">
           <option value="Application Submitted">Application Submitted</option>
           <option value="First Round">First Round</option>
           <option value="Second Round">Second Round</option>
@@ -32,10 +32,10 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="job-source">
+        <label for="jobSource">
           Job Source</label>
-        <input id="job-source" type="text" name="job-source" placeholder="Source for job" value="{{applications.companyName}}"
-          class="form-control" />
+        <input id="jobSource" type="text" name="jobSource" placeholder="Source for job" value="{{application.jobSource}}"
+          class="form-control" required />
       </div>
       <div class="form-group">
         <div class="custom-file">
@@ -45,17 +45,27 @@
       </div>
       <div class="form-group">
         <div class="custom-file">
-          <input id="cover-letter" type="file" name="cover-letter" class="custom-file-input" />
-          <label for="cover-letter" class="custom-file-label">Upload Cover Letter used</label>
+          <input id="coverletter" type="file" name="coverletter" class="custom-file-input" />
+          <label for="coverletter" class="custom-file-label">Upload Cover Letter used</label>
         </div>
       </div>
       <div class="form-group">
         <label for="notes">
           Notes
         </label>
-        <textarea id="notes" name="notes" rows="4" placeholder="Any Other Notes" class="form-control">{{post.body}}</textarea>
+        <textarea id="notes" name="notes" rows="4" placeholder="Any Other Notes" class="form-control">{{application.notes}}</textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Create New Job Application</button>
+      {{#if application}}
+      <div class="form-group">
+        <button type="submit btn-danger" class="btn btn-primary btn-inline">Edit Application</button>
+        <button type="button btn-danger" class="btn btn-danger btn-inline">Delete Application</button>
+      </div>
+      {{else}}
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Create New Job Application</button>
+      </div>
+      {{/if}}
+
     </form>
   </div>
 </article>
