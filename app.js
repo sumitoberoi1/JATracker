@@ -10,7 +10,7 @@ const exphbs = require("express-handlebars");
 const helmet = require("helmet");
 const passport = require("passport");
 const keys = require('./config/keys')
-//const flash = require("connect-flash");
+const flash = require("connect-flash");
 const passportConfig = require('./config/passportConfig');
 app.use(logger("short"));
 //passportConfig.setup()
@@ -24,9 +24,8 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
-//app.use(flash)
-// app.use(passport.initialize())
-// app.use(passport.session());
+app.use(passport.initialize())
+app.use(passport.session());
 
 
 const viewEngine = exphbs({

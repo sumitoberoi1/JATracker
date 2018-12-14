@@ -5,8 +5,10 @@ const logoutRoute = require("./logout");
 const applicationRoutes = require("./application")
 const path = require("path");
 const userData = require("../data/users");
-
+const passport = require("passport")
+const passportConfig = require('../config/passportConfig');
 const routes = app => {
+  passportConfig.setup()
   app.get('/', async function (req, res) {
     if (req.cookies.AuthCookie) {
       if (!req.session.user) {

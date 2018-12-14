@@ -1,9 +1,9 @@
 const passport = require("passport");
 const userData = require("../data/users");
 const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require('bcrypt');
 module.exports.setup = function () {
     passport.serializeUser((user,done) => {
-        console.log(`Error in Passport ${e}`)
         done(null,user._id)
     })
     passport.deserializeUser(async (id,done) => {   
@@ -16,6 +16,7 @@ module.exports.setup = function () {
         }
     })
     passport.use(`local`,new LocalStrategy(async (userName,password,done) => {
+        
         try {
             const user = await userData.getUserByUsername(userName);
             const passwordsMatch = await bcrypt.compare(password, user.hashedPassword);
