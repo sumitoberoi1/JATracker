@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
     if (passwordsMatch) {
       res.cookie("AuthCookie", user["_id"]);
       req.session.user = user;
-      res.redirect('/application');
+      res.redirect('/login');
     }
     else {
       loginData.error = "Incorrect login and/or password."
