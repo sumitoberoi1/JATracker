@@ -9,6 +9,7 @@ const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
 const helmet = require("helmet");
 const passport = require("passport");
+const keys = require('./config/keys')
 app.use(logger("short"));
 app.use("/public", static);
 app.use(helmet.xssFilter());
@@ -17,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-  secret: 'secret',
+  secret:keys.sessionSecret ,
   resave: true,
   saveUninitialized: false,
 }));

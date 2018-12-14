@@ -7,14 +7,15 @@ $('input[name="coverletter"]').change(function(e){
     const fileName = e.target.files[0].name;
     $(this).next('.custom-file-label').html(fileName);
 });
+${'#'}
+
 
 function show_new_work_form() {
     document.getElementById('hiddenNewWorkForm').style.display = "block";
     document.getElementById('coverLetter').style.display = "none";
     document.getElementById('resume').style.display = "none";
     $('label[for="coverLetter"]').css('display', 'none');
-    $('label[for="resume"]').css('display', 'none');
-    
+    $('label[for="resume"]').css('display', 'none');   
 }
 
 function hide_new_work_form() {
