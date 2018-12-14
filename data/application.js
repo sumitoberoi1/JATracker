@@ -42,7 +42,7 @@ const editApplication = async (id, updatedApplicationData) => {
 
 const getAllApplications = async() => {
     const applicationCollection = await applications();
-    return await applicationCollection.find({}).toArray();
+    return await applicationCollection.find({}).sort({ appliedDate: -1 }).toArray();
 }
 const deleteApplication = async(id) => {
     const applicationCollection = await applications();
