@@ -11,22 +11,26 @@ module.exports.setup = function () {
             const user = await userData.getUserByID(id)
             done(null,user)
         } catch (e) {
-            console.log(`Error in Passport ${e}`)
             done(e,user)
         }
     })
-    passport.use(`local`,new LocalStrategy(async (userName,password,done) => {
+    passport.use(`local`,new LocalStrategy({passReqToCallback : true}, async (req,userName,password,done) => {
         
         try {
             const user = await userData.getUserByUsername(userName);
-            const passwordsMatch = await bcrypt.compare(password, user.hashedPassword);
-            if (passwordsMatch) {
-                return done(null,user)
+            if (user) {
+                const passwordsMatch = await bcrypt.compare(password, user.hashedPassword);
+                if (passwordsMatch) {
+                    return done(null,user)
+                } else {
+                    return done(null,false,{message:'Invalid Password'});
+                }
             } else {
-                return done(null,false,{message:'Invalid Password'});
+                return done(null,false,{message:`User doesn't exist`});
             }
         } catch(e) {
-            return done(null,false,{message:'Invalid Password'});
+            console.log(`Error in authenticating ${e}`)
+            return done(null,false,{error:'Invalid Password'});
         }
     }))
     } ,

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userData = require("../data/users");
 
+
 router.get("/edit_profile", async (req, res) => {
   if(!req.cookies.AuthCookie){
     res.clearCookie("AuthCookie");
@@ -29,7 +30,7 @@ router.get("/edit_profile", async (req, res) => {
         res.render("user/edit_profile",{title:'Edit Profile', active, profile: profile})
       }
       else {
-        res.redirect('/login');
+        ('/login');
       }
     }
     else {
@@ -89,9 +90,7 @@ router.post("/edit_profile", async (req, res) => {
 
   try 
   {
-    console.log("check here" + JSON.stringify(newProfile))
     user = await userData.updateUserProfile(req.session.user._id, newProfile);
-    console.log("check here" + JSON.stringify(user))
     req.session.user = user;
     res.redirect('/user/view_profile');
   } 

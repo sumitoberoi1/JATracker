@@ -2,7 +2,29 @@
     <div class="jumbotron text-center">
         <h1>All Applications </h1>
     </div>
+    {{#if applications}}
+    <div class="container">
+
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button">Search</button>
+            </span>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Filter
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">A-Z</a>
+                    <a class="dropdown-item" href="#">Most Recent</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="clearfix"></div>
+    {{/if}}
     <div class="container">
         {{#if applications}}
         <ul class="list-group">

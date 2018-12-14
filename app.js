@@ -26,8 +26,7 @@ app.use(session({
 }));
 app.use(passport.initialize())
 app.use(passport.session());
-
-
+app.use(flash())
 const viewEngine = exphbs({
   // Specify helpers which are only registered on this instance.
   helpers: {
