@@ -37,10 +37,10 @@ module.exports.setup = function () {
     
 
 module.exports.ensureAuthenticated = (req,res,next) => {
-    if (req.isAuthenticated) {
-        next()
-    } else {
-        res.flash("info", "You must be logged in to see this page.")
+    if (req.isAuthenticated()) {
+        next();
+      } else {
+        req.flash("info", "You must be logged in to see this page.");
         res.redirect("/login");
-    }
+      }
 }

@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const applicationData = data.application;
 const multer = require("multer")
+const passPortConfig = require("../config/passportConfig")
 let active = {};
 const multerConfig = {
     storage: multer.diskStorage({
@@ -23,6 +24,8 @@ const multerObject = multer(multerConfig).fields([
     {
     name: 'coverletter', maxCount: 1
 }])
+
+router.use(passPortConfig.ensureAuthenticated)
 
 router.get("/new",(req,res) => {
     active = {newApplication:true}
@@ -55,8 +58,7 @@ router.delete("/:id",async (req,res) => {
     }
 })
 
-
-router.get("/", async (req, res) => {
+router.get("/",async (req, res) => {
     try {
       const applications= await applicationData.getAllApplications();
       res.render("applications/allApplications",{title:'All Applications',applications:applications})

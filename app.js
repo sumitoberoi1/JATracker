@@ -24,9 +24,9 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
+app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session());
-app.use(flash())
 const viewEngine = exphbs({
   // Specify helpers which are only registered on this instance.
   helpers: {
@@ -37,8 +37,8 @@ const viewEngine = exphbs({
 });
 app.engine("handlebars", viewEngine);
 app.set("view engine", "handlebars");
-configRoutes(app);
 
+configRoutes(app);
 app.listen(3000, () => {
   console.log("Your server is now listening on port 3000! Navigate to http://localhost:3000 to access it");
   if (process && process.send) process.send({done: true});
