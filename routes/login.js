@@ -3,7 +3,6 @@ const userData = require("../data/users");
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const passport = require("passport");
-
 let loginData = {layout:false,title:'Login'}
 router.get("/", async (req, res) => {
     if (req.cookies.AuthCookie) {
