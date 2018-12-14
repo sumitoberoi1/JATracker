@@ -97,6 +97,8 @@ async function addUserWorkExperience(id, newWorkExperience) {
 
 async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
   try {
+    console.log('resume', resume)
+    console.log('coverLetter', coverLetter)
     console.log(JSON.stringify(InfoToUpdate))
     const userCollection = await users();
     const currUser = await userCollection.findOneAndUpdate(
@@ -109,6 +111,7 @@ async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
                       }
                     }
                 );
+                console.log('curr:', currUser)
     if (currUser === null) {
         throw "Fail to update profile!";
     }

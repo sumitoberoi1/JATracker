@@ -100,6 +100,10 @@ router.get("/view_profile", async (req, res) => {
 
 router.post("/edit_profile", multerObject, async (req, res) => {
   let newProfile = {};
+  const id = req.session.user._id;
+  const userdata = await userData.getUserByID(id)
+  console.log(userdata.coverLetter)
+  console.log(userdata.resume)
   newProfile.fullName = req.body.fullName;
   newProfile.school = req.body.school;
   newProfile.skills = req.body.skills;
@@ -113,16 +117,22 @@ router.post("/edit_profile", multerObject, async (req, res) => {
         console.log(`In resume`, req.files.resume)
         resume = req.files.resume[0]
     }
+    else if (userdata.resume) {
+      resume = userdata.resume
+    }
     if (req.files.coverLetter && req.files.coverLetter.length > 0) {
-        console.log(`In coverLetter`, req.files.coverLetter)
+        console.log(`In coverLetter`)
         coverLetter = req.files.coverLetter[0]
     }
+    else if (userdata.coverLetter) {
+      coverLetter = userdata.coverLetter
+    }
   }
-  console.log('files:', req.files)
-  console.log('resume', resume)
-  console.log('coverLetter', coverLetter)
+  // console.log('files:', req.files)
   try 
   {
+    console.log('resume', resume)
+    console.log('coverLetter', coverLetter)
     // console.log("check here" + JSON.stringify(newProfile))
     user = await userData.updateUserProfile(req.session.user._id, newProfile, resume, coverLetter)  
     // console.log("check here" + JSON.stringify(user))
