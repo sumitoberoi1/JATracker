@@ -2,32 +2,34 @@
     <div class="signupForm">
         <form method="post" action="/signup" class="form-signin">
             <header>
-                <h2>Sign Up</h2>
+                <h1>Sign Up</h1>
             </header>
             {{#if error}}
-                <div class="alert alert-danger" role="alert">
-                    {{{error}}}
-                </div>
+            <div class="alert alert-danger" role="alert">
+                {{{error}}}
+            </div>
             {{/if}}
             <div class="form-group">
                 <label for="username">Username</label>
-                <input class="form-control" type="text" name="username" id="username" required>
+                <input class="form-control" type="text" name="username" id="username" placeholder="Username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input class="form-control" type="password" name="password" id="password" required>
+                <input class="form-control" type="password" name="password" id="password" placeholder="Password"
+                    required>
             </div>
             <div class="form-group">
                 <label for="repeatedPassword">Confirm Password</label>
-                <input class="form-control" type="password" name="repeatedPassword" id="repeatedPassword" required>
+                <input class="form-control" type="password" name="repeatedPassword" id="repeatedPassword" required
+                    placeholder="Repeat Password">
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input class="form-control" type="email" name="email" id="email" required>
+                <input class="form-control" type="email" name="email" id="email" placeholder="Email" required>
             </div>
 
-            <button id="signup"type="submit" class="btn btn-lg btn-primary btn-block">Sign up</button>
+            <button id="signup" type="submit" class="btn btn-lg btn-primary btn-block">Sign up</button>
             <a id="login" class="btn btn-lg btn-primary btn-block" href="/login">Login</a>
 
         </form>
