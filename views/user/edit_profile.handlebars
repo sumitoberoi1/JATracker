@@ -33,9 +33,6 @@
           <label for="resume" class="custom-file-label">{{#if profile.resume}}{{profile.resume.originalname}}
                                                                 {{else}}Upload Your Resume{{/if}}</label>
         </div>
-          {{#if profile.resume}}
-            <a href="{{profile.resume.path}}" download="{{profile.resume.originalname}}" class="card-link">Resume</a>
-            {{/if}}
         </div>
 
         <div class="form-group">
@@ -44,9 +41,6 @@
           <label for="coverLetter" class="custom-file-label">{{#if profile.coverLetter}}{{profile.coverLetter.originalname}}
                                                                 {{else}}Upload Your Cover Letter{{/if}}</label>
           </div>
-            {{#if profile.coverLetter}}
-            <a href="{{profile.coverLetter.path}}" download="{{profile.coverLetter.originalname}}" class="card-link">CoverLetter</a>
-            {{/if}}
         </div>
         <br/>
         <br/>

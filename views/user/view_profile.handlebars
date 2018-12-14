@@ -12,7 +12,13 @@
                 <p class="card-text">School: {{profile.profileschool}}</p>
                 <p class="card-text">Skills: {{profile.profile.skills}}</p>
                 <p class="card-text">Resume: {{#if profile.resume}}{{profile.resume.originalname}}{{else}}Not Upload Resume Yet{{/if}}</p>
+                {{#if profile.resume}}
+                <a href="{{profile.resume.path}}" download="{{profile.resume.originalname}}" class="card-link">Resume</a>
+                {{/if}}
                 <p class="card-text">Cover Letter: {{#if profile.coverLetter}}{{profile.coverLetter.originalname}}{{else}}Not Upload Cover Letter Yet{{/if}}</p>
+                {{#if profile.coverLetter}}
+                <a href="{{profile.coverLetter.path}}" download="{{profile.coverLetter.originalname}}" class="card-link">CoverLetter</a>
+                {{/if}}
 
 
                 <br/>
