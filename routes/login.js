@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
             } 
             catch (e) 
             {
-                res.render("login", {layout:false,error: e});
+                res.render("login", {layout:false,error: e,title:'Login'});
                 return;
             }
             req.session.user = user;
@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
         res.redirect('/user/edit_profile');
     }
     else {
-        res.render('login',{layout:false});
+        res.render('login',{layout:false, title:'Login'});
     }
 });
 
@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
         return;
 	}
     if (!user) {
-        res.render("login", {layout:false, error: "Username is not valid"});
+        res.render("login", {layout:false, error: "Username is not valid",title:'Login'});
         return;
     }
     const passwordsMatch = await bcrypt.compare(password, user.hashedPassword);
@@ -52,7 +52,7 @@ router.post("/", async (req, res) => {
       res.redirect('/user/view_profile');
     }
     else {
-      res.render("login", {error: "Incorrect login and/or password."});
+      res.render("login", {error: "Incorrect login and/or password.",title:'Login'});
       return;
     }
 

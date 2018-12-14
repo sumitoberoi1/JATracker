@@ -4,13 +4,6 @@ $('input[name="resume"]').change(function(e){
     $(this).next('.custom-file-label').html(fileName);
 });
 $('input[name="coverletter"]').change(function(e){
-<<<<<<< HEAD
-=======
-    const fileName = e.target.files[0].name;
-    $(this).next('.custom-file-label').html(fileName);
-});
-$('input[name="coverLetter"]').change(function(e){
->>>>>>> origin/profile/kexian
     const fileName = e.target.files[0].name;
     $(this).next('.custom-file-label').html(fileName);
 });
