@@ -54,7 +54,7 @@
             <input id="resume" type="file" accept=".doc,.docx,application/pdf" name="resume" class="custom-file-input"
               "{{resume.originalname}}" />
             <label for="resume" class="custom-file-label">
-              {{#if application}}
+              {{#if application.resume.originalname}}
               {{application.resume.originalname}}
               {{else}}
               Upload Resume used
@@ -66,7 +66,7 @@
           <div class="custom-file">
             <input id="coverletter" type="file" name="coverletter" class="custom-file-input" accept=".doc,.docx,application/pdf" />
             <label for="coverletter" class="custom-file-label">
-              {{#if application}}
+              {{#if application.coverletter.originalname}}
               {{application.coverletter.originalname}}
               {{else}}
               Upload Cover Letter used

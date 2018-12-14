@@ -1,4 +1,9 @@
 
+let applications;
+$( document ).ready(function() {
+    applications = "{{applications}}"
+    console.log(`Applications ${applications}`)
+})
 $('input[name="resume"]').change(function(e){
     const fileName = e.target.files[0].name;
     $(this).next('.custom-file-label').html(fileName);
@@ -10,7 +15,10 @@ $('input[name="coverletter"]').change(function(e){
 
 
 $( "#SearchApplicationButton" ).click(function() {
-    alert( "Handler for .click() called." );
+    const text = $( "#SeachApplicationSearchBar" ).val();
+    if (text.length > 0) {
+
+    }
 });
 
 function show_new_work_form() {

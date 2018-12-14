@@ -30,13 +30,22 @@ app.use(passport.session());
 const viewEngine = exphbs({
   // Specify helpers which are only registered on this instance.
   helpers: {
-      concat: function(str1,str2) { return str1 + str2}
+      concat: function(str1,str2) { return str1 + str2},
+      select: function (value, options) {
+        return options.fn()
+          .split('\n')
+          .map(function (v) {
+            var t = 'value="' + value + '"';
+            return RegExp(t).test(v) ? v.replace(t, t + ' selected="selected"') : v;
+          })
+          .join('\n');
+      }
   },
   defaultLayout: "main",
   partialsDir:["views/partials/"]
 });
 app.engine("handlebars", viewEngine);
-app.set("view engine", "handlebars");
+app.set("view engine", "handlebars"); 
 
 configRoutes(app);
 app.listen(3000, () => {

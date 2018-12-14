@@ -72,7 +72,6 @@ router.get("/",async (req, res) => {
 
 router.post("/",
 multerObject,async (req,res) => {
-    console.log(`I came here in POST`)
     const applicationPostData = req.body;
     const {
         companyName,
