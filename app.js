@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(session({
   secret:keys.sessionSecret ,
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
 }));
 const viewEngine = exphbs({
   // Specify helpers which are only registered on this instance.

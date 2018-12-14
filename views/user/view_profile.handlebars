@@ -1,68 +1,65 @@
 <article>
-  <div class="jumbotron text-center">
-    <h1>View Profile</h1>
-  </div>
-  <div class="container">
-
-  <li class="list-group-item">
-    <div class="card">
-        <div class="card-header">
-            <h2 class="card-title">My Profile</h2>
-        </div>
-        <div class="card-body">
-            <p class="card-text">Full Name: {{profile.fullName}}</p>
-            <p class="card-text">School: {{profile.school}}</p>
-            <p class="card-text">Skills: {{profile.skills}}</p>
-            <p class="card-text">Present Job: {{profile.presentJob}}</p>
-            <p class="card-text">Path to Resume: {{profile.resume}}</p>
-            <p class="card-text">Path to Cover Letter: {{profile.coverLetter}}</p>
-            <br/>
-            <h4>Work Experience</h4>
-            <br/>
-            <div class="container">
-                <div class="span8">
-                    {{#unless profile.workExperience}}
-                        <p>Add Work Experience by clicking EDIT Profile...</p>
-                    {{/unless}} 
-                    {{#each profile.workExperience}}
-                    <h5>{{this.jobTittle}}</h5>
-                    <p>Employer: {{this.employer}}</p>
-                    <p>{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
-                    <p>{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
-                    <p>{{#if this.location}}Location: {{this.location}}{{/if}}</p>
-                    <p>{{#if this.description}}Description: {{this.description}}{{/if}}</p>
-                    <div class="clear"></div>
-                    <hr>
-                    {{/each}}
-                </div>
-            </div>
-            <br/>
-
-            <h4>Projects</h4>
-            <br/>
-            <div class="container">
-                <div class="span8">
-                    {{#unless profile.workExperience}}
-                        <p>Add Projects by clicking EDIT Profile...</p>
-                    {{/unless}} 
-                    {{#each profile.projects}}
-                    <h5>{{this.name}}</h5>
-                    <p>{{#if this.Position}}Position: {{this.position}}{{/if}}</p>
-                    <p>{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
-                    <p>{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
-                    <p>{{#if this.description}}Description: {{this.description}}{{/if}}</p>
-                    <div class="clear"></div>
-                    <hr>
-                    {{/each}}
-                </div>
-            </div>
-            <br/>
-        </div>
+    <div class="jumbotron text-center">
+        <h1>View Profile</h1>
     </div>
-</li>
-<br/>
-<br/>
-<a class='ng-button' href="/user/edit_profile">Edit Profile</a>
-       
-</div>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">My Profile</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Full Name: {{profile.fullName}}</p>
+                <p class="card-text">School: {{profile.school}}</p>
+                <p class="card-text">Skills: {{profile.skills}}</p>
+                <p class="card-text">Present Job: {{profile.presentJob}}</p>
+                <p class="card-text">Path to Resume: {{profile.resume}}</p>
+                <p class="card-text">Path to Cover Letter: {{profile.coverLetter}}</p>
+                <br />
+                <h4>Work Experience</h4>
+                <br />
+                <div class="container">
+                    <div class="span8">
+                        {{#unless profile.workExperience}}
+                        <p>Add Work Experience by clicking EDIT Profile...</p>
+                        {{/unless}}
+                        {{#each profile.workExperience}}
+                        <h5>{{this.jobTittle}}</h5>
+                        <p>Employer: {{this.employer}}</p>
+                        <p>{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
+                        <p>{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
+                        <p>{{#if this.location}}Location: {{this.location}}{{/if}}</p>
+                        <p>{{#if this.description}}Description: {{this.description}}{{/if}}</p>
+                        <div class="clear"></div>
+                        <hr>
+                        {{/each}}
+                    </div>
+                </div>
+                <br />
+
+                <h4>Projects</h4>
+                <br />
+                <div class="container">
+                    <div class="span8">
+                        {{#unless profile.workExperience}}
+                        <p>Add Projects by clicking EDIT Profile...</p>
+                        {{/unless}}
+                        {{#each profile.projects}}
+                        <h5>{{this.name}}</h5>
+                        <p>{{#if this.Position}}Position: {{this.position}}{{/if}}</p>
+                        <p>{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
+                        <p>{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
+                        <p>{{#if this.description}}Description: {{this.description}}{{/if}}</p>
+                        <div class="clear"></div>
+                        <hr>
+                        {{/each}}
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <a href="/user/edit_profile" class="btn btn-primary btn-block">Edit Profile</a>
+    </div>
 </article>
