@@ -1,80 +1,27 @@
 const express = require("express");
 const router = express.Router();
 const userData = require("../data/users");
+const passPortConfig = require("../config/passportConfig")
+router.use(passPortConfig.ensureAuthenticated)
 
 
 router.get("/edit_profile", async (req, res) => {
-  if(!req.cookies.AuthCookie){
-    res.clearCookie("AuthCookie");
-    res.redirect('/login');
-    return;
-  }
-  else {
-    if (!req.session.user) {
-      let user = null;
-      try 
-      {
-        console.log("auth" + req.cookies.AuthCookie)
-        user = await userData.getUserByID(req.cookies.AuthCookie);
-        console.log(user)
-      } 
-      catch (e) 
-      {
-          res.render("login", {error: e});
-          return;
-      }
-      if (user) {
-        req.session.user = user;
+    const user = req.user
+    if (user) {
         let profile = user.profile;
-        active = {profile:true}
+        const active = {profile:true}
         res.render("user/edit_profile",{title:'Edit Profile', active, profile: profile})
-      }
-      else {
-        ('/login');
-      }
     }
-    else {
-      let profile = req.session.user.profile;
-      active = {profile:true}
-      res.render("user/edit_profile", {title:'Edit Profile', active, profile: profile})
-    }
-  }
 });
 
+
 router.get("/view_profile", async (req, res) => {
-  if(!req.cookies.AuthCookie){
-    res.redirect('/login');
-    return;
-  }
-  else {
-    if (!req.session.user) {
-      let user = null;
-      try 
-      {
-        user = await userData.getUserByID(req.cookies.AuthCookie);
-      } 
-      catch (e) 
-      {
-        res.redirect('/login');
-        return;
-      }
-      if (user) {
-        req.session.user = user;
-        let profile = user.profile;
-        active = {profile:true}
-        res.render("user/view_profile", {title:'View Profile', active, profile: profile})
-      }
-      else {
-        res.redirect('/login');
-      }
-    }
-    else {
-      let profile = req.session.user.profile;
-      console.log(JSON.stringify(profile))
-      active = {profile:true}
+    const user = req.user
+    if (user) {
+      let profile = user.profile;
+      const active = {profile:true}
       res.render("user/view_profile", {title:'View Profile', active, profile: profile})
     }
-  }
 });
 
 router.post("/edit_profile", async (req, res) => {
