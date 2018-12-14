@@ -14,17 +14,17 @@ const routes = app => {
           try 
           {
               user = await userData.getUserByID(req.cookies.AuthCookie);
-              console.log("returned user" + user)
               req.session.user = user;
           } 
           catch (e) 
           {
-              res.render("login", {error: e});
-              return;
+            res.clearCookie('AuthCookie');
+            res.render("login", {error: e});
+            return;
           }
       }
       console.log("AuthCookie" + req.cookies.AuthCookie)
-      console.log("req.session.user" + req.session.user)
+      console.log("req.session.user" + JSON.stringify(req.session.user))
       res.redirect('/user/view_profile');
     }
     else {

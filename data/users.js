@@ -15,6 +15,9 @@ async function getUserByID(_id)
     }
     let userCollection = await users();
     let user = await userCollection.findOne({_id: _id});
+    if (!user) {
+      throw "Invalid AuthCookie"
+    }
     return user;
   } 
   catch (e) {
@@ -59,18 +62,44 @@ async function signUp(username, password, email)
       coverLetter: null,
       workExperience: [],
       projects: []
-    },
+    }
   };
-  console.log("new user:" + newUser)
   const createdNewUser = await userCollection.insertOne(newUser);
   if (createdNewUser.insertedCount === 0) throw "Fail to create new user!";
   return createdNewUser;
 }
 
-async function updateUser(id, InfoToUpdate) {
+
+async function addUserWorkExperience(id, newWorkExperience) {
   try {
     const userCollection = await users();
-    currUser = userCollection.findOneAndUpdate(
+    newWorkExperience._id = uuid();
+    const currUser = await userCollection.findOneAndUpdate(
+                    { "_id" : id},
+                    { $push: 
+                      {"profile.workExperience": newWorkExperience}
+                    },
+                    {
+                      safe: true,
+                      upsert: true
+                    }
+    );
+
+    if (currUser === null) {
+        throw "Fail to update profile!";
+    }
+    return await this.getUserByID(id);
+  }
+  catch(error) {
+      throw error;
+  }
+}
+
+async function updateUserProfile(id, InfoToUpdate) {
+  try {
+    console.log(JSON.stringify(InfoToUpdate))
+    const userCollection = await users();
+    const currUser = await userCollection.findOneAndUpdate(
                     { "_id" :  id},
                     { $set: 
                       { "profile" : InfoToUpdate}
@@ -86,23 +115,21 @@ async function updateUser(id, InfoToUpdate) {
   }
 }
 
-async function removeWorkExperience(id, workid)
-{
-  const user = await this.getUserByID(id)
-  const newWorkEXperience = user.profile.workExperience
-  console.log(newWorkEXperience.length)
-  for(var i=0;i<newWorkEXperience.length;i++){
-    if(newWorkEXperience[i].workID === workid)
-    newWorkEXperience.split(i, 1)
-  }
+
+async function addUserProject(id, newProject) {
   try {
     const userCollection = await users();
-    currUser = userCollection.findOneAndUpdate(
-      { "_id" :  id},
-      { $set: 
-        { "profile" : newWorkEXperience}
-      }
-  );
+    newProject._id = uuid();
+    const currUser = await userCollection.findOneAndUpdate(
+                    { "_id" : id},
+                    { $push: 
+                      {"profile.projects": newProject}
+                    },
+                    {
+                      safe: true,
+                      upsert: true
+                    }
+    );
     if (currUser === null) {
         throw "Fail to update profile!";
     }
@@ -113,23 +140,15 @@ async function removeWorkExperience(id, workid)
   }
 }
 
-async function removeProject(id, projectid)
-{
-  const user = await this.getUserByID(id)
-  const newProject = user.profile.projects
-  console.log(newProject.length)
-  for(var i=0;i<newProject.length;i++){
-    if(newProject[i].projectID === projectid)
-    newProject.split(i, 1)
-  }
+async function editUserWorkExperience(id, workExperience) {
   try {
     const userCollection = await users();
-    currUser = userCollection.findOneAndUpdate(
-      { "_id" :  id},
-      { $set: 
-        { "profile" : newProject}
-      }
-  );
+    const currUser = await userCollection.findOneAndUpdate(
+                    { "_id" :  id},
+                    { $set: 
+                      { "profile.workExperience" : workExperience}
+                    }
+                );
     if (currUser === null) {
         throw "Fail to update profile!";
     }
@@ -140,25 +159,15 @@ async function removeProject(id, projectid)
   }
 }
 
-async function addWorkexperience(id, newWorkExperience) 
-{
-  const user = await this.getUserByID(id)
-  const newworkExperience = user.profile
-  newworkExperience.workExperience.push(newWorkExperience)
-  const ne = user.profile.workExperience
-  console.log(ne.length)
-  for(var i=0;i<ne.length;i++){
-    if(ne[i].workID === workid)
-    ne.split(i, 1)
-  }
+async function editUserProject(id, projects) {
   try {
     const userCollection = await users();
-    currUser = userCollection.findOneAndUpdate(
-      { "_id" :  id},
-      { $set: 
-        { "profile" : newworkExperience}
-      }
-  );
+    const currUser = await userCollection.findOneAndUpdate(
+                    { "_id" :  id},
+                    { $set: 
+                      { "profile.projects" : projects}
+                    }
+                );
     if (currUser === null) {
         throw "Fail to update profile!";
     }
@@ -169,23 +178,39 @@ async function addWorkexperience(id, newWorkExperience)
   }
 }
 
-async function addProject(id, newProject) 
-{
-  const user = await this.getUserByID(id)
-  const project = user.profile
-  project.projects.push(newProject)
+
+async function deleteWorkExperience(userId, workExperienceId) {
   try {
     const userCollection = await users();
-    currUser = userCollection.findOneAndUpdate(
-      { "_id" :  id},
-      { $set: 
-        { "profile" : project}
-      }
-  );
+    const currUser = await userCollection.findOneAndUpdate(
+                    { "_id" : userId},
+                    { $pull: 
+                      {"profile.workExperience": {"_id": workExperienceId}}
+                    }
+    );
     if (currUser === null) {
-        throw "Fail to update profile!";
+        throw "Fail to delete profile!";
     }
-    return await this.getUserByID(id);
+    return await this.getUserByID(userId);
+  }
+  catch(error) {
+      throw error;
+  }
+}
+
+async function deleteProject(userId, projectId) {
+  try {
+    const userCollection = await users();
+    const currUser = await userCollection.findOneAndUpdate(
+                    { "_id" : userId},
+                    { $pull: 
+                      {"profile.projects": {"_id": projectId}}
+                    }
+    );
+    if (currUser === null) {
+        throw "Fail to delete profile!";
+    }
+    return await this.getUserByID(userId);
   }
   catch(error) {
       throw error;
@@ -196,9 +221,11 @@ module.exports = {
   getUserByUsername,
   getUserByID,
   signUp,
-  updateUser,
-  addProject,
-  addWorkexperience,
-  removeProject,
-  removeWorkExperience
+  updateUserProfile,
+  addUserWorkExperience,
+  addUserProject,
+  editUserWorkExperience,
+  editUserProject,
+  deleteWorkExperience,
+  deleteProject
 };
