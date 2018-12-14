@@ -10,24 +10,9 @@ const passportConfig = require('../config/passportConfig');
 const routes = app => {
   passportConfig.setup()
   app.get('/', async function (req, res) {
-    if (req.cookies.AuthCookie) {
-      if (!req.session.user) {
-          let user = null;
-          try 
-          {
-              user = await userData.getUserByID(req.cookies.AuthCookie);
-              req.session.user = user;
-          } 
-          catch (e) 
-          {
-            res.clearCookie('AuthCookie');
-            res.render("login", {error: e});
-            return;
-          }
-      }
+    if (req.user) {
       res.redirect('/application');
-    }
-    else {
+    } else {
       res.redirect('/login');
     }
   });

@@ -4,7 +4,6 @@ const userData = require("../data/users");
 const passPortConfig = require("../config/passportConfig")
 router.use(passPortConfig.ensureAuthenticated)
 
-
 router.get("/edit_profile", async (req, res) => {
     const user = req.user
     if (user) {
@@ -33,12 +32,11 @@ router.post("/edit_profile", async (req, res) => {
   newProfile.resume = req.body.resume;
   newProfile.coverLetter = req.body.coverLetter;
   newProfile.workExperience = req.session.user.profile.workExperience;
-  newProfile.projects = req.session.user.profile.projects;
-
+  newProfile.projects = req.session.user.profile.projects; 
   try 
   {
-    user = await userData.updateUserProfile(req.session.user._id, newProfile);
-    req.session.user = user;
+    console.log(`Req user ${JSON.stringify(req.user)}`)
+    await userData.updateUserProfile(req.user.id, newProfile);
     res.redirect('/user/view_profile');
   } 
   catch (e) 
