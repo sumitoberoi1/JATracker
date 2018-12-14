@@ -2,6 +2,27 @@ const express = require("express");
 const router = express.Router();
 const userData = require("../data/users");
 const uuid = require('uuid/v4');
+const multer = require("multer");
+
+const multerConfig = {
+    storage: multer.diskStorage({
+        destination: function(req, file, next){
+          next(null, __dirname + '/../userFiles');
+        },
+        filename: function(req, file, next){
+          console.log('file', file);
+          const ext = file.mimetype.split('/')[1];
+          next(null, file.fieldname + '-' + Date.now() + '.'+  ext);
+        }
+      })
+}
+const multerObject = multer(multerConfig).fields([
+    {
+    name: 'resume', maxCount: 1
+    }, 
+    {
+    name: 'coverLetter', maxCount: 1
+}])
 
 router.get("/edit_profile", async (req, res) => {
   if(!req.cookies.AuthCookie){
@@ -14,9 +35,9 @@ router.get("/edit_profile", async (req, res) => {
       let user = null;
       try 
       {
-        console.log("auth" + req.cookies.AuthCookie)
+        // console.log("auth" + req.cookies.AuthCookie)
         user = await userData.getUserByID(req.cookies.AuthCookie);
-        console.log(user)
+        // console.log(user)
       } 
       catch (e) 
       {
@@ -25,7 +46,7 @@ router.get("/edit_profile", async (req, res) => {
       }
       if (user) {
         req.session.user = user;
-        let profile = user.profile;
+        let profile = user;
         active = {profile:true}
         res.render("user/edit_profile",{title:'Edit Profile', active, profile: profile})
       }
@@ -34,7 +55,7 @@ router.get("/edit_profile", async (req, res) => {
       }
     }
     else {
-      let profile = req.session.user.profile;
+      let profile = req.session.user;
       active = {profile:true}
       res.render("user/edit_profile", {title:'Edit Profile', active, profile: profile})
     }
@@ -60,7 +81,7 @@ router.get("/view_profile", async (req, res) => {
       }
       if (user) {
         req.session.user = user;
-        let profile = user.profile;
+        let profile = user;
         active = {profile:true}
         res.render("user/view_profile", {title:'View Profile', active, profile: profile})
       }
@@ -69,7 +90,7 @@ router.get("/view_profile", async (req, res) => {
       }
     }
     else {
-      let profile = req.session.user.profile;
+      let profile = req.session.user;
       console.log(JSON.stringify(profile))
       active = {profile:true}
       res.render("user/view_profile", {title:'View Profile', active, profile: profile})
@@ -77,23 +98,36 @@ router.get("/view_profile", async (req, res) => {
   }
 });
 
-router.post("/edit_profile", async (req, res) => {
+router.post("/edit_profile", multerObject, async (req, res) => {
   let newProfile = {};
   newProfile.fullName = req.body.fullName;
   newProfile.school = req.body.school;
   newProfile.skills = req.body.skills;
   newProfile.presentJob = req.body.presentJob;
-  newProfile.resume = req.body.resume;
-  newProfile.coverLetter = req.body.coverLetter;
   newProfile.workExperience = req.session.user.profile.workExperience;
   newProfile.projects = req.session.user.profile.projects;
-
+  let resume = null
+  let coverLetter = null
+  if (req.files) {
+    if (req.files.resume && req.files.resume.length > 0) {
+        console.log(`In resume`, req.files.resume)
+        resume = req.files.resume[0]
+    }
+    if (req.files.coverLetter && req.files.coverLetter.length > 0) {
+        console.log(`In coverLetter`, req.files.coverLetter)
+        coverLetter = req.files.coverLetter[0]
+    }
+  }
+  console.log('files:', req.files)
+  console.log('resume', resume)
+  console.log('coverLetter', coverLetter)
   try 
   {
-    console.log("check here" + JSON.stringify(newProfile))
-    user = await userData.updateUserProfile(req.session.user._id, newProfile);
-    console.log("check here" + JSON.stringify(user))
+    // console.log("check here" + JSON.stringify(newProfile))
+    user = await userData.updateUserProfile(req.session.user._id, newProfile, resume, coverLetter)  
+    // console.log("check here" + JSON.stringify(user))
     req.session.user = user;
+    // console.log("originalname", req.files.resume[0])
     res.redirect('/user/view_profile');
   } 
   catch (e) 
@@ -253,35 +287,35 @@ router.get("/profile/project/edit/:id", async (req, res) => {
 });
 
 
-router.post("/profile/work_experience/edit/:id", async (req, res) => {
-  let updatedWorkExperience = {};
-  updatedWorkExperience._id = req.params.id;
-  updatedWorkExperience.jobTittle = req.body.jobTittle;
-  updatedWorkExperience.employer = req.body.employer;
-  updatedWorkExperience.startDate = req.body.startDate;
-  updatedWorkExperience.endDate = req.body.endDate;
-  updatedWorkExperience.location = req.body.location;
-  updatedWorkExperience.description = req.body.description;
-  try 
-  {
-    let workExperience = req.session.user.profile.workExperience;
-    for(var i=0; i < workExperience.length; i++){
-      if(workExperience[i]._id === req.params.id) {
-        workExperience[i] = updatedWorkExperience;
-      }
-    }
-    console.log(JSON.stringify(workExperience))
-    user = await userData.editUserWorkExperience(req.session.user._id, workExperience);
-    req.session.user = user;
-    res.redirect('/user/edit_profile');
-  } 
-  catch (e) 
-  {
-    console.log(e)
-    res.status(500).json({ error: e });
-    return;
-  }
-});
+// router.post("/profile/work_experience/edit/:id", async (req, res) => {
+//   let updatedWorkExperience = {};
+//   updatedWorkExperience._id = req.params.id;
+//   updatedWorkExperience.jobTittle = req.body.jobTittle;
+//   updatedWorkExperience.employer = req.body.employer;
+//   updatedWorkExperience.startDate = req.body.startDate;
+//   updatedWorkExperience.endDate = req.body.endDate;
+//   updatedWorkExperience.location = req.body.location;
+//   updatedWorkExperience.description = req.body.description;
+//   try 
+//   {
+//     let workExperience = req.session.user.profile.workExperience;
+//     for(var i=0; i < workExperience.length; i++){
+//       if(workExperience[i]._id === req.params.id) {
+//         workExperience[i] = updatedWorkExperience;
+//       }
+//     }
+//     console.log(JSON.stringify(workExperience))
+//     user = await userData.editUserWorkExperience(req.session.user._id, workExperience);
+//     req.session.user = user;
+//     res.redirect('/user/edit_profile');
+//   } 
+//   catch (e) 
+//   {
+//     console.log(e)
+//     res.status(500).json({ error: e });
+//     return;
+//   }
+// });
 
 
 router.post("/profile/project/edit/:id", async (req, res) => {

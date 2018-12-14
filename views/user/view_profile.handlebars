@@ -3,26 +3,27 @@
         <h1>View Profile</h1>
     </div>
     <div class="container">
-    <li class="list-group-item">
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title">My Profile</h2>
             </div>
             <div class="card-body">
-                <p class="card-text">Full Name: {{profile.fullName}}</p>
-                <p class="card-text">School: {{profile.school}}</p>
-                <p class="card-text">Skills: {{profile.skills}}</p>
-                <p class="card-text">Present Job: {{profile.presentJob}}</p>
-                <p class="card-text">Path to Resume: {{profile.resume}}</p>
-                <p class="card-text">Path to Cover Letter: {{profile.coverLetter}}</p>
+                <p class="card-text">Full Name: {{profile.profile.fullName}}</p>
+                <p class="card-text">School: {{profile.profileschool}}</p>
+                <p class="card-text">Skills: {{profile.profile.skills}}</p>
+                <p class="card-text">Resume: {{#if profile.resume}}{{profile.resume.originalname}}{{else}}Not Upload Resume Yet{{/if}}</p>
+                <p class="card-text">Resume: {{#if profile.coverLetter}}{{profile.coverLetter.originalname}}{{else}}Not Upload Cover Letter Yet{{/if}}</p>
+
+
                 <br/>
                 <h2>Work Experience</h2>
                 <br/>
-                {{#unless profile.workExperience}}
+                {{#unless profile.profile.workExperience}}
                 <p>Add Work Experience by clicking EDIT Profile...</p>
                 {{/unless}} 
-                {{#each profile.workExperience}}
+                {{#each profile.profile.workExperience}}
                 <h3 class="card-subtitle mb-2 text-mutedcard-subtitle mb-2 text-muted">{{this.jobTittle}}</h3>
+                <p class="card-text">{{#if this.employer}}Employer: {{this.employer}}{{/if}}</p>
                 <p class="card-text">{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
                 <p class="card-text">{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
                 <p class="card-text">{{#if this.location}}Location: {{this.location}}{{/if}}</p>
@@ -34,10 +35,10 @@
 
                 <h2>Projects</h2>
                 <br/>
-                {{#unless profile.workExperience}}
+                {{#unless profile.profile.projects}}
                 <p>Add Projects by clicking EDIT Profile...</p>
                 {{/unless}} 
-                {{#each profile.projects}}
+                {{#each profile.profile.projects}}
                 <h3 class="card-subtitle mb-2 text-mutedcard-subtitle mb-2 text-muted">{{this.name}}</h3>
                 <p class="card-text">{{#if this.Position}}Position: {{this.position}}{{/if}}</p>
                 <p class="card-text">{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
@@ -49,7 +50,6 @@
                 <br/>
             </div>
         </div>
-    </li>
     <br/>
     <br/>
     <a class='ng-button' href="/user/edit_profile">Edit Profile</a>

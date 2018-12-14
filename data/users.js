@@ -58,11 +58,11 @@ async function signUp(username, password, email)
       school: null,
       skills: null,
       presentJob: null,
-      resume: null,
-      coverLetter: null,
       workExperience: [],
       projects: []
-    }
+    },
+    resume: null,
+    coverLetter: null,
   };
   const createdNewUser = await userCollection.insertOne(newUser);
   if (createdNewUser.insertedCount === 0) throw "Fail to create new user!";
@@ -95,14 +95,18 @@ async function addUserWorkExperience(id, newWorkExperience) {
   }
 }
 
-async function updateUserProfile(id, InfoToUpdate) {
+async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
   try {
     console.log(JSON.stringify(InfoToUpdate))
     const userCollection = await users();
     const currUser = await userCollection.findOneAndUpdate(
                     { "_id" :  id},
                     { $set: 
-                      { "profile" : InfoToUpdate}
+                      {
+                        "profile" : InfoToUpdate,
+                        "resume": resume,
+                        "coverLetter": coverLetter
+                      }
                     }
                 );
     if (currUser === null) {
