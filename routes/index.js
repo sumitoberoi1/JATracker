@@ -9,7 +9,8 @@ const passport = require("passport")
 const passportConfig = require('../config/passportConfig');
 const routes = app => {
   passportConfig.setup()
-  app.get('/', async function (req, res) {
+  app.get('/',passportConfig.ensureAuthenticated, async function (req, res) {
+    console.log(`Req user ${req.user}`)
     if (req.user) {
       res.redirect('/application');
     } else {
