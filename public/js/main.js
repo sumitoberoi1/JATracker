@@ -9,6 +9,9 @@ $('input[name="coverletter"]').change(function(e){
 });
 
 
+$( "#SearchApplicationButton" ).click(function() {
+    alert( "Handler for .click() called." );
+});
 
 function show_new_work_form() {
     document.getElementById('hiddenNewWorkForm').style.display = "block";
