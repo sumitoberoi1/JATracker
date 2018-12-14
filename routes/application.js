@@ -114,8 +114,8 @@ multerObject,async (req,res) => {
 })
 
 
-router.put("/:id",multerObject,async (req, res) => {
-    const id = req.params.id
+router.post("/editApplication",multerObject,async (req, res) => {
+    const id = req.body.id
     const application = await applicationData.getApplicationByID(id)
     console.log(`Here in applicatioonnEDIt`)
     try {

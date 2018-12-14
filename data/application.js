@@ -33,11 +33,23 @@ const editApplication = async (id, updatedApplicationData) => {
     const query = {
         _id: id
     };
+    const {companyName,role,applyDate,applicationStatus,
+        jobSource,resume,coverletter,notes} = updatedApplicationData
+    const editApplication = {
+        companyName: companyName,
+        jobrole: role,
+        appliedDate: applyDate,
+        applicationStatus:applicationStatus,
+        jobSource:jobSource,
+        resume:resume,
+        coverletter:coverletter,
+        notes:notes
+    }
     const applicationCollection = await applications();
     await applicationCollection.updateOne(query, {
-        $set: updatedRecipeData
+        $set: editApplication
     });
-    return await getRecipeByID(id);
+    return await getApplicationByID(id);
 }
 
 const getAllApplications = async() => {
