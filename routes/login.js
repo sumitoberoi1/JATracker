@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
             } 
             catch (e) 
             {
-                res.render("login", {error: e});
+                res.render("login", {layout:false,error: e});
                 return;
             }
             req.session.user = user;
@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
         res.redirect('/user/edit_profile');
     }
     else {
-        res.render('login');
+        res.render('login',{layout:false});
     }
 });
 
@@ -36,11 +36,11 @@ router.post("/", async (req, res) => {
     } 
     catch (e) 
     {
-        res.render("login", {error: e});
+        res.render("login", {error: e, layout:false});
         return;
 	}
     if (!user) {
-        res.render("login", {error: "Username is not valid"});
+        res.render("login", {layout:false, error: "Username is not valid"});
         return;
     }
     const passwordsMatch = await bcrypt.compare(password, user.hashedPassword);

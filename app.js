@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
 const helmet = require("helmet");
+const passport = require("passport");
 app.use(logger("short"));
 app.use("/public", static);
 app.use(helmet.xssFilter());
@@ -25,7 +26,8 @@ const viewEngine = exphbs({
   helpers: {
       concat: function(str1,str2) { return str1 + str2}
   },
-  defaultLayout: "main"
+  defaultLayout: "main",
+  partialsDir:["views/partials/"]
 });
 
 app.engine("handlebars", viewEngine);
