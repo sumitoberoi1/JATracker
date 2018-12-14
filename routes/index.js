@@ -23,8 +23,6 @@ const routes = app => {
             return;
           }
       }
-      console.log("AuthCookie" + req.cookies.AuthCookie)
-      console.log("req.session.user" + JSON.stringify(req.session.user))
       res.redirect('/application');
     }
     else {

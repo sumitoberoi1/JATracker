@@ -4,8 +4,6 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const uuid = require('uuid/v4');
 
-
-
 async function getUserByID(_id) 
 {
   try 

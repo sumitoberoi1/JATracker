@@ -41,6 +41,7 @@ router.post("/", async (req, res) => {
     }
     try {
         signup = await userData.signUp(username, password, email);
+        console.log(`Success signedUp`)
         res.redirect("/user/edit_profile");
     } catch (e) {
         signUpData.error = e

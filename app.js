@@ -10,10 +10,12 @@ const exphbs = require("express-handlebars");
 const helmet = require("helmet");
 const passport = require("passport");
 const keys = require('./config/keys')
+//const flash = require("connect-flash");
+const passportConfig = require('./config/passportConfig');
 app.use(logger("short"));
+//passportConfig.setup()
 app.use("/public", static);
 app.use(helmet.xssFilter());
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -22,6 +24,11 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
+//app.use(flash)
+// app.use(passport.initialize())
+// app.use(passport.session());
+
+
 const viewEngine = exphbs({
   // Specify helpers which are only registered on this instance.
   helpers: {
@@ -30,7 +37,6 @@ const viewEngine = exphbs({
   defaultLayout: "main",
   partialsDir:["views/partials/"]
 });
-
 app.engine("handlebars", viewEngine);
 app.set("view engine", "handlebars");
 configRoutes(app);
