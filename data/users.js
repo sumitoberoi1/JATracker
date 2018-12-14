@@ -42,6 +42,22 @@ async function getUserByUsername(username)
   }
 }
 
+async function getUserByEmail(email) 
+{
+  try 
+  {
+    if (!email || typeof email != 'string') {
+        throw "email not vaild";
+    }
+    let userCollection = await users();
+    let user = await userCollection.findOne({email: email});
+    return user;
+  } 
+  catch (e) {
+  throw e;
+  }
+}
+
 
 async function signUp(username, password, email) 
 {
@@ -227,5 +243,6 @@ module.exports = {
   editUserWorkExperience,
   editUserProject,
   deleteWorkExperience,
-  deleteProject
+  deleteProject,
+  getUserByEmail
 };
