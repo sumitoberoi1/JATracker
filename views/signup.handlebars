@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 {{> headPartial}}
+
 <article>
 
     <div class="signupForm">
-        <form method="post" action="/signup" class="form-signin" id="signup">
+        <form method="post" action="/signup" class="form-signin" id="signupform">
             <header>
                 <h1>Sign Up</h1>
             </header>
@@ -36,7 +37,7 @@
                 <input class="form-control" type="email" name="email" id="email" placeholder="Email" required>
             </div>
 
-            <button id="signup" type="submit" class="btn btn-lg btn-primary btn-block">Sign up</button>
+            <button id="signupbtn" type="submit" class="btn btn-lg btn-primary btn-block" disabled="false">Sign up</button>
             <a id="login" class="btn btn-lg btn-secondary btn-block" href="/login">Go back to Login</a>
 
         </form>
