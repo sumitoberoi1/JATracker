@@ -17,6 +17,7 @@ const multerConfig = {
         }
       })
 }
+
 const multerObject = multer(multerConfig).fields([
     {
     name: 'resume', maxCount: 1
@@ -37,6 +38,18 @@ router.get("/edit/:id",async(req,res) => {
     active = {newApplication:true}
     const application = await applicationData.getApplicationByID(id)
     res.render("applications/new",{title:'Edit Application',application:application,active})
+});
+
+router.get("/all",async(req,res) => {
+    try {
+        const applications= await applicationData.getAllApplications();
+        res.json({'applications':applications})
+      } catch (e) {
+      console.log(`Error ${e}`)
+        res.status(500).json({
+          error: e
+      });
+    }
 });
 
 router.get("/:id",async (req,res) => {
@@ -63,7 +76,7 @@ router.delete("/:id",async (req,res) => {
 
 router.get("/",async (req, res) => {
     try {
-    active = {allApplications:true}
+      active = {allApplications:true}
       const applications= await applicationData.getAllApplications();
       res.render("applications/allApplications",{title:'All Applications',applications:applications,active})
     } catch (e) {

@@ -10,26 +10,31 @@
     {{#if applications}}
     <div class="container">
         <div class="input-group">
-            <input type="text" id="SeachApplicationSearchBar" class="form-control m-1" placeholder="Search for...">
-            <span class="input-group-btn m-1">
-                <button class="btn btn-primary" type="button" id="SearchApplicationButton">Search</button>
-            </span>
+            <input type="text" id="SeachApplicationSearchBar" class="form-control m-1" placeholder="Search for Role or companyName..">
             <div class="dropdown m-1">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Filter
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">A-Z</a>
-                    <a class="dropdown-item" href="#">Most Recent</a>
-
+                <div class="dropdown-menu" id="sort-dropdown" aria-labelledby="dropdownMenuButton">
+                    <option class="dropdown-item">Recent Apply Date First</option>
+                    <option class="dropdown-item" value="Not Submitted">Not Submitted</option>
+                    <option class="dropdown-item" class="dropdown-item" value="Under Review">Under Review</option>
+                    <option class="dropdown-item" value="First Round">First Round</option>
+                    <option class="dropdown-item" value="Second Round">Second Round</option>
+                    <option class="dropdown-item" value="Third Round">Third Round</option>
+                    <option class="dropdown-item" value="Post Third Round">Post Third Round</option>
+                    <option class="dropdown-item" value="Offer Recieved">Offer Recieved</option>
+                    <option class="dropdown-item" value="No Offer">No Offer</option>
+                    <option class="dropdown-item" value="Pending">Pending</option>
+                    <option class="dropdown-item" value="Offer Rejected">Offer Rejected</option>
                 </div>
             </div>
         </div>
     </div>
     <div class="clearfix"></div>
     {{/if}}
-    <div class="container">
+    <div class="container" id='allApplicationContainer'>
         {{#if applications}}
         <ul class="list-group">
             {{#each applications}}
@@ -51,3 +56,4 @@
         {{/if}}
     </div>
 </article>
+<script src="/public/js/allApplicatitons.js"></script>

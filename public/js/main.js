@@ -26,6 +26,7 @@ $('#SearchApplicationButton').click((e) => {
     const context = {title:'new title'}
     const compileData = template(context)
     pageHTTML.innerHTML = compileData
+    console.log(`page HTMl ${pageHTTML}`)
 })
 $('#deleteApplicationButton').click((e)=> {
     const delID = $('#applicationID').val();
