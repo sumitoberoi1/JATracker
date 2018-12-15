@@ -20,6 +20,24 @@ $( "#SearchApplicationButton" ).click(function() {
     }
 });
 
+$('#deleteApplicationButton').click((e)=> {
+    const delID = $('#applicationID').val();
+    $.ajax({
+        type: "DELETE",
+        url: `/application/${delID}`,
+        success: function(result) {
+            alert('Application Deleted')
+            if (typeof result.redirect == 'string') {
+                window.location = result.redirect
+            }
+        },
+        error: function(result) {
+            alert('Errror in deleting application')
+        }
+    })
+    e.preventDefault();
+})
+
 function show_new_work_form() {
     document.getElementById('hiddenNewWorkForm').style.display = "block";
     document.getElementById('coverLetter').style.display = "none";

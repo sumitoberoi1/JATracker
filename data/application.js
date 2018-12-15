@@ -3,7 +3,7 @@ const applications = mongoCollections.applications;
 const uuid = require('uuid/v4');
 const createApplication = async (applicationData) => {
     const applicationCollection = await applications();
-    const {companyName,jobrole,appliedDate,applicationStatus,
+    const {companyName,role,applyDate,applicationStatus,
         jobSource,resume,coverletter,notes} = applicationData
     const newApplication = {
         companyName: companyName,

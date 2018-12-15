@@ -4,7 +4,11 @@ const userData = require("../data/users");
 let signUpData = {layout:false, title:'Sign Up'}
 
 router.get("/", async(req, res) => {
-	res.render("signup",signUpData);
+    if (req.user) {
+        res.redirect("/application")
+    } else {
+        res.render("signup",signUpData);
+    }
 });
 
 router.post("/", async (req, res) => {

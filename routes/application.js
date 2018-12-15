@@ -50,7 +50,8 @@ router.delete("/:id",async (req,res) => {
         const application = await applicationData.getApplicationByID(id)
         if (application) {
             await applicationData.deleteApplication(id)
-            res.render("applications/allApplications",{title:'All Applications',applications:applications})
+            res.status = 201
+            res.json({redirect:'/application'})
         }
     } catch (e) {
         console.log(`Error in deleting application ${e}`)
@@ -90,7 +91,7 @@ multerObject,async (req,res) => {
         // } else if (!errorChecking.dataValidArray(steps)) {
         // errorMessage = `Invalid Steps`
         // } else {
-        const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
+     const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
         if (req.files) {
             if (req.files.resume && req.files.resume.length > 0) {
                 console.log(`In resume`)
