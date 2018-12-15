@@ -34,26 +34,16 @@ router.get("/new",(req,res) => {
 
 router.get("/edit/:id",async(req,res) => {
     const id = req.params.id
-<<<<<<< HEAD
     active = {newApplication:true}
     const application = await applicationData.getApplicationByID(id)
     res.render("applications/new",{title:'Edit Application',application:application,active})
-=======
-    const application = await applicationData.getApplicationByID(id)
-    res.render("applications/new",{title:'Edit Application',application:application})
->>>>>>> origin/nitish
 });
 
 router.get("/:id",async (req,res) => {
     const id = req.params.id
-<<<<<<< HEAD
     active = {newApplication:true}
     const application = await applicationData.getApplicationByID(id)
     res.render("applications/application",{title:'My Application',application:application,active})
-=======
-    const application = await applicationData.getApplicationByID(id)
-    res.render("applications/application",{title:'My Application',application:application})
->>>>>>> origin/nitish
 });
 
 router.delete("/:id",async (req,res) => {
@@ -62,12 +52,8 @@ router.delete("/:id",async (req,res) => {
         const application = await applicationData.getApplicationByID(id)
         if (application) {
             await applicationData.deleteApplication(id)
-<<<<<<< HEAD
             res.status = 201
             res.json({redirect:'/application'})
-=======
-            res.render("applications/allApplications",{title:'All Applications',applications:applications})
->>>>>>> origin/nitish
         }
     } catch (e) {
         console.log(`Error in deleting application ${e}`)
@@ -77,14 +63,9 @@ router.delete("/:id",async (req,res) => {
 
 router.get("/",async (req, res) => {
     try {
-<<<<<<< HEAD
     active = {allApplications:true}
       const applications= await applicationData.getAllApplications();
       res.render("applications/allApplications",{title:'All Applications',applications:applications,active})
-=======
-      const applications= await applicationData.getAllApplications();
-      res.render("applications/allApplications",{title:'All Applications',applications:applications})
->>>>>>> origin/nitish
     } catch (e) {
     console.log(`Error ${e}`)
       res.status(500).json({
@@ -113,11 +94,7 @@ multerObject,async (req,res) => {
         // } else if (!errorChecking.dataValidArray(steps)) {
         // errorMessage = `Invalid Steps`
         // } else {
-<<<<<<< HEAD
      const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
-=======
-        const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
->>>>>>> origin/nitish
         if (req.files) {
             if (req.files.resume && req.files.resume.length > 0) {
                 console.log(`In resume`)
