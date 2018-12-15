@@ -3,6 +3,10 @@ const router = express.Router();
 const userData = require("../data/users");
 const passPortConfig = require("../config/passportConfig")
 router.use(passPortConfig.ensureAuthenticated)
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/nitish
 router.get("/edit_profile", async (req, res) => {
     const user = req.user
     if (user) {

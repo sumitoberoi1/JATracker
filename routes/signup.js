@@ -4,11 +4,15 @@ const userData = require("../data/users");
 let signUpData = {layout:false, title:'Sign Up'}
 
 router.get("/", async(req, res) => {
+<<<<<<< HEAD
     if (req.user) {
         res.redirect("/application")
     } else {
         res.render("signup",signUpData);
     }
+=======
+	res.render("signup",signUpData);
+>>>>>>> origin/nitish
 });
 
 router.post("/", async (req, res) => {
