@@ -36,9 +36,7 @@
     margin-left: auto;
     margin-right: auto;
   }
-  .navbar-brand {
-    background-color: #0072ee;
-  }
+  
 
   .ng-button { background:#0072ee; color: white; text-decoration:none; padding:10px;
     transition:1s; height: 25px; box-shadow: 1px 1px 1px 1px black; border: 1px solid black;

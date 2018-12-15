@@ -9,7 +9,7 @@ const createApplication = async (applicationData,userID) => {
     const newApplication = {
         companyName: companyName,
         jobrole: role,
-        appliedDate: applyDate,
+        appliedDate: new Date(applyDate),
         applicationStatus:applicationStatus,
         jobSource:jobSource,
         resume:resume,
@@ -43,7 +43,7 @@ const editApplication = async (id, updatedApplicationData,userID) => {
     const editApplication = {
         companyName: companyName,
         jobrole: role,
-        appliedDate: applyDate,
+        appliedDate: new Date(applyDate),
         applicationStatus:applicationStatus,
         jobSource:jobSource,
         resume:resume,

@@ -8,7 +8,7 @@
                 <h3 class="card-subtitle mb-2 text-mutedcard-subtitle mb-2 text-muted">Role: {{application.jobrole}}</h3>
                 <p class="card-text">Status: {{application.applicationStatus}}</p>
                 <p class="card-text">Source: {{application.jobSource}}</p>
-                <p>Applied On/To Apply Date: {{application.appliedDate}}</p>
+                <p>Applied On/To Apply Date: {{formatDate application.appliedDate}}</p>
             </div>
             <div class="card-footer">
                 {{#if application.resume}}

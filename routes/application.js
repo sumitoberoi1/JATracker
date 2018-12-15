@@ -136,9 +136,6 @@ multerObject,async (req,res) => {
         console.log(`Application Data ${JSON.stringify(newApplication)}`)
         res.redirect(`/application/${newApplication._id}`)
         return
-        // res.status(500).json({
-        // error: errorMessage
-        // });
      } catch (e) {
          console.log(`Error in creating application ${e}`)
         res.status(500).json({error: e});
