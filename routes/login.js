@@ -1,55 +1,69 @@
 const express = require("express");
-const router = express.Router();
 const userData = require("../data/users");
-const uuid = require('uuid/v4');
-const { getUserFromCookie } = require("../public/js/cookieFunctions");
-
+const bcrypt = require('bcrypt');
+const router = express.Router();
+const passport = require("passport");
+let loginData = {layout:false,title:'Login'}
 router.get("/", async (req, res) => {
-	let user = await getUserFromCookie(req);
-
-	// Redirect to /account if already logged in
-    if (user) 
-    {
-		res.redirect("/account");
-    } 
-    else 
-    {
-		res.render("login");
-	}
+    if (req.cookies.AuthCookie) {
+        if (!req.session.user) {
+            let user = null;
+            try 
+            {
+                user = await userData.getUserByID(req.cookies.AuthCookie);
+            } 
+            catch (e) 
+            {
+                loginData.error = e
+                res.render("login", loginData);
+                return;
+            }
+            req.session.user = user;
+        }
+        res.redirect('/application');
+    }
+    else {
+        res.render('login',{layout:false, title:'Login'});
+    }
 });
+router.post("/",passport.authenticate("local", {
+    successRedirect: "/application",
+     failureRedirect: "/login",
+    failureFlash: true
+  }))
 
-router.post("/", async (req, res) => {
-	const username = req.body.username;
-	const password = req.body.password;
+// router.post("/", async (req, res) => {
+//     const username = req.body.username;
+//     const password = req.body.password;
 
-	let error_message = "Incorrect username/password.";
-	let user = undefined;
+//     let user = undefined;
+//     try 
+//     {
+// 		user = await userData.getUserByUsername(username);
+//     } 
+//     catch (e) 
+//     {
+//         loginData.error = e
+//         res.render("login", loginData);
+//         return;
+// 	}
+//     if (!user) {
+//         loginData.error =  "Username is not valid"
+//         res.render("login", loginData);
+//         return;
+//     }
+//     const passwordsMatch = await bcrypt.compare(password, user.hashedPassword);
+//     if (passwordsMatch) {
+//       res.cookie("AuthCookie", user["_id"]);
+//       req.session.user = user;
+//       res.redirect('/login');
+//     }
+//     else {
+//       loginData.error = "Incorrect login and/or password."
+//       res.render("login", loginData);
+//       return;
+//     }
 
-    try 
-    {
-		user = await userData.login(username, password);
-    } 
-    catch (e) 
-    {
-		error_message = e;
-	}
-
-    if (user) 
-    {
-		// Create cookie
-		let sID = uuid();
-		res.cookie("AuthCookie", sID);
-		userData.addUserSessionID(user._id, sID);
-
-		res.redirect("/account");
-    } 
-    else 
-    {
-		let data = {
-			error: error_message
-		}
-		res.render("login", data);
-	}
-});
+// });
 
 module.exports = router;
