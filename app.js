@@ -16,6 +16,16 @@ app.use(logger("short"));
 app.use("/public", static);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const rewriteUnsupportedBrowserMethods = (req, res, next) => {
+  if (req.body && req.body._method) {
+      req.method = req.body._method;
+      delete req.body._method;
+  }
+  next();
+};
+
+app.use(rewriteUnsupportedBrowserMethods);
 app.use(cookieParser());
 app.use(session({
   secret:keys.sessionSecret ,
@@ -44,6 +54,7 @@ const viewEngine = exphbs({
 });
 app.engine("handlebars", viewEngine);
 app.set("view engine", "handlebars"); 
+
 
 configRoutes(app);
 app.listen(3000, () => {
