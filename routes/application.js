@@ -33,16 +33,29 @@ router.get("/new",(req,res) => {
     res.render("applications/new",{title:'Create New Application',active})
 });
 
+router.get("/future",async (req,res) => {
+    try {
+        active = {futureApplications:true}
+        const applications= await applicationData.getFutureApplications(req.user._id)
+        res.render("applications/allApplications",{title:'Future Applications',applications:applications,active})
+      } catch (e) {
+      console.log(`Error ${e}`)
+        res.status(500).json({
+          error: e
+        });
+    }
+})
+
 router.get("/edit/:id",async(req,res) => {
     const id = req.params.id
     active = {newApplication:true}
-    const application = await applicationData.getApplicationByID(id)
+    const application = await applicationData.getApplicationByID(id,req.user._id)
     res.render("applications/new",{title:'Edit Application',application:application,active})
 });
 
 router.get("/all",async(req,res) => {
     try {
-        const applications= await applicationData.getAllApplications();
+        const applications= await applicationData.getAllApplications(req.user._id);
         res.json({'applications':applications})
       } catch (e) {
       console.log(`Error ${e}`)
@@ -55,14 +68,14 @@ router.get("/all",async(req,res) => {
 router.get("/:id",async (req,res) => {
     const id = req.params.id
     active = {newApplication:true}
-    const application = await applicationData.getApplicationByID(id)
+    const application = await applicationData.getApplicationByID(id,req.user._id)
     res.render("applications/application",{title:'My Application',application:application,active})
 });
 
 router.delete("/:id",async (req,res) => {
     const id = req.params.id
     try {
-        const application = await applicationData.getApplicationByID(id)
+        const application = await applicationData.getApplicationByID(id,req.user._id)
         if (application) {
             await applicationData.deleteApplication(id)
             res.status = 201
@@ -77,7 +90,7 @@ router.delete("/:id",async (req,res) => {
 router.get("/",async (req, res) => {
     try {
       active = {allApplications:true}
-      const applications= await applicationData.getAllApplications();
+      const applications= await applicationData.getAllApplications(req.user._id);
       res.render("applications/allApplications",{title:'All Applications',applications:applications,active})
     } catch (e) {
     console.log(`Error ${e}`)
@@ -118,8 +131,9 @@ multerObject,async (req,res) => {
                 appplicationToSaveData.coverletter = req.files.coverletter[0]
             }
         }
-        console.log(`Application Data ${JSON.stringify(appplicationToSaveData)}`)
-        const newApplication = await applicationData.createApplication(appplicationToSaveData);
+        
+        const newApplication = await applicationData.createApplication(appplicationToSaveData,req.user._id);
+        console.log(`Application Data ${JSON.stringify(newApplication)}`)
         res.redirect(`/application/${newApplication._id}`)
         return
         // res.status(500).json({
@@ -136,7 +150,7 @@ router.put("/application/:id",async (req,res) => {
 
 router.post("/editApplication",multerObject,async (req, res) => {
     const id = req.body.id
-    const application = await applicationData.getApplicationByID(id)
+    const application = await applicationData.getApplicationByID(id,req.user._id)
     console.log(`Here in applicatioonnEDIt`)
     try {
         const applicationEditData = req.body
@@ -161,7 +175,7 @@ router.post("/editApplication",multerObject,async (req, res) => {
                 appplicationToSaveData.coverletter = application.coverletter
             }
         }
-        const editApplication = await applicationData.editApplication(id,appplicationToSaveData)
+        const editApplication = await applicationData.editApplication(id,appplicationToSaveData,req.user._id)
         res.redirect(`/application/${editApplication._id}`)
         return
     } catch (e) {
