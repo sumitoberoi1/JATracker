@@ -1,23 +1,21 @@
+
 const MongoClient = require("mongodb").MongoClient;
-
 const settings = {
-	mongoConfig: {
-		serverUrl: "mongodb://localhost:27017/",
-		database: "movieProject"
-	}
+  mongoConfig: {
+    serverUrl: "mongodb://localhost:27017/",
+    database: "JATracker"
+  }
 };
+const mongoConfig = settings.mongoConfig;
 
-let = fullMongoUrl = `${settings.mongoConfig.serverUrl}`;
 let _connection = undefined;
 let _db = undefined;
 
-async function connection() {
-	if (!_connection) {
-		_connection = await (MongoClient.connect(fullMongoUrl));
-		_db = await (_connection.db(settings.mongoConfig.database));
-	}
+module.exports = async () => {
+  if (!_connection) {
+    _connection = await MongoClient.connect(mongoConfig.serverUrl,{ useNewUrlParser: true });
+    _db = await _connection.db(mongoConfig.database);
+  }
 
-	return _db;
-}
-
-module.exports = connection;
+  return _db;
+};
