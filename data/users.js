@@ -24,7 +24,6 @@ async function getUserByID(_id)
 }
 
 
-
 async function getUserByID(_id) 
 {
   try 
@@ -93,11 +92,11 @@ async function signUp(username, password, email)
       school: null,
       skills: null,
       presentJob: null,
-      resume: null,
-      coverLetter: null,
       workExperience: [],
       projects: []
-    }
+    },
+    resume: null,
+    coverLetter: null,
   };
   const createdNewUser = await userCollection.insertOne(newUser);
   if (createdNewUser.insertedCount === 0) throw "Fail to create new user!";
@@ -132,8 +131,6 @@ async function addUserWorkExperience(id, newWorkExperience) {
 
 async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
   try {
-    console.log('resume', resume)
-    console.log('coverLetter', coverLetter)
     console.log(JSON.stringify(InfoToUpdate))
     const userCollection = await users();
     const currUser = await userCollection.findOneAndUpdate(
@@ -146,7 +143,6 @@ async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
                       }
                     }
                 );
-                console.log('curr:', currUser)
     if (currUser === null) {
         throw "Fail to update profile!";
     }
