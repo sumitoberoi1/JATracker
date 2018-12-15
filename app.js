@@ -13,9 +13,7 @@ const keys = require('./config/keys')
 const flash = require("connect-flash");
 const passportConfig = require('./config/passportConfig');
 app.use(logger("short"));
-//passportConfig.setup()
 app.use("/public", static);
-app.use(helmet.xssFilter());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

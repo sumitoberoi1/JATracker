@@ -24,6 +24,27 @@ async function getUserByID(_id)
 }
 
 
+
+async function getUserByID(_id) 
+{
+  try 
+  {
+    if (!_id || typeof _id != 'string') {
+        throw "id not vaild";
+    }
+    let userCollection = await users();
+    let user = await userCollection.findOne({_id: _id});
+    if (!user) {
+      throw "Invalid AuthCookie"
+    }
+    return user;
+  } 
+  catch (e) {
+  throw e;
+  }
+}
+
+
 async function getUserByUsername(username) 
 {
   try 
@@ -109,16 +130,23 @@ async function addUserWorkExperience(id, newWorkExperience) {
   }
 }
 
-async function updateUserProfile(id, InfoToUpdate) {
+async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
   try {
+    console.log('resume', resume)
+    console.log('coverLetter', coverLetter)
     console.log(JSON.stringify(InfoToUpdate))
     const userCollection = await users();
     const currUser = await userCollection.findOneAndUpdate(
                     { "_id" :  id},
                     { $set: 
-                      { "profile" : InfoToUpdate}
+                      {
+                        "profile" : InfoToUpdate,
+                        "resume": resume,
+                        "coverLetter": coverLetter
+                      }
                     }
                 );
+                console.log('curr:', currUser)
     if (currUser === null) {
         throw "Fail to update profile!";
     }

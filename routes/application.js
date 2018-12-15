@@ -113,7 +113,9 @@ multerObject,async (req,res) => {
         res.status(500).json({error: e});
     }
 })
-
+router.put("/application/:id",async (req,res) => {
+   
+})
 
 router.post("/editApplication",multerObject,async (req, res) => {
     const id = req.body.id

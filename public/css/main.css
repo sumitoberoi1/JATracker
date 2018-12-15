@@ -40,16 +40,17 @@
     background-color: #0072ee;
   }
 
-  /* All applicaton page*/
-  
-  ul {
-    list-style-type: none;
+  .ng-button { background:#0072ee; color: white; text-decoration:none; padding:10px;
+    transition:1s; height: 25px; box-shadow: 1px 1px 1px 1px black; border: 1px solid black;
+    border-radius: 20px;
+    }
+  .ng-button:hover { background:black; color:white; text-decoration:none; border:1px solid;
+  border-radius: 0px;
   }
+
   
-  ul.list-group:after {
-    clear: both;
-    display: block;
-    content: "";
+  .clear {
+    clear:both;    
   }
   
   .list-group-item {

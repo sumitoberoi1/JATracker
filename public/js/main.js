@@ -13,7 +13,6 @@ $('input[name="coverletter"]').change(function(e){
     $(this).next('.custom-file-label').html(fileName);
 });
 
-
 $( "#SearchApplicationButton" ).click(function() {
     const text = $( "#SeachApplicationSearchBar" ).val();
     if (text.length > 0) {
