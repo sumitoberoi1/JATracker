@@ -1,0 +1,25 @@
+<article>
+    <div class="container p-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">{{application.companyName}}</h2>
+            </div>
+            <div class="card-body">
+                <h3 class="card-subtitle mb-2 text-mutedcard-subtitle mb-2 text-muted">Role: {{application.jobrole}}</h3>
+                <p class="card-text">Status: {{application.applicationStatus}}</p>
+                <p class="card-text">Source: {{application.jobSource}}</p>
+                <p>Applied On/To Apply Date: {{formatDate application.appliedDate}}</p>
+            </div>
+            <div class="card-footer">
+                {{#if application.resume}}
+                <a href="{{application.resume.path}}" download="{{application.resume.originalname}}" class="card-link">Resume</a>
+                {{/if}}
+                {{#if application.coverletter}}
+                <a href="{{application.coverletter.path}}" download="{{application.coverletter.originalname}}" class="card-link">Cover
+                    Letter</a>
+                {{/if}}
+                <a href={{concat "/application/edit/" application._id }} class="card-link">Edit Application</a>
+            </div>
+        </div>
+    </div>
+</article>

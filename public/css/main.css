@@ -1,0 +1,87 @@
+.bg-blue {
+    background-color: #57b3f5;
+}
+
+.add-form{
+  display: block;
+  margin: auto;
+  width: 1000px;
+  padding: 80px;
+}
+
+.add-form form {
+  background-color: rgba(190, 189, 189, 0.945);
+  background: #f2f3f7;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 30px;
+  padding-top: 10px;
+  width:80%;
+}
+
+.hiddenNewWorkForm, .hiddenNewProjectForm {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+    position: fixed;
+    background-color: #6d9add;
+    overflow: auto;
+  }
+
+  .signupForm, .loginForm{
+    width: 500px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+
+  .ng-button { background:#0072ee; color: white; text-decoration:none; padding:10px;
+    transition:1s; height: 25px; box-shadow: 1px 1px 1px 1px black; border: 1px solid black;
+    border-radius: 20px;
+    }
+  .ng-button:hover { background:black; color:white; text-decoration:none; border:1px solid;
+  border-radius: 0px;
+  }
+
+  
+  .clear {
+    clear:both;    
+  }
+  
+  .list-group-item {
+      float: left;
+      border: 0 !important;
+      margin: 0px;
+      padding: 10px 0px;
+  }
+  .ng-button { 
+    background:#0072ee; color: white; 
+    text-decoration:none; padding:10px;
+    transition:1s; height: 25px; box-shadow: 1px 1px 1px 1px black; border: 1px solid black;
+    border-radius: 20px;
+  }
+  .ng-button:hover { background:black; color:white; text-decoration:none; border:1px solid;
+  border-radius: 0px;
+  }
+
+  
+  .clear {
+    clear:both;    
+  }
+  .btn-info {
+      margin-right:15px;
+      text-transform:uppercase;
+      padding:10px;
+      display:block;
+      float:left;
+  }
+  .btn-info a {
+      display:block;
+      text-decoration:none;
+      width:100%;
+      height:100%;
+      color:#fff;
+  }
