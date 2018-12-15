@@ -25,19 +25,7 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   }
   next();
 };
-
-app.use(rewriteUnsupportedBrowserMethods);
-app.use(cookieParser());
-app.use(session({
-  secret:keys.sessionSecret ,
-  resave: true,
-  saveUninitialized: true,
-}));
-app.use(flash())
-app.use(passport.initialize())
-app.use(passport.session());
 const viewEngine = exphbs({
-  // Specify helpers which are only registered on this instance.
   helpers: {
       concat: function(str1,str2) { return str1 + str2},
       select: function (value, options) {
@@ -61,6 +49,17 @@ const viewEngine = exphbs({
   defaultLayout: "main",
   partialsDir:["views/partials/"]
 });
+
+app.use(rewriteUnsupportedBrowserMethods);
+app.use(cookieParser());
+app.use(session({
+  secret:keys.sessionSecret ,
+  resave: true,
+  saveUninitialized: true,
+}));
+app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session());
 app.engine("handlebars", viewEngine);
 app.set("view engine", "handlebars"); 
 
