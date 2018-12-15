@@ -29,8 +29,6 @@ const multerObject = multer(multerConfig).fields([
 router.get("/edit_profile", async (req, res) => {
   const profile = req.user;
   const active = {profile:true}
-  // console.log(profile.resume.originalname)
-  // console.log(profile.coverLetter.originalname)
   res.render("user/edit_profile",{title:'Edit Profile', active, profile: profile})
 });
 

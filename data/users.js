@@ -4,25 +4,6 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const uuid = require('uuid/v4');
 
-async function getUserByID(_id) 
-{
-  try 
-  {
-    if (!_id || typeof _id != 'string') {
-        throw "id not vaild";
-    }
-    let userCollection = await users();
-    let user = await userCollection.findOne({_id: _id});
-    if (!user) {
-      throw "Invalid AuthCookie"
-    }
-    return user;
-  } 
-  catch (e) {
-  throw e;
-  }
-}
-
 
 async function getUserByID(_id) 
 {

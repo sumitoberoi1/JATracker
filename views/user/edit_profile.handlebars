@@ -3,198 +3,189 @@
     <h1>Edit Profile</h1>
   </div>
   <div class="container">
-    <form action="/user/edit_profile" method="POST" class="md-form" id="application-submission">
-        <div class="form-group">
-          <label for="fullName">
-            Full Name </label>
-          <input id="fullName" type="text" name="fullName" placeholder="Enter Full Name" value="{{profile.fullName}}"
-            class="form-control" required/>
-        </div>
-        <div class="form-group">
-          <label for="school">
-            School</label>
-          <input id="school" type="text" name="school" placeholder="Enter School" value="{{profile.school}}"
-            class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="skills">Skills</label>
-          <input id="skills" type="text" name="skills" placeholder="Enter Skills (Separated by commas)" value="{{profile.skills}}"
-            class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="presentJob">Present Job</label>
-          <input id="presentJob" type="text" name="presentJob" placeholder="Enter Present Job" value="{{profile.presentJob}}"
-            class="form-control" />
-        </div>
+    <form action="/user/edit_profile" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="fullName">
+          Full Name </label>
+        <input id="fullName" type="text" name="fullName" placeholder="Enter Full Name" value="{{profile.profile.fullName}}"
+          class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="school">
+          School</label>
+        <input id="school" type="text" name="school" placeholder="Enter School" value="{{profile.profile.school}}"
+          class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="skills">Skills</label>
+        <input id="skills" type="text" name="skills" placeholder="Enter Skills (Separated by commas)" value="{{profile.profile.skills}}"
+          class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="presentJob">Present Job</label>
+        <input id="presentJob" type="text" name="presentJob" placeholder="Enter Present Job" value="{{profile.profile.presentJob}}"
+          class="form-control" />
+      </div>
 
+      <div class="form-group">
         <div class="custom-file">
-          <input id="resume" type="file" name="resume" class="custom-file-input" />
-          <label for="resume" class="custom-file-label">{{#if profile.resume}}{{profile.resume}}
-                                                                {{else}}Upload Your Resume{{/if}}</label>
+          <input id="resume" type="file" name="resume" class="custom-file-input" accept=".doc,.docx,application/pdf" />
+          <label for="resume" class="custom-file-label">{{#if profile.resume}}{{profile.resume.originalname}}
+            {{else}}Upload Your Resume{{/if}}</label>
         </div>
-        <br/>
-        <br/>
+      </div>
 
+      <div class="form-group">
         <div class="custom-file">
-          <input id="coverLetter" type="file" name="resume" class="custom-file-input" />
-          <label for="coverLetter" class="custom-file-label">{{#if profile.coverLetter}}{{profile.coverLetter}}
-                                                                {{else}}Upload Your Cover Letter{{/if}}</label>
+          <input id="coverLetter" type="file" name="coverLetter" class="custom-file-input" accept=".doc,.docx,application/pdf" />
+          <label for="coverLetter" class="custom-file-label">{{#if
+            profile.coverLetter}}{{profile.coverLetter.originalname}}
+            {{else}}Upload Your Cover Letter{{/if}}</label>
         </div>
-        <br/>
-        <br/>
+      </div>
+      <br />
+      <br />
 
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block">Save</button>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Save</button>
+      </div>
+    </form>
+    <br />
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Work Experience and Projects</h2>
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">Work Experience</h2>
+        <br />
+        {{#unless profile.profile.workExperience}}
+        <p>Edit Work Experience</p>
+        {{/unless}}
+        {{#each profile.profile.workExperience}}
+        <h3 class="card-subtitle mb-2 text-mutedcard-subtitle mb-2 text-muted">{{this.jobTittle}}</h3>
+        <p class="card-text">{{#if this.employer}}Employer: {{this.employer}}{{/if}}</p>
+        <p class="card-text">{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
+        <p class="card-text">{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
+        <p class="card-text">{{#if this.location}}Location: {{this.location}}{{/if}}</p>
+        <p class="card-text">{{#if this.description}}Description: {{this.description}}{{/if}}</p>
+        <div class="tags">
+          <span class="btn-info"><a href="/user/profile/work_experience/edit/{{this._id}}">Edit</a></span>
+          <span class="btn-info"><a href="/user/profile/work_experience/delete/{{this._id}}">Delete</a></span>
         </div>
-      </form>
-      <br/>
-      
-      <h4>Work Experience</h4>
-      <br/>
-      <div class="container">
-          <div class="span8">
-              {{#each profile.workExperience}}
-              <h5>{{this.jobTittle}}</h5>
-              <p>Employer: {{this.employer}}</p>
-              <p>{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
-              <p>{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
-              <p>{{#if this.location}}Location: {{this.location}}{{/if}}</p>
-              <p>{{#if this.description}}Description: {{this.description}}{{/if}}</p>
-              <div>
-                <div class="tags">
-                  <span class="btn-info"><a href="/user/profile/work_experience/edit/{{this._id}}">Edit</a></span>
-                  <span class="btn-info"><a href="/user/profile/work_experience/delete/{{this._id}}">Delete</a></span>
-                </div>    
-              </div> 
-              <div class="clear"></div>
-              <hr>
-              {{/each}}
+        <div class="clear"></div>
+        <hr>
+        {{/each}}
+        <button type="button" class="btn bg-blue" onclick="show_new_work_form()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Add Work Experience
+        </button>
+        <div class="hiddenNewWorkForm" id="hiddenNewWorkForm">
+          <div class="add-form">
+            <form action="/user/profile/new_work_experience" method="post">
+              <h2>Add your current or previous job experience...</h2>
+
+              <div class="form-group">
+                <label for="jobTittle">Job Tittle</label>
+                <input id="jobTittle" type="text" name="jobTittle" placeholder="Enter Job Tittle" class="form-control"
+                  required />
+              </div>
+
+              <div class="form-group">
+                <label for="employer">Employer</label>
+                <input id="employer" type="text" name="employer" placeholder="Enter Employer" class="form-control"
+                  required />
+              </div>
+
+              <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input id="startDate" type="date" name="startDate" class="form-control" required />
+              </div>
+
+              <div class="form-group">
+                <label for="endDate">End Date</label>
+                <input id="endDate" type="date" name="endDate" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="location">Location</label>
+                <input id="location" type="text" name="location" placeholder="Enter the city you worked..." class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" class="form-control" rows="4" placeholder="Any Other Description" name="description"></textarea>
+              </div>
+
+              <button id="cancel" name="cancel" class="btn btn-danger" type="button" onclick="hide_new_work_form()">Cancel</button>
+              <button id="save" name="save" class="btn btn-success" type="submit">Save</button>
+            </form>
           </div>
-      </div>
-
-      <button type="button" class="btn bg-blue" onclick="show_new_work_form()">
-        <i class="fa fa-plus" aria-hidden="true"></i>
-        Add Work Experience</button>
-
-
-      {{!-- hidden new work form --}}
-      <div class="hiddenNewWorkForm" id="hiddenNewWorkForm">
-        <div class="add-form">
-          <form action="/user/profile/new_work_experience" method="post">
-            <h2>Add your current or previous job experience...</h2>
-
-            <div class="form-group">
-              <label for="jobTittle">Job Tittle</label>
-              <input id="jobTittle" type="text" name="jobTittle" placeholder="Enter Job Tittle" 
-                class="form-control" required/>
-            </div>
-
-            <div class="form-group">
-              <label for="employer">Employer</label>
-              <input id="employer" type="text" name="employer" placeholder="Enter Employer" 
-                class="form-control" required/>
-            </div>
-
-            <div class="form-group">
-              <label for="startDate">Start Date</label>
-              <input id="startDate" type="date" name="startDate" placeholder="Enter Start Date" 
-              class="form-control" required/>
-            </div>
-
-            <div class="form-group">
-              <label for="endDate">End Date</label>
-              <input id="endDate" type="date" name="endDate" placeholder="Enter End Date" 
-                class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label for="location">Location</label>
-              <input id="location" type="text" name="location" placeholder="Enter the city you worked..." 
-                class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea id="description" class="form-control" rows="4"  placeholder="Any Other Description" name="description" ></textarea>
-            </div>
-
-            <button id="cancel" name="cancel" class="btn btn-danger" type="button" onclick="hide_new_work_form()">Cancel</button>
-            <button id="save" name="save" class="btn btn-success" type="submit">Save</button>
-          </form>
         </div>
-      </div>
-      
-      <br/>
-      <br/>
-      <br/>
+        <br />
+        <br />
+        <h2>Projects</h2>
+        <br />
+        {{#unless profile.profile.projects}}
+        <p>Edit projects</p>
+        {{/unless}}
+        {{#each profile.profile.projects}}
+        <h3 class="card-subtitle mb-2 text-mutedcard-subtitle mb-2 text-muted">{{this.name}}</h3>
+        <p class="card-text">{{#if this.position}}Position: {{this.position}}{{/if}}</p>
+        <p class="card-text">{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
+        <p class="card-text">{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
+        <p class="card-text">{{#if this.description}}Description: {{this.description}}{{/if}}</p>
+        <div class="tags">
+          <span class="btn-info"><a href="/user/profile/project/edit/{{this._id}}">Edit</a></span>
+          <span class="btn-info"><a href="/user/profile/project/delete/{{this._id}}">Delete</a></span>
+        </div>
+        <div class="clear"></div>
+        <hr>
+        {{/each}}
+        <button type="button" class="btn bg-blue" onclick="show_new_project_form()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Add Project
+        </button>
+        <div class="hiddenNewProjectForm" id="hiddenNewProjectForm">
+          <div class="add-form">
+            <form action="/user/profile/new_project" method="post">
+              <h2>We only support projects with URLs at the moment...</h2>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" type="text" name="name" placeholder="Name" class="form-control" required />
+              </div>
 
-      <h4>Projects</h4>
-      <div class="container">
-          <div class="span8">
-              {{#each profile.projects}}
-              <h5>{{this.name}}</h5>
-              <p>{{#if this.Position}}Position: {{this.position}}{{/if}}</p>
-              <p>{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
-              <p>{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
-              <p>{{#if this.description}}Description: {{this.description}}{{/if}}</p>
-              <div>
-                <div class="tags">
-                  <span class="btn-info"><a href="/user/profile/project/edit/{{this._id}}">Edit</a></span>
-                  <span class="btn-info"><a href="/user/profile/project/delete/{{this._id}}">Delete</a></span>
-                </div>    
-              </div> 
-              <div class="clear"></div>
-              <hr>
-              {{/each}}
+              <div class="form-group">
+                <label for="position">Position</label>
+                <input id="position" type="text" name="position" placeholder="Enter Position" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="projectstartDate">Start Date</label>
+                <input id="projectstartDate" type="date" name="projectstartDate" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="projectendDate">End Date</label>
+                <input id="projectendDate" type="date" name="projectendDate" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="projectdescription">Description</label>
+                <textarea id="projectdescription" class="form-control" rows="4" placeholder="Any Other Description"
+                  name="projectdescription"></textarea>
+              </div>
+
+              <button id="projectcancel" name="projectcancel" class="btn btn-danger" type="button" onclick="hide_new_project_form()">Cancel</button>
+              <button id="projectsave" name="projectsave" class="btn btn-success" type="submit">Save</button>
+            </form>
           </div>
-      </div>
-      <br/>
-
-      <button type="button" class="btn bg-blue" onclick="show_new_project_form()">
-        <i class="fa fa-plus" aria-hidden="true"></i>
-        Add Project</button>
-      <br/>
-
-      {{!-- hidden new project form --}}
-      <div class="hiddenNewProjectForm" id="hiddenNewProjectForm">
-        <div class="add-form">
-          <form action="/user/profile/new_project" method="post">
-            <h2>We only support projects with URLs at the moment...</h2>
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input id="name" type="text" name="name" placeholder="Name" 
-                class="form-control" required/>
-            </div>
-
-            <div class="form-group">
-              <label for="position">Position</label>
-              <input id="position" type="text" name="position" placeholder="Enter Position" 
-                class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label for="startDate">Start Date</label>
-              <input id="startDate" type="date" name="startDate" placeholder="Enter Start Date (Required)" class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label for="endDate">End Date</label>
-              <input id="endDate" type="date" name="endDate" placeholder="Enter End Date" class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea id="description" class="form-control" rows="4"  placeholder="Any Other Description" name="description"></textarea>
-            </div>
-
-            <button id="cancel" name="cancel" class="btn btn-danger" type="button" onclick="hide_new_project_form()">Cancel</button>
-            <button id="save" name="save" class="btn btn-success" type="submit">Save</button>
-          </form>
         </div>
+        <br />
       </div>
-      <br/>
-      <br/>
-      <a class='ng-button' href="/user/view_profile">View Profile</a>
+    </div>
+    <br />
+    <br />
+    <a class='ng-button' href="/user/view_profile">View Profile</a>
 
   </div>
 </article>
