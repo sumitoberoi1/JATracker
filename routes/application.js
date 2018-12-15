@@ -34,8 +34,9 @@ router.get("/new",(req,res) => {
 
 router.get("/edit/:id",async(req,res) => {
     const id = req.params.id
+    active = {newApplication:true}
     const application = await applicationData.getApplicationByID(id)
-    res.render("applications/new",{title:'Edit Application',application:application})
+    res.render("applications/new",{title:'Edit Application',application:application,active})
 });
 
 router.get("/:id",async (req,res) => {
@@ -61,8 +62,9 @@ router.delete("/:id",async (req,res) => {
 
 router.get("/",async (req, res) => {
     try {
+    active = {allApplications:true}
       const applications= await applicationData.getAllApplications();
-      res.render("applications/allApplications",{title:'All Applications',applications:applications})
+      res.render("applications/allApplications",{title:'All Applications',applications:applications,active})
     } catch (e) {
     console.log(`Error ${e}`)
       res.status(500).json({
