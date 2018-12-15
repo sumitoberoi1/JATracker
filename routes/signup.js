@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const userData = require("../data/users");
-
+let signUpData = {layout:false, title:'Sign Up'}
 
 router.get("/", async(req, res) => {
-	res.render("signup");
+	res.render("signup",signUpData);
 });
 
 router.post("/", async (req, res) => {
@@ -24,20 +24,28 @@ router.post("/", async (req, res) => {
         if (user) {
             error_message += "Username already exists";
         }
+        const userByEmail = await userData.getUserByEmail(email)
+        if (userByEmail) {
+            error_message += "Email already exists";
+        }
+        
     } catch (e) {
-        res.render("signup", {error: error_message});
+        signUpData.error = error_message
+        res.render("signup",signUpData);
         return;
     }
     if (error_message !== ""){
-        console.log(error_message);
-        res.render("signup", {error: error_message});
+        signUpData.error = error_message
+        res.render("signup", signUpData);
         return;
     }
     try {
         signup = await userData.signUp(username, password, email);
-        res.redirect("/login");
+        console.log(`Success signedUp`)
+        res.redirect("/user/edit_profile");
     } catch (e) {
-        res.render("signup", {error: e});
+        signUpData.error = e
+        res.render("signup", signUpData);
         return;
     }
 });

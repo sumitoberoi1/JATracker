@@ -4,6 +4,25 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const uuid = require('uuid/v4');
 
+async function getUserByID(_id) 
+{
+  try 
+  {
+    if (!_id || typeof _id != 'string') {
+        throw "id not vaild";
+    }
+    let userCollection = await users();
+    let user = await userCollection.findOne({_id: _id});
+    if (!user) {
+      throw "Invalid AuthCookie"
+    }
+    return user;
+  } 
+  catch (e) {
+  throw e;
+  }
+}
+
 
 
 async function getUserByID(_id) 
@@ -35,6 +54,22 @@ async function getUserByUsername(username)
     }
     let userCollection = await users();
     let user = await userCollection.findOne({username: username});
+    return user;
+  } 
+  catch (e) {
+  throw e;
+  }
+}
+
+async function getUserByEmail(email) 
+{
+  try 
+  {
+    if (!email || typeof email != 'string') {
+        throw "email not vaild";
+    }
+    let userCollection = await users();
+    let user = await userCollection.findOne({email: email});
     return user;
   } 
   catch (e) {
@@ -97,8 +132,6 @@ async function addUserWorkExperience(id, newWorkExperience) {
 
 async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
   try {
-    console.log('resume', resume)
-    console.log('coverLetter', coverLetter)
     console.log(JSON.stringify(InfoToUpdate))
     const userCollection = await users();
     const currUser = await userCollection.findOneAndUpdate(
@@ -111,7 +144,6 @@ async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
                       }
                     }
                 );
-                console.log('curr:', currUser)
     if (currUser === null) {
         throw "Fail to update profile!";
     }
@@ -234,5 +266,6 @@ module.exports = {
   editUserWorkExperience,
   editUserProject,
   deleteWorkExperience,
-  deleteProject
+  deleteProject,
+  getUserByEmail
 };

@@ -7,8 +7,8 @@ const createApplication = async (applicationData) => {
         jobSource,resume,coverletter,notes} = applicationData
     const newApplication = {
         companyName: companyName,
-        jobrole: jobrole,
-        appliedDate: appliedDate,
+        jobrole: role,
+        appliedDate: applyDate,
         applicationStatus:applicationStatus,
         jobSource:jobSource,
         resume:resume,
@@ -29,10 +29,44 @@ const getApplicationByID = async (id) => {
     return application;
 }
 
-const editApplication = async (id) => {
-    
+const editApplication = async (id, updatedApplicationData) => {
+    const query = {
+        _id: id
+    };
+    const {companyName,role,applyDate,applicationStatus,
+        jobSource,resume,coverletter,notes} = updatedApplicationData
+    const editApplication = {
+        companyName: companyName,
+        jobrole: role,
+        appliedDate: applyDate,
+        applicationStatus:applicationStatus,
+        jobSource:jobSource,
+        resume:resume,
+        coverletter:coverletter,
+        notes:notes
+    }
+    const applicationCollection = await applications();
+    await applicationCollection.updateOne(query, {
+        $set: editApplication
+    });
+    return await getApplicationByID(id);
+}
+
+const getAllApplications = async() => {
+    const applicationCollection = await applications();
+    return await applicationCollection.find({}).sort({ appliedDate: -1 }).toArray();
+}
+const deleteApplication = async(id) => {
+    const applicationCollection = await applications();
+    const deletionInfo = await applicationCollection.removeOne({ _id: id });
+    if (deletionInfo.deletedCount === 0) {
+        throw `Could not delete post with id of ${id}`;
+    } 
 }
 module.exports = {
     createApplication,
-    getApplicationByID
+    getApplicationByID,
+    getAllApplications,
+    editApplication,
+    deleteApplication
 }

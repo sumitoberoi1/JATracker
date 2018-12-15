@@ -4,30 +4,14 @@ const signUpRoute = require("./signup");
 const logoutRoute = require("./logout");
 const applicationRoutes = require("./application")
 const path = require("path");
-const userData = require("../data/users");
-
+const passportConfig = require('../config/passportConfig');
 const routes = app => {
-  app.get('/', async function (req, res) {
-    if (req.cookies.AuthCookie) {
-      if (!req.session.user) {
-          let user = null;
-          try 
-          {
-              user = await userData.getUserByID(req.cookies.AuthCookie);
-              req.session.user = user;
-          } 
-          catch (e) 
-          {
-            res.clearCookie('AuthCookie');
-            res.render("login", {error: e});
-            return;
-          }
-      }
-      console.log("AuthCookie" + req.cookies.AuthCookie)
-      console.log("req.session.user" + JSON.stringify(req.session.user))
-      res.redirect('/user/view_profile');
-    }
-    else {
+  passportConfig.setup()
+  app.get('/',passportConfig.ensureAuthenticated, async function (req, res) {
+    console.log(`Req user ${req.user}`)
+    if (req.user) {
+      res.redirect('/application');
+    } else {
       res.redirect('/login');
     }
   });
