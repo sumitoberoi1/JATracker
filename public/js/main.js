@@ -13,13 +13,14 @@ $('input[name="coverletter"]').change(function(e){
     $(this).next('.custom-file-label').html(fileName);
 });
 
-$( "#SearchApplicationButton" ).click(function() {
-    const text = $( "#SeachApplicationSearchBar" ).val();
-    if (text.length > 0) {
-
-    }
-});
-
+$('#SearchApplicationButton').click((e) => {
+    console.log(`Clicked this`)
+    const pageHTTML =  $('html')[0].outerHTML
+    const template = Handlebars.compile(pageHTTML)
+    const context = {title:'new title'}
+    const compileData = template(context)
+    pageHTTML.innerHTML = compileData
+})
 $('#deleteApplicationButton').click((e)=> {
     const delID = $('#applicationID').val();
     $.ajax({
