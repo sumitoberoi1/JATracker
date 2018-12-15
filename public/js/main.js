@@ -1,15 +1,4 @@
-$(document).ready(()=>{
-    var max1 = new Date(new Date().setFullYear(new Date().getFullYear() + 2))
-    var max2 = max1.toISOString().split('T')[0]
-    var min1 = new Date(new Date().setFullYear(new Date().getFullYear() - 2))
-    var min2 = min1.toISOString().split('T')[0]	
-    document.getElementsByName("startDate")[0].setAttribute('max', max2);
-    document.getElementsByName("startDate")[0].setAttribute('min', min2);
-    document.getElementsByName("endDate")[0].setAttribute('max', max2);
-    document.getElementsByName("endDate")[0].setAttribute('min', min2);
-    document.getElementsById("applyDate")[0].setAttribute('max', max2);
-    document.getElementsById("applyDate")[0].setAttribute('min', min2);
-})
+
 $('input[name="resume"]').change(function(e){
     const fileName = e.target.files[0].name;
     $(this).next('.custom-file-label').html(fileName);
