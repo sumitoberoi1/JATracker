@@ -37,7 +37,7 @@ router.get("/future",async (req,res) => {
     try {
         active = {futureApplications:true}
         const applications= await applicationData.getFutureApplications(req.user._id)
-        res.render("applications/allApplications",{title:'Future Applications',applications:applications,active})
+        res.render("applications/allApplications",{title:'Track Applications',applications:applications,active})
       } catch (e) {
       console.log(`Error ${e}`)
         res.status(500).json({

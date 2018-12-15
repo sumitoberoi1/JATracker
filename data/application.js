@@ -65,10 +65,11 @@ const getAllApplications = async(userID) => {
 
 const getFutureApplications =  async(userID) => {
     const applicationCollection = await applications();
-    return await applicationCollection.find({
-        appliedDate:{
-        $gte: new Date().getDate()
-    }}).sort({ appliedDate: -1 }).toArray();
+    let query = {userID:userID,appliedDate:{
+        $gte: new Date()
+    }}
+
+    return await applicationCollection.find(query).sort({ appliedDate: -1 }).toArray();
 }
 const deleteApplication = async(id,userID) => {
     const applicationCollection = await applications();
