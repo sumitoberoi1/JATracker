@@ -5,7 +5,7 @@ const passPortConfig = require("../config/passportConfig")
 const multer = require("multer");
 const uuid = require('uuid/v4');
 router.use(passPortConfig.ensureAuthenticated)
-
+let errorActive = {profile:true}
 const multerConfig = {
   storage: multer.diskStorage({
       destination: function(req, file, next){
@@ -64,17 +64,16 @@ router.get("/profile/project/edit/:id", async (req, res) => {
   res.render("user/edit_project", {title:'Edit Project', project : currProject});
 });
 
-router.get("/profile/work_experience/delete/:id", async (req, res) => {
+router.get(`/profile/work_experience/delete/:id`, async (req, res) => {
   try 
   {
     user = await userData.deleteWorkExperience(req.user._id, req.params.id);
-    req.session.user = user;
-    res.redirect('/user/edit_profile');
+    req.user = user
+    res.redirect('/user/edit_profile')
   } 
   catch (e) 
   {
-    console.log(e)
-    res.status(500).render("error/500")
+    res.status(500).render("error/500",errorActive)
     return;
   }
 });
@@ -82,14 +81,16 @@ router.get("/profile/work_experience/delete/:id", async (req, res) => {
 router.get("/profile/project/delete/:id", async (req, res) => {
   try 
   {
-    user = await userData.deleteProject(req.session.user._id, req.params.id);
-    req.session.user = user;
-    res.redirect('/user/edit_profile');
+    req.user = await userData.deleteProject(req.session.user._id, req.params.id);
+    req.user = user
+    res.redirect('/user/edit_profile')
+    // res.status = 201
+    // res.json({redirect:'/user/edit_profile'})
   } 
   catch (e) 
   {
     console.log(e)
-    res.status(404).render("error/404")
+    res.status(404).render("error/404",errorActive)
     return;
   }
 });
@@ -134,7 +135,7 @@ router.post("/edit_profile", multerObject, async (req, res) => {
   } 
   catch (e) 
   {
-    res.status(500).render("error/404", {e});
+    res.status(500).render("error/500",errorActive)
     return;
   }
 });
@@ -150,8 +151,6 @@ router.post("/profile/new_work_experience", async (req, res) => {
   newWorkExperience.description = req.body.description;
   try 
   {
-    console.log("user" + JSON.stringify(req.user))
-    console.log(JSON.stringify(newWorkExperience))
     user = await userData.addUserWorkExperience(req.user._id, newWorkExperience);
     req.session.user = user;
     res.redirect('/user/edit_profile');
@@ -159,7 +158,7 @@ router.post("/profile/new_work_experience", async (req, res) => {
   catch (e) 
   {
     console.log(e)
-    res.status(500).json({ error: e });
+    res.status(500).render("error/500",errorActive)
     return;
   }
 });
@@ -183,7 +182,7 @@ router.post("/profile/new_project", async (req, res) => {
   catch (e) 
   {
     console.log(e)
-    res.status(500).json({ error: e });
+    res.status(500).render("error/500",active)
     return;
   }
 });
@@ -214,7 +213,7 @@ router.post("/profile/work_experience/edit/:id", async (req, res) => {
   catch (e) 
   {
     console.log(e)
-    res.status(500).json({ error: e });
+    res.status(500).render("error/500",active)
     return;
   }
 });
@@ -243,7 +242,7 @@ router.post("/profile/project/edit/:id", async (req, res) => {
   catch (e) 
   {
     console.log(e)
-    res.status(500).json({ error: e });
+    res.status(500).render("error/500",errorActive)
     return;
   }
 });

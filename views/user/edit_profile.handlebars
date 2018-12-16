@@ -46,7 +46,7 @@
         <div class="custom-file">
           <input id="resume" type="file" name="resume" class="custom-file-input" accept=".doc,.docx,application/pdf" />
           <label for="resume" class="custom-file-label">{{#if profile.resume}}{{profile.resume.originalname}}
-            {{else}}Upload Resume Here....{{/if}}</label>
+            {{else}}{{/if}}</label>
         </div>
       </div>
 
@@ -55,7 +55,7 @@
           <input id="coverLetter" type="file" name="coverletter" class="custom-file-input" accept=".doc,.docx,application/pdf" />
           <label for="coverLetter" class="custom-file-label">{{#if
             profile.coverLetter}}{{profile.coverLetter.originalname}}
-            {{else}}Upload Cover Letter Here...{{/if}}</label>
+            {{else}}{{/if}}</label>
         </div>
       </div>
 
@@ -181,7 +181,8 @@
         <p class="card-text">{{#if this.description}}Description: {{this.description}}{{/if}}</p>
         <div class="tags">
           <a href="/user/profile/project/edit/{{this._id}}" class="btn btn-primary">Edit</a>
-          <a href="/user/profile/project/delete/{{this._id}}" class="btn btn-danger">Delete</a>
+          <a href="/user/profile/project/delete/{{this._id}}" class="btn btn-danger deleteProjectButton">Delete</a>
+          <input type="hidden" value={{this._id}} />
         </div>
         <div class="clear"></div>
         <hr>
@@ -199,7 +200,7 @@
       <div class="hiddenNewProjectForm" id="hiddenNewProjectForm">
         <div class="add-form">
           <form action="/user/profile/new_project" method="post">
-            <h2>Projects...</h2>
+            <h2>Add Projects...</h2>
             <div class="form-group">
               <label for="name">Name</label>
               <input id="name" type="text" name="name" placeholder="Name" class="form-control" required />

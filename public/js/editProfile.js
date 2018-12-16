@@ -27,3 +27,23 @@ function hide_new_project_form() {
     $('label[for="coverLetter"]').css('display', 'block');
     $('label[for="resume"]').css('display', 'block');
 }
+
+$(document).on("click", ".deleteProjectButton", function(e){
+    // const closestInput = $(this).next('input')
+    // const delID = closestInput.val()
+    // $.ajax({
+    //     type: "DELETE",
+    //     url: `/profile/project/delete/${delID}`,
+    //     success: function(result) {
+    //         alert('Project Deleted ${}')
+    //         window.location = result.redirect
+    //         if (typeof result.redirect == 'string') {
+    //             window.location = result.redirect
+    //         }
+    //     },
+    //     error: function(result) {
+    //         alert('Errror in deleting application')
+    //     }
+    // })
+    // e.preventDefault()
+});
