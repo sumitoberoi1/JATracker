@@ -67,7 +67,8 @@ router.get("/profile/project/edit/:id", async (req, res) => {
 router.get("/profile/work_experience/delete/:id", async (req, res) => {
   try 
   {
-    await userData.deleteWorkExperience(req.user._id, req.params.id);
+    user = await userData.deleteWorkExperience(req.user._id, req.params.id);
+    req.session.user = user;
     res.redirect('/user/edit_profile');
   } 
   catch (e) 
@@ -81,7 +82,8 @@ router.get("/profile/work_experience/delete/:id", async (req, res) => {
 router.get("/profile/project/delete/:id", async (req, res) => {
   try 
   {
-    userData.deleteProject(req.user._id, req.params.id);
+    user = await userData.deleteProject(req.session.user._id, req.params.id);
+    req.session.user = user;
     res.redirect('/user/edit_profile');
   } 
   catch (e) 
@@ -121,7 +123,9 @@ router.post("/edit_profile", multerObject, async (req, res) => {
   }
   try 
   {
-    await userData.updateUserProfile(req.user._id, newProfile, resume, coverLetter)  
+    user = await userData.updateUserProfile(req.user._id, newProfile, resume, coverLetter)  
+    console.log(user)
+    req.session.user = user;
     res.redirect('/user/view_profile');
   } 
   catch (e) 
@@ -166,7 +170,10 @@ router.post("/profile/new_project", async (req, res) => {
   newProject.description = req.body.projectdescription;
   try 
   {
-    await userData.addUserProject(req.user._id, newProject);
+    console.log("user" + JSON.stringify(req.user))
+    console.log(JSON.stringify(newProject))
+    user = await userData.addUserProject(req.user._id, newProject);
+    req.session.user = user;
     res.redirect('/user/edit_profile');
   } 
   catch (e) 
@@ -195,7 +202,9 @@ router.post("/profile/work_experience/edit/:id", async (req, res) => {
         workExperience[i] = updatedWorkExperience;
       }
     }
-    await userData.editUserWorkExperience(req.user._id, workExperience);
+    console.log(JSON.stringify(workExperience))
+    curruser = await userData.editUserWorkExperience(req.user._id, workExperience);
+    req.session.user = curruser;
     res.redirect('/user/edit_profile');
   } 
   catch (e) 
@@ -223,7 +232,8 @@ router.post("/profile/project/edit/:id", async (req, res) => {
         projects[i] = updatedProject;
       }
     }
-    await userData.editUserProject(req.user._id, projects);
+    curruser = await userData.editUserProject(req.user._id, projects);
+    req.session.user = curruser;
     res.redirect('/user/edit_profile');
   } 
   catch (e) 

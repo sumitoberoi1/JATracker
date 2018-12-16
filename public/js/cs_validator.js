@@ -1,4 +1,4 @@
-var check = function(e) {
+let check = function(e) {
     if (document.getElementById('password').value ==
       document.getElementById('repeatedPassword').value) {
       document.getElementById('message').style.color = 'green';
