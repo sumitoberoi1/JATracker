@@ -123,7 +123,7 @@ multerObject,async (req,res) => {
      const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
         if (req.files) {
             if (req.files.resume && req.files.resume.length > 0) {
-                console.log(`In resume`)
+                console.log(`In resume ${req.files.resume}`)
                 appplicationToSaveData.resume = req.files.resume[0]
             }
             if (req.files.coverletter && req.files.coverletter.length > 0) {
@@ -131,7 +131,6 @@ multerObject,async (req,res) => {
                 appplicationToSaveData.coverletter = req.files.coverletter[0]
             }
         }
-        
         const newApplication = await applicationData.createApplication(appplicationToSaveData,req.user._id);
         console.log(`Application Data ${JSON.stringify(newApplication)}`)
         res.redirect(`/application/${newApplication._id}`)
