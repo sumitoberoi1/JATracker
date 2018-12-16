@@ -36,23 +36,26 @@ router.get("/new",(req,res) => {
 });
 
 router.get("/future",async (req,res) => {
+    active = {futureApplications:true}
     try {
-        active = {futureApplications:true}
         const applications= await applicationData.getFutureApplications(req.user._id)
         res.render("applications/allApplications",{title:'Track Applications',applications:applications,active})
       } catch (e) {
-      console.log(`Error ${e}`)
-        res.status(500).json({
-          error: e
-        });
+        console.log(`Error ${e}`)
+        res.status(500).render("error/404",active)
     }
 })
 
 router.get("/edit/:id",async(req,res) => {
-    const id = req.params.id
-    active = {newApplication:true}
-    const application = await applicationData.getApplicationByID(id,req.user._id)
-    res.render("applications/new",{title:'Edit Application',application:application,active})
+    try {
+        const id = req.params.id
+        active = {newApplication:true}
+        const application = await applicationData.getApplicationByID(id,req.user._id)
+        res.render("applications/new",{title:'Edit Application',application:application,active})
+    } catch (e) {
+        active = {allApplications:true}
+        res.status(404).render("error/404",active)
+    }
 });
 
 router.get("/all",async(req,res) => {
@@ -89,8 +92,8 @@ router.delete("/:id",async (req,res) => {
             res.json({redirect:'/application'})
         }
     } catch (e) {
-        console.log(`Error in deleting application ${e}`)
-        res.status(500).json({error: e});
+        active = {allApplications:true}
+        res.status(404).render("error/404",active)
     }
 })
 
@@ -100,10 +103,8 @@ router.get("/",async (req, res) => {
       const applications= await applicationData.getAllApplications(req.user._id);
       res.render("applications/allApplications",{title:'All Applications',applications:applications,active})
     } catch (e) {
-    console.log(`Error ${e}`)
-      res.status(500).json({
-        error: e
-      });
+        active = {allApplications:true}
+        res.status(500).render("error/500",active)
     }
 });
 
