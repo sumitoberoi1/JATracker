@@ -29,21 +29,21 @@ function hide_new_project_form() {
 }
 
 $(document).on("click", ".deleteProjectButton", function(e){
-    // const closestInput = $(this).next('input')
-    // const delID = closestInput.val()
-    // $.ajax({
-    //     type: "DELETE",
-    //     url: `/profile/project/delete/${delID}`,
-    //     success: function(result) {
-    //         alert('Project Deleted ${}')
-    //         window.location = result.redirect
-    //         if (typeof result.redirect == 'string') {
-    //             window.location = result.redirect
-    //         }
-    //     },
-    //     error: function(result) {
-    //         alert('Errror in deleting application')
-    //     }
-    // })
-    // e.preventDefault()
+    const closestInput = $(this).next('input')
+    const delID = closestInput.val()
+    $.ajax({
+        type: "DELETE",
+        url: `profile/project/delete/${delID}`,
+        success: function(result) {
+            alert('Project Deleted')
+            console.log(`Result ${JSON.stringify(result)}`)
+            if (typeof result.redirect == 'string') {
+                window.location = result.redirect
+            }
+        },
+        error: function(result) {
+            alert('Errror in deleting application')
+        }
+    })
+    e.preventDefault()
 });

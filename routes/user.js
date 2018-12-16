@@ -78,18 +78,17 @@ router.get(`/profile/work_experience/delete/:id`, async (req, res) => {
   }
 });
 
-router.get("/profile/project/delete/:id", async (req, res) => {
+router.delete("/profile/project/delete/:id", async (req, res) => {
   try 
   {
-    req.user = await userData.deleteProject(req.session.user._id, req.params.id);
-    req.user = user
-    res.redirect('/user/edit_profile')
-    // res.status = 201
-    // res.json({redirect:'/user/edit_profile'})
+    console.log(`ID: to delete ${req.user}`)
+    await userData.deleteProject(req.user._id, req.params.id);
+    res.status = 201
+    res.json({redirect:'/user/edit_profile'})
   } 
   catch (e) 
   {
-    console.log(e)
+    console.log(`Error in deleting ${e}`)
     res.status(404).render("error/404",errorActive)
     return;
   }
