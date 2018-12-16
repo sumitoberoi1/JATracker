@@ -13,3 +13,21 @@ const createErrorHTML = (errors) => {
         
     });
 } 
+
+$('#deleteApplicationButton').click((e)=> {
+    const delID = $('#applicationID').val();
+    $.ajax({
+        type: "DELETE",
+        url: `/application/${delID}`,
+        success: function(result) {
+            alert('Application Deleted')
+            if (typeof result.redirect == 'string') {
+                window.location = result.redirect
+            }
+        },
+        error: function(result) {
+            alert('Errror in deleting application')
+        }
+    })
+    e.preventDefault();
+})

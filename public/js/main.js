@@ -1,40 +1,4 @@
 
-$('input[name="resume"]').change(function(e){
-    const fileName = e.target.files[0].name;
-    $(this).next('.custom-file-label').html(fileName);
-});
-$('input[name="coverletter"]').change(function(e){
-    const fileName = e.target.files[0].name;
-    $(this).next('.custom-file-label').html(fileName);
-});
-
-$('#SearchApplicationButton').click((e) => {
-    console.log(`Clicked this`)
-    const pageHTTML =  $('html')[0].outerHTML
-    const template = Handlebars.compile(pageHTTML)
-    const context = {title:'new title'}
-    const compileData = template(context)
-    pageHTTML.innerHTML = compileData
-    console.log(`page HTMl ${pageHTTML}`)
-})
-$('#deleteApplicationButton').click((e)=> {
-    const delID = $('#applicationID').val();
-    $.ajax({
-        type: "DELETE",
-        url: `/application/${delID}`,
-        success: function(result) {
-            alert('Application Deleted')
-            if (typeof result.redirect == 'string') {
-                window.location = result.redirect
-            }
-        },
-        error: function(result) {
-            alert('Errror in deleting application')
-        }
-    })
-    e.preventDefault();
-})
-
 function show_new_work_form() {
     document.getElementById('hiddenNewWorkForm').style.display = "block";
     document.getElementById('coverLetter').style.display = "none";
