@@ -133,25 +133,12 @@ multerObject,async (req,res) => {
 })
 
 
-router.put("/application/:id",async (req,res) => {
-   
-})
-
 router.post("/editApplication",multerObject,async (req, res) => {
     const id = req.body.id
     const application = await applicationData.getApplicationByID(id,req.user._id)
     console.log(`Here in applicatioonnEDIt`)
     try {
         const appplicationToSaveData = req.body
-        const {
-            companyName,
-            role,
-            applyDate,
-            applicationStatus,
-            jobSource,
-            notes
-        } = appplicationToSaveData;
-        const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
         if (req.files) {
             if (req.files.resume && req.files.resume.length > 0) {
                 appplicationToSaveData.resume = req.files.resume[0]
@@ -164,11 +151,18 @@ router.post("/editApplication",multerObject,async (req, res) => {
                 appplicationToSaveData.coverletter = application.coverletter
             }
         }
+        if (!errorValidation.isValidApplicationData(appplicationToSaveData)) {
+            req.flash("error","Invalid ApplicationData")
+            active = {newApplication:true}
+            res.status(422).render("applications/new",{title:'Create New Application',application:application,active,errors:req.flash("error")})
+            return
+        }
         const editApplication = await applicationData.editApplication(id,appplicationToSaveData,req.user._id)
         res.redirect(`/application/${editApplication._id}`)
         return
     } catch (e) {
-        res.status(404).json({error: e});
+        req.flash("error","Server Error")
+        res.status(500).render("applications/new",{title:'Create New Application',application:application,active,errors:req.flash("error")})
     }
 })
 
