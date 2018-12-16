@@ -37,7 +37,7 @@
 
       <div class="form-group">
         <div class="custom-file">
-          <input id="coverLetter" type="file" name="coverLetter" class="custom-file-input" accept=".doc,.docx,application/pdf" />
+          <input id="coverLetter" type="file" name="coverletter" class="custom-file-input" accept=".doc,.docx,application/pdf" />
           <label for="coverLetter" class="custom-file-label">{{#if
             profile.coverLetter}}{{profile.coverLetter.originalname}}
             {{else}}Upload Your Cover Letter{{/if}}</label>
@@ -46,6 +46,7 @@
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block">Save Profile</button>
         </form>
+  </div>
    <div class="clearfix"></div>
      
 
@@ -75,11 +76,17 @@
         <div class="clear"></div>
         <hr>
         {{/each}}
+        <div class ="text-center">
         <div class="form-group">
+            <div class="card-footer">
+                
+           
         <button type="button" class="btn btn-primary" onclick="show_new_work_form()">
         
           Add Work Experience
-        </button> </div>
+        </button> </div></div>
+         </div>
+        
         <div class="hiddenNewWorkForm" id="hiddenNewWorkForm">
           <div class="add-form">
             <form action="/user/profile/new_work_experience" method="post">
@@ -133,6 +140,8 @@
         </div>
         <div class="clearfix"> </div>
         <div class="clearfix"> </div>
+       
+         
         <h2>Projects</h2>
         <div class="clearfix"> </div>
         {{#unless profile.profile.projects}}
@@ -151,10 +160,14 @@
         <div class="clear"></div>
         <hr>
         {{/each}}
-        <button type="button" class="btn btn-primary"  onclick="show_new_project_form()">
+          <div class="card-footer">
+               
+          
+        <div class="text-center">
+        <button type="button" class="btn btn-primary"    onclick="show_new_project_form()">
          
           Add Project
-        </button>
+        </button></div>  </div> </div>
         <div class="hiddenNewProjectForm" id="hiddenNewProjectForm">
           <div class="add-form">
             <form action="/user/profile/new_project" method="post">
@@ -204,7 +217,7 @@
       </div>
       </div>
       </div>
-      x`
+     
     </form>
 </article>
 <script src="/public/js/Present_job.js"></script>
