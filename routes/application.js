@@ -4,6 +4,8 @@ const data = require("../data");
 const applicationData = data.application;
 const multer = require("multer")
 const passPortConfig = require("../config/passportConfig")
+const helperMethods = require("../helpers/helperMethod")
+const errorValidation = require("../helpers/errorValdation")
 let active = {};
 const multerConfig = {
     storage: multer.diskStorage({
@@ -112,24 +114,23 @@ multerObject,async (req,res) => {
         notes
     } = applicationPostData;
     try {
-        // let errorMessage = ``;
-        // if (!errorChecking.dataValidString(title)) {
-        // errorMessage = `Invalid Title`
-        // } else if (!errorChecking.arrayContainsObjectsWithKeys(ingredients, ['name', 'amount'])) {
-        // errorMessage = `Invalid Ingredients array either you didn't provide an array or one of your ingredient doesn't have a valid structure`
-        // } else if (!errorChecking.dataValidArray(steps)) {
-        // errorMessage = `Invalid Steps`
-        // } else {
      const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
         if (req.files) {
             if (req.files.resume && req.files.resume.length > 0) {
                 console.log(`In resume ${req.files.resume}`)
-                appplicationToSaveData.resume = req.files.resume[0]
+                const resume = req.files.resume[0]
+                appplicationToSaveData.resume = resume
             }
             if (req.files.coverletter && req.files.coverletter.length > 0) {
-                console.log(`In coverletter`)
-                appplicationToSaveData.coverletter = req.files.coverletter[0]
+                const coverletter = req.files.coverletter[0]
+                appplicationToSaveData.coverletter = coverletter
             }
+        }
+        if (!errorValidation.isValidApplicationData(applicationPostData)) {
+            req.flash("error","Invalid ApplicationData")
+            active = {newApplication:true}
+            res.status(422).render("applications/new",{title:'Create New Application',active,errors:req.flash("error")})
+            return
         }
         const newApplication = await applicationData.createApplication(appplicationToSaveData,req.user._id);
         console.log(`Application Data ${JSON.stringify(newApplication)}`)
@@ -140,6 +141,8 @@ multerObject,async (req,res) => {
         res.status(500).json({error: e});
     }
 })
+
+
 router.put("/application/:id",async (req,res) => {
    
 })
@@ -149,7 +152,7 @@ router.post("/editApplication",multerObject,async (req, res) => {
     const application = await applicationData.getApplicationByID(id,req.user._id)
     console.log(`Here in applicatioonnEDIt`)
     try {
-        const applicationEditData = req.body
+        const appplicationToSaveData = req.body
         const {
             companyName,
             role,
@@ -157,7 +160,7 @@ router.post("/editApplication",multerObject,async (req, res) => {
             applicationStatus,
             jobSource,
             notes
-        } = applicationEditData;
+        } = appplicationToSaveData;
         const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
         if (req.files) {
             if (req.files.resume && req.files.resume.length > 0) {

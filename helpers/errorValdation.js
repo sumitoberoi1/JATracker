@@ -27,6 +27,49 @@ const arrayContainsObject = (array) => {
     return true;
 }
 
+const isValidFilePath = (path) => {
+    return path === 'doc' || path === 'docx' || path === 'pdf'
+}
+const isValidDate = (dateString) => {
+    if (dataNotNULL(dateString) && typeof dateString === dataTypes.string) {
+        const date = new Date(dateString)
+        if (isNaN(date.getMonth())) {
+            return false
+         }
+         else
+         {
+            return true
+         }
+    } else {
+        return false
+    }
+}
+
+const isValidApplicationData = (data) => {
+    const {
+        companyName,
+        role,
+        applyDate,
+        applicationStatus,
+        jobSource,
+        notes
+    } = data;
+    console.log(`Instance of date ${typeof applyDate}`)
+    if (dataValidString(companyName) && dataValidString(role) && dataValidString(applicationStatus) && dataValidString(jobSource) && isValidDate(applyDate)) {
+        if (notes) {
+            if (dataValidString(notes)) {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
+    } else {
+        return false
+    }
+}
+
 const objectContainsKeys = (object,params) => {
     for (const key of params) {
         if (!object.hasOwnProperty(key)) {
@@ -57,5 +100,7 @@ module.exports = {
     dataValidArray,
     dataValidObject,
     arrayContainsObject,
-    arrayContainsObjectsWithKeys
+    arrayContainsObjectsWithKeys,
+    isValidFilePath,
+    isValidApplicationData
 }

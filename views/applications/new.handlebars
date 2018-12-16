@@ -3,6 +3,11 @@
     <h1>{{title}}</h1>
   </div>
   <div class="container">
+    {{#if errors}}
+    <div class="alert alert-danger" role="alert">
+      {{{errors}}}
+    </div>
+    {{/if}}
     {{#if application}}
     <form action="/application/editApplication" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data"
       onsubmit="">
