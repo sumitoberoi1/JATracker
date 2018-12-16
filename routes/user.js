@@ -39,7 +39,7 @@ router.get("/view_profile", async (req, res) => {
   res.render("user/view_profile", {title:'View Profile', active, profile: profile})
 });
 
-router.get("/profile/work_experience/edit/:id", async (req, res) => {
+router.get("/profile/work_experience/edit/:id", (req, res) => {
   const user = req.user
   const profile = user.profile;
   const workExperiences = profile.workExperience;
@@ -74,7 +74,7 @@ router.get("/profile/work_experience/delete/:id", async (req, res) => {
   catch (e) 
   {
     console.log(e)
-    res.status(500).json({ error: e });
+    res.status(500).render("error/500")
     return;
   }
 });
@@ -89,7 +89,7 @@ router.get("/profile/project/delete/:id", async (req, res) => {
   catch (e) 
   {
     console.log(e)
-    res.status(500).json({ error: e });
+    res.status(404).render("error/404")
     return;
   }
 });
