@@ -43,21 +43,25 @@
             {{else}}Upload Your Cover Letter{{/if}}</label>
         </div>
       </div>
+
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block">Save Profile</button>
         </form>
   </div>
+  
+
    <div class="clearfix"></div>
      
 
     
     <div class="clearfix"> </div>
+    <br>
     <div class="card">
       <div class="card-header">
-        <h2 class="card-title">Work Experience and Projects</h2>
+        <h2 class="card-title">Work Experience </h2>
       </div>
       <div class="card-body">
-        <h2 class="card-title">Work Experience</h2>
+      
         <div class="clearfix"> </div>
         {{#unless profile.profile.workExperience}}
         <p>Edit Work Experience</p>
@@ -138,11 +142,17 @@
             </form>
           </div>
         </div>
+        </div>
+      </div> 
         <div class="clearfix"> </div>
         <div class="clearfix"> </div>
-       
-         
-        <h2>Projects</h2>
+       <br>
+          <div class="card" id="projectscard">
+      <div class="card-header">
+        <h2 class="card-title"> Projects</h2>
+      </div>
+      <div class="card-body">
+        {{!-- <h2>Projects</h2> --}}
         <div class="clearfix"> </div>
         {{#unless profile.profile.projects}}
         <p>Edit projects</p>
