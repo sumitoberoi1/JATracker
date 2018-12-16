@@ -24,7 +24,11 @@
         </div>
         <div class="form-group">
           <label for="applyDate">Enter Applied Date or Date you will apply On</label>
+          {{#if application}}
           <input id="applyDate" type="date" name="applyDate" class="form-control" required value="{{formDateFormat application.appliedDate}}" />
+          {{else}}
+          <input id="applyDate" type="date" name="applyDate" class="form-control" required />
+          {{/if}}
         </div>
         <div class="form-group">
           <label for="applicationStatus">
@@ -83,8 +87,8 @@
         </div>
         {{#if application}}
         <div class="form-group">
-          <button type="submit btn-danger" class="btn btn-primary btn-inline">Edit Application</button>
-          <button type="button btn-danger" class="btn btn-danger btn-inline" id="deleteApplicationButton">Delete
+          <button type="submit" class="btn btn-primary btn-inline">Edit Application</button>
+          <button type="button" class="btn btn-danger btn-inline" id="deleteApplicationButton">Delete
             Application</button>
         </div>
         {{else}}
