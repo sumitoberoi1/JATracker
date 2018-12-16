@@ -35,14 +35,14 @@
                     <a href="{{profile.resume.path}}" download="{{profile.resume.originalname}}" class="card-link">
                         <i class="fa fa-file" aria-hidden="true" style="font-size:36px"></i>
                     </a>
-                    {{profile.resume.originalname}}{{else}}Not Upload Resume Yet
+                    {{profile.resume.originalname}}{{else}}
                     {{/if}}
 
                     {{#if profile.coverLetter}}
                     <a href="{{profile.coverLetter.path}}" download="{{profile.coverLetter.originalname}}" class="card-link">
                         <i class="fa fa-file" aria-hidden="true" style="font-size:36px"></i>
                     </a>
-                    {{profile.coverLetter.originalname}}{{else}}Not Upload Cover Letter Yet
+                    {{profile.coverLetter.originalname}}{{else}}
                     {{/if}}
                 </p>
             </div>
@@ -69,8 +69,9 @@
 
                 {{/each}}
             </div>
-            <div class="card-footer">
-                <a href="/user/edit_profile" class="card-link">Add Work Experience by clicking Edit Profile</a>
+             <div class="card-footer">
+                   <div class="text-center">
+                <a href="/user/edit_profile" class="btn btn-primary role="button">Add Work Experience by clicking Edit Profile</a>
             </div>
 
         </div>
@@ -101,9 +102,10 @@
             </div>
             <hr>
 
-            <div class="card-footer">
-                <a href="/user/edit_profile" class="card-link">Add Projects by clicking Edit Profile</a>
-            </div>
+         <div class="card-footer">
+                 <div class="text-center">
+                <a href="/user/edit_profile" class="btn btn-primary role="button">Add Projects by clicking Edit Profile</a>
+          </div>  </div>
         </div>
     </div>
     <div class="clearfix visible-xs"></div>
