@@ -182,7 +182,6 @@
         <div class="tags">
           <a href="/user/profile/project/edit/{{this._id}}" class="btn btn-primary">Edit</a>
           <a href="/user/profile/project/delete/{{this._id}}" class="btn btn-danger">Delete</a>
-
         </div>
         <div class="clear"></div>
         <hr>
@@ -225,6 +224,7 @@
               <label for="projectdescription">Description</label>
               <textarea id="projectdescription" class="form-control" rows="4" placeholder="Any Other Description" name="projectdescription"></textarea>
             </div>
+
             <button id="projectcancel" name="projectcancel" class="btn btn-danger" type="button" onclick="hide_new_project_form()">Cancel</button>
             <button id="projectsave" name="projectsave" class="btn btn-primary" type="submit">Save</button>
           </form>
