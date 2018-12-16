@@ -28,15 +28,11 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
 const viewEngine = exphbs({
   helpers: {
       concat: function(str1,str2) { return str1 + str2},
-      select: function (value, options) {
-        return options.fn()
-          .split('\n')
-          .map(function (v) {
-            var t = 'value="' + value + '"';
-            return RegExp(t).test(v) ? v.replace(t, t + ' selected="selected"') : v;
-          })
-          .join('\n');
-      },
+      select:  function( value, options ){
+        let $el = $('<select />').html( options.fn(this) );
+        $el.find('[value="' + value + '"]').attr({'selected':'selected'});
+        return $el.html();
+    },
       formatDate: function(dateString) {
         let date = new Date(dateString) 
         return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
