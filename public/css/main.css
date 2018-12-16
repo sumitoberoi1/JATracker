@@ -30,6 +30,10 @@
     overflow: auto;
   }
 
+  .updateWorkForm, .updateProjectForm {
+    background-color: #6d9add;
+  }
+
   .signupForm, .loginForm {
     width: 500px;
     margin-top: 50px;
