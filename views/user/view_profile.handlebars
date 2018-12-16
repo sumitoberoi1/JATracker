@@ -12,6 +12,16 @@
                 <p class="card-text">School: {{profile.profile.school}}</p>
                 <p class="card-text">Skills: {{profile.profile.skills}}</p>
                 <p class="card-text">Present Job: {{profile.profile.presentJob}}</p>
+                {{#if profile.profile.gitHubLink}}
+                <a class="fab fa-github btn btn-lg" style="color:black" href={{profile.profile.gitHubLink}} role="button">Github</a>
+                {{/if}}
+                {{#if profile.profile.linkedinLink}}
+                <a class="fab fa-linkedin btn btn-lg" style="color:black" href={{profile.profile.linkedinLink}} role="button">LinkedIn</a>
+                {{/if}}
+                {{#if profile.profile.stackOverflowLink}}
+                <a class="fab fa-stack-overflow btn btn-lg" style="color:black" href={{profile.profile.stackOverflowLink}}
+                    role="button">StackOverflow</a>
+                {{/if}}
             </div>
             <div class="clearfix visible-xs"></div>
         </div>
@@ -21,23 +31,19 @@
             </div>
             <div class="card-body" style="position: relative;">
                 <p class="card-text">
-                    <elem>
-                        {{#if profile.resume}}
-                        <a href="{{profile.resume.path}}" download="{{profile.resume.originalname}}" class="card-link">
-                            <i class="fa fa-file" aria-hidden="true" style="font-size:36px"></i>
-                        </a>
-                        <span>{{profile.resume.originalname}}{{else}}</span>
-                        {{/if}}
-                    </elem>
+                    {{#if profile.resume}}
+                    <a href="{{profile.resume.path}}" download="{{profile.resume.originalname}}" class="card-link">
+                        <i class="fa fa-file" aria-hidden="true" style="font-size:36px"></i>
+                    </a>
+                    {{profile.resume.originalname}}{{else}}Not Upload Resume Yet
+                    {{/if}}
 
-                    <elem>
-                        {{#if profile.coverLetter}}
-                        <a href="{{profile.coverLetter.path}}" download="{{profile.coverLetter.originalname}}" class="card-link">
-                            <i class="fa fa-file" aria-hidden="true" style="font-size:36px"></i>
-                        </a>
-                        <span>{{profile.coverLetter.originalname}}{{else}}</span>
-                        {{/if}}
-                    </elem>
+                    {{#if profile.coverLetter}}
+                    <a href="{{profile.coverLetter.path}}" download="{{profile.coverLetter.originalname}}" class="card-link">
+                        <i class="fa fa-file" aria-hidden="true" style="font-size:36px"></i>
+                    </a>
+                    {{profile.coverLetter.originalname}}{{else}}Not Upload Cover Letter Yet
+                    {{/if}}
                 </p>
             </div>
         </div>

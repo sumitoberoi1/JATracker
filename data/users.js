@@ -73,6 +73,9 @@ async function signUp(username, password, email)
       school: null,
       skills: null,
       presentJob: null,
+      gitHubLink: null,
+      linkedinLink: null,
+      stackOverflowLink: null,
       workExperience: [],
       projects: []
     },

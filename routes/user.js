@@ -49,7 +49,7 @@ router.get("/profile/work_experience/edit/:id", async (req, res) => {
       currWorkExperience = workExperiences[i];
     }
   }
-  res.render("user/edit_work_experience", {workExperience : currWorkExperience});
+  res.render("user/edit_work_experience", {title:'Edit Work Experience', workExperience : currWorkExperience});
 });
 
 router.get("/profile/project/edit/:id", async (req, res) => {
@@ -61,7 +61,7 @@ router.get("/profile/project/edit/:id", async (req, res) => {
       currProject = userprojects[i];
     }
   }
-  res.render("user/edit_project", {project : currProject});
+  res.render("user/edit_project", {title:'Edit Project', project : currProject});
 });
 
 router.get("/profile/work_experience/delete/:id", async (req, res) => {
@@ -102,6 +102,9 @@ router.post("/edit_profile", multerObject, async (req, res) => {
   newProfile.school = req.body.school;
   newProfile.skills = req.body.skills;
   newProfile.presentJob = req.body.presentJob;
+  newProfile.gitHubLink = req.body.gitHubLink;
+  newProfile.linkedinLink = req.body.linkedinLink;
+  newProfile.stackOverflowLink = req.body.stackOverflowLink;
   newProfile.workExperience = userdata.profile.workExperience;
   newProfile.projects = userdata.profile.projects;
   let resume = null

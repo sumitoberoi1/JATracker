@@ -26,6 +26,21 @@
         <input id="presentJob" type="text" name="presentJob" placeholder="Enter Present Job" value="{{profile.profile.presentJob}}"
           class="form-control" />
       </div>
+      <div class="form-group">
+        <label for="gitHubLink">GitHub Link</label>
+        <input id="gitHubLink" type="url" name="gitHubLink" placeholder="Enter GitHub Link" value="{{profile.profile.gitHubLink}}"
+          class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="linkedinLink">LinkedIn Link</label>
+        <input id="linkedinLink" type="url" name="linkedinLink" placeholder="Enter LinkedIn Link" value="{{profile.profile.linkedinLink}}"
+          class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="stackOverflowLink">StackOverflow Link</label>
+        <input id="stackOverflowLink" type="url" name="stackOverflowLink" placeholder="Enter StackOverflow Link" value="{{profile.profile.stackOverflowLink}}"
+          class="form-control" />
+      </div>
 
       <div class="form-group">
         <div class="custom-file">
@@ -46,14 +61,14 @@
 
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block">Save Profile</button>
-        </form>
-  </div>
-  
+      </div>
+    </form>
 
-   <div class="clearfix"></div>
-     
 
-    
+    <div class="clearfix"></div>
+
+
+
     <div class="clearfix"> </div>
     <br>
     <div class="card">
@@ -61,7 +76,7 @@
         <h2 class="card-title">Work Experience </h2>
       </div>
       <div class="card-body">
-      
+
         <div class="clearfix"> </div>
         {{#unless profile.profile.workExperience}}
         <p>Edit Work Experience</p>
@@ -74,23 +89,24 @@
         <p class="card-text">{{#if this.location}}Location: {{this.location}}{{/if}}</p>
         <p class="card-text">{{#if this.description}}Description: {{this.description}}{{/if}}</p>
         <div class="tags">
-          <a href="/user/profile/work_experience/edit/{{this._id}}" class="btn btn-primary" role="button">Edit</a></button>
-         <a href="/user/profile/work_experience/delete/{{this._id}}"class="btn btn-danger" role="button">Delete</a></button>
+          <a href="/user/profile/work_experience/edit/{{this._id}}" class="btn btn-primary" role="button">Edit</a>
+          <a href="/user/profile/work_experience/delete/{{this._id}}" class="btn btn-danger" role="button">Delete</a>
         </div>
         <div class="clear"></div>
         <hr>
         {{/each}}
-        <div class ="text-center">
-        <div class="form-group">
+        <div class="text-center">
+          <div class="form-group">
             <div class="card-footer">
-                
-           
-        <button type="button" class="btn btn-primary" onclick="show_new_work_form()">
-        
-          Add Work Experience
-        </button> </div></div>
-         </div>
-        
+
+
+              <button type="button" class="btn btn-primary" onclick="show_new_work_form()">
+
+                Add Work Experience
+              </button> </div>
+          </div>
+        </div>
+
         <div class="hiddenNewWorkForm" id="hiddenNewWorkForm">
           <div class="add-form">
             <form action="/user/profile/new_work_experience" method="post">
@@ -113,19 +129,19 @@
                 <input id="startDate" type="date" name="startDate" class="form-control" required />
               </div>
 
-               <div class="checkbox"> 
-    <label class="checkbox-custom"> 
-    <input type="checkbox" name="present_job" id="present_job" value="yes">
-    <i class="fa fa-fw fa-square-o"></i> Present Job
-    </label> 
-    </div>
- <div class="form-group">
+              <div class="checkbox">
+                <label class="checkbox-custom">
+                  <input type="checkbox" name="present_job" id="present_job" value="yes">
+                  <i class="fa fa-fw fa-square-o"></i> Present Job
+                </label>
+              </div>
+              <div class="form-group">
 
-    <div class="input" id="endDateinput">
-  <label for="endDate">End Date</label>
-   <input id="endDate" type="date" name="endDate" placeholder="Enter End Date" value="{{workExperience.endDate}}" class="form-control" />
-    </div>
-</div>
+                <div class="input" id="endDateinput">
+                  <label for="endDate">End Date</label>
+                  <input id="endDate" type="date" name="endDate" value="{{workExperience.endDate}}" class="form-control" />
+                </div>
+              </div>
 
               <div class="form-group">
                 <label for="location">Location</label>
@@ -142,12 +158,12 @@
             </form>
           </div>
         </div>
-        </div>
-      </div> 
-        <div class="clearfix"> </div>
-        <div class="clearfix"> </div>
-       <br>
-          <div class="card" id="projectscard">
+      </div>
+    </div>
+    <div class="clearfix"> </div>
+    <div class="clearfix"> </div>
+    <br>
+    <div class="card" id="projectscard">
       <div class="card-header">
         <h2 class="card-title"> Projects</h2>
       </div>
@@ -164,70 +180,64 @@
         <p class="card-text">{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
         <p class="card-text">{{#if this.description}}Description: {{this.description}}{{/if}}</p>
         <div class="tags">
-          <a href="/user/profile/project/edit/{{this._id}}" class="btn btn-primary" >Edit</a>
-       <a href="/user/profile/project/delete/{{this._id}}" class="btn btn-danger">Delete</a>
+          <a href="/user/profile/project/edit/{{this._id}}" class="btn btn-primary">Edit</a>
+          <a href="/user/profile/project/delete/{{this._id}}" class="btn btn-danger">Delete</a>
         </div>
         <div class="clear"></div>
         <hr>
         {{/each}}
-          <div class="card-footer">
-               
-          
-        <div class="text-center">
-        <button type="button" class="btn btn-primary"    onclick="show_new_project_form()">
-         
-          Add Project
-        </button></div>  </div> </div>
-        <div class="hiddenNewProjectForm" id="hiddenNewProjectForm">
-          <div class="add-form">
-            <form action="/user/profile/new_project" method="post">
-              <h2>We only support projects with URLs at the moment...</h2>
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input id="name" type="text" name="name" placeholder="Name" class="form-control" required />
-              </div>
+        <div class="card-footer">
 
-              <div class="form-group">
-                <label for="position">Position</label>
-                <input id="position" type="text" name="position" placeholder="Enter Position" class="form-control" />
-              </div>
 
-              <div class="form-group">
-                <label for="projectstartDate">Start Date</label>
-                <input id="projectstartDate" type="date" name="projectstartDate" class="form-control" />
-              </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-primary" onclick="show_new_project_form()">
 
-              <div class="form-group">
-                <label for="projectendDate">End Date</label>
-                <input id="projectendDate" type="date" name="projectendDate" class="form-control" />
-              </div>
-
-              <div class="form-group">
-                <label for="projectdescription">Description</label>
-                <textarea id="projectdescription" class="form-control" rows="4" placeholder="Any Other Description"
-                  name="projectdescription"></textarea>
-              </div>
-
-              <button id="projectcancel" name="projectcancel" class="btn btn-danger" type="button" onclick="hide_new_project_form()">Cancel</button>
-              <button id="projectsave" name="projectsave" class="btn btn-success" type="submit">Save</button>
-            </form>
-          </div>
+              Add Project
+            </button></div>
         </div>
-        <div class="clearfix"> </div>
       </div>
+      <div class="hiddenNewProjectForm" id="hiddenNewProjectForm">
+        <div class="add-form">
+          <form action="/user/profile/new_project" method="post">
+            <h2>We only support projects with URLs at the moment...</h2>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name" type="text" name="name" placeholder="Name" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+              <label for="position">Position</label>
+              <input id="position" type="text" name="position" placeholder="Enter Position" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label for="projectstartDate">Start Date</label>
+              <input id="projectstartDate" type="date" name="projectstartDate" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label for="projectendDate">End Date</label>
+              <input id="projectendDate" type="date" name="projectendDate" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label for="projectdescription">Description</label>
+              <textarea id="projectdescription" class="form-control" rows="4" placeholder="Any Other Description" name="projectdescription"></textarea>
+            </div>
+
+            <button id="projectcancel" name="projectcancel" class="btn btn-danger" type="button" onclick="hide_new_project_form()">Cancel</button>
+            <button id="projectsave" name="projectsave" class="btn btn-success" type="submit">Save</button>
+          </form>
+        </div>
+      </div>
+      <div class="clearfix"> </div>
     </div>
-    <div class="clearfix"> </div>
-    <div class="clearfix"> </div>
-<div class ="container">
-<div class="clearfix"> </div>
   </div>
-    <hr>
-    
-      </div>
-      </div>
-      </div>
-      </div>
-     
-    </form>
+  <div class="clearfix"> </div>
+  <div class="clearfix"> </div>
+  <div class="container">
+    <div class="clearfix"> </div>
+  </div>
+  <hr>
 </article>
 <script src="/public/js/Present_job.js"></script>
