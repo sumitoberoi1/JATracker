@@ -5,7 +5,7 @@ const userData = require("../data/users");
 let signUpData = {layout:false, title:'Sign Up'}
 
 router.get("/", async(req, res) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
         res.redirect("/application")
     } else {
         res.render("signup",signUpData);

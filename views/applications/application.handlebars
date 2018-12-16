@@ -9,6 +9,9 @@
                 <p class="card-text">Status: {{application.applicationStatus}}</p>
                 <p class="card-text">Source: {{application.jobSource}}</p>
                 <p>Applied On/To Apply Date: {{formatDate application.appliedDate}}</p>
+                {{#if application.notes}}
+                <p>Job Notes: {{application.notes}}</p>
+                {{/if}}
             </div>
             <div class="card-footer">
                 {{#if application.resume}}

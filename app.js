@@ -64,21 +64,24 @@ app.engine("handlebars", viewEngine);
 app.set("view engine", "handlebars"); 
 
 const doesUserHaveProfile = (req,res,next) => {
+  console.log(`PATH :${req.path} url : ${req.path}`)
   const path = "/user/edit_profile"
    if (req.isAuthenticated()) {
       const user = req.user 
+      console.log(`USer ${JSON.stringify(user)}`)
       if (user && user.profile && user.profile.fullName) {
+        console.log(`In if of dooes`)
         next()
       } else {
-        if (req.method === 'GET' && req.originalUrl === path) {
-          console.log(`If`)
+        if (req.method === 'GET' && req.path === path) {
           next()
         } else {
-          console.log(`Else`)
+          console.log(`In else of dooes`)
           res.redirect("/user/edit_profile")
         }
       }
    } else {
+    console.log(`In super eelse of dooes`)
      next()
    } 
 }
@@ -87,7 +90,7 @@ app.use(function (req, res, next) {
   console.log(`Errors ${res.locals.errors}`)
   next();
 });
-app.use(doesUserHaveProfile)
+//app.use(doesUserHaveProfile)
 
 configRoutes(app);
 app.listen(3000, () => {

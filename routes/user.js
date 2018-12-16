@@ -95,6 +95,7 @@ router.get("/profile/project/delete/:id", async (req, res) => {
 });
 
 router.post("/edit_profile", multerObject, async (req, res) => {
+  console.log(`Here in edit profile`)
   let newProfile = {};
   const userdata = req.user
   newProfile.fullName = req.body.fullName;
