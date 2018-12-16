@@ -68,10 +68,15 @@ router.get("/all",async(req,res) => {
 });
 
 router.get("/:id",async (req,res) => {
-    const id = req.params.id
-    active = {newApplication:true}
-    const application = await applicationData.getApplicationByID(id,req.user._id)
-    res.render("applications/application",{title:'My Application',application:application,active})
+    try {
+        const id = req.params.id
+        active = {newApplication:true}
+        const application = await applicationData.getApplicationByID(id,req.user._id)
+        res.render("applications/application",{title:'My Application',application:application,active})
+    } catch (e) {
+        active = {allApplications:true}
+        res.status(404).render("error/404",active)
+    }
 });
 
 router.delete("/:id",async (req,res) => {

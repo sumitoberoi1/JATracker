@@ -44,7 +44,7 @@ router.get("/profile/work_experience/edit/:id", async (req, res) => {
   const profile = user.profile;
   const workExperiences = profile.workExperience;
   let currWorkExperience;
-  for(var i=0; i < workExperiences.length; i++){
+  for(let i=0; i < workExperiences.length; i++){
     if(workExperiences[i]._id === req.params.id) {
       currWorkExperience = workExperiences[i];
     }
@@ -56,7 +56,7 @@ router.get("/profile/project/edit/:id", async (req, res) => {
   const user = req.user
   const profile = user.profile;
   const userprojects = profile.projects;
-  for(var i=0; i < userprojects.length; i++){
+  for(let i=0; i < userprojects.length; i++){
     if(userprojects[i]._id === req.params.id) {
       currProject = userprojects[i];
     }
@@ -201,7 +201,7 @@ router.post("/profile/work_experience/edit/:id", async (req, res) => {
   {
     const userdata = req.user
     let workExperience = userdata.profile.workExperience;
-    for(var i=0; i < workExperience.length; i++){
+    for(let i=0; i < workExperience.length; i++){
       if(workExperience[i]._id === req.params.id) {
         workExperience[i] = updatedWorkExperience;
       }
@@ -231,7 +231,7 @@ router.post("/profile/project/edit/:id", async (req, res) => {
   {
     const userdata = req.user
     let projects = userdata.profile.projects;
-    for(var i=0; i < projects.length; i++){
+    for(let i=0; i < projects.length; i++){
       if(projects[i]._id === req.params.id) {
         projects[i] = updatedProject;
       }
