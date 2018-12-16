@@ -7,7 +7,7 @@ let check = function(e) {
    
     } else {
      
-      document.getElementById('message').style.color = 'red';
+      document.getElementById('message').style.color = '#ee0000';
       document.getElementById('message').innerHTML = 'Passwords not matching';
        document.getElementById("signupbtn").disabled = true;
 
