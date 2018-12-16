@@ -40,6 +40,7 @@
             Application Status
           </label>
           <select id="applicationStatus" class="form-control" name="applicationStatus">
+            {{#select application.applicationStatus}}
             <option value="Application Submitted">Application Submitted</option>
             <option value="Not Submitted">Not Submitted</option>
             <option value="Under Review">Under Review</option>
@@ -51,6 +52,7 @@
             <option value="No Offer">No Offer</option>
             <option value="Pending">Pending</option>
             <option value="Offer Rejected">Offer Rejected</option>
+            {{/select}}
           </select>
         </div>
         <div class="form-group">
