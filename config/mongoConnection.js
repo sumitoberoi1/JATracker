@@ -20,6 +20,5 @@ module.exports = async () => {
       throw e
     }
   }
-
   return _db;
 };
