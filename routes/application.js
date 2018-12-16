@@ -105,25 +105,16 @@ router.get("/",async (req, res) => {
 router.post("/",
 multerObject,async (req,res) => {
     const applicationPostData = req.body;
-    const {
-        companyName,
-        role,
-        applyDate,
-        applicationStatus,
-        jobSource,
-        notes
-    } = applicationPostData;
     try {
-     const appplicationToSaveData = {companyName,role,applyDate,applicationStatus,jobSource,notes}
         if (req.files) {
             if (req.files.resume && req.files.resume.length > 0) {
                 console.log(`In resume ${req.files.resume}`)
                 const resume = req.files.resume[0]
-                appplicationToSaveData.resume = resume
+                applicationPostData.resume = resume
             }
             if (req.files.coverletter && req.files.coverletter.length > 0) {
                 const coverletter = req.files.coverletter[0]
-                appplicationToSaveData.coverletter = coverletter
+                applicationPostData.coverletter = coverletter
             }
         }
         if (!errorValidation.isValidApplicationData(applicationPostData)) {
@@ -132,13 +123,12 @@ multerObject,async (req,res) => {
             res.status(422).render("applications/new",{title:'Create New Application',active,errors:req.flash("error")})
             return
         }
-        const newApplication = await applicationData.createApplication(appplicationToSaveData,req.user._id);
-        console.log(`Application Data ${JSON.stringify(newApplication)}`)
+        const newApplication = await applicationData.createApplication(applicationPostData,req.user._id);
         res.redirect(`/application/${newApplication._id}`)
         return
      } catch (e) {
-         console.log(`Error in creating application ${e}`)
-        res.status(500).json({error: e});
+        req.flash("error","Server Error")
+        res.status(500).render("applications/new",{title:'Create New Application',active,errors:req.flash("error")})
     }
 })
 
