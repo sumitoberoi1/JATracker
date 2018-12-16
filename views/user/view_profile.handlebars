@@ -69,51 +69,52 @@
 
                 {{/each}}
             </div>
-             <div class="card-footer">
-                   <div class="text-center">
-                <a href="/user/edit_profile" class="btn btn-primary" role="button">Add Work Experience by clicking Edit Profile</a>
+            <div class="card-footer">
+                <div class="text-center">
+                    <a href="/user/edit_profile" class="btn btn-primary" role="button">Add Work Experience</a>
+                </div>
+            </div>
+            <div class="clearfix visible-xs"></div>
+            <div class="clearfix"></div>
+            <div class="card my-3">
+                <div class="card-header">
+                    <h2 class="card-title">Projects</h2>
+                </div>
+                <div class="card-body">
+                    {{#unless profile.profile.projects}}
+                    <p>Add Projects by clicking EDIT Profile...</p>
+                    {{/unless}}
+                    {{#each profile.profile.projects}}
+                    <h3>{{this.name}}</h3>
+                    <p class="card-text">{{#if this.Position}}Position: {{this.position}}{{/if}}</p>
+                    <p class="card-text">{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
+                    <p class="card-text">{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
+                    <p class="card-text">{{#if this.description}}Description: {{this.description}}{{/if}}</p>
+                    <div class="clear"></div>
+                    {{/each}}
+                </div>
+                <hr>
+                <div class="card-footer">
+                    <div class="text-center">
+                        <a href="/user/edit_profile" class="btn btn-primary" role="button">Add Projects</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="clearfix visible-xs"></div>
-        <div class="clearfix"></div>
-        <div class="card my-3">
-            <div class="card-header">
-                <h2 class="card-title">Projects</h2>
+
+        <div class="clearfix visible-xs"></div>
+
+
+        <div class="clearfix visible-xs"></div>
+        <div class="container">
+            <div class="form-group">
+
+                <a href="/user/edit_profile" class="btn btn-primary btn-lg m-1" role="button">Edit Profile</a>
+                <a href="/logout" class="btn btn-danger btn-lg m-1" role="button">Logout</a>
             </div>
-            <div class="card-body">
-                {{#unless profile.profile.projects}}
-                <p>Add Projects by clicking EDIT Profile...</p>
-                {{/unless}}
-                {{#each profile.profile.projects}}
-                <h3>{{this.name}}</h3>
-                <p class="card-text">{{#if this.Position}}Position: {{this.position}}{{/if}}</p>
-                <p class="card-text">{{#if this.startDate}}Start Date: {{this.startDate}}{{/if}}</p>
-                <p class="card-text">{{#if this.endDate}}End Date: {{this.endDate}}{{/if}}</p>
-                <p class="card-text">{{#if this.description}}Description: {{this.description}}{{/if}}</p>
-                <div class="clear"></div>
-                {{/each}}
-            </div>
-            <hr>
-         <div class="card-footer">
-                 <div class="text-center">
-                <a href="/user/edit_profile" class="btn btn-primary" role="button">Add Projects by clicking Edit Profile</a>
-          </div>  </div>
+
         </div>
     </div>
-    <div class="clearfix visible-xs"></div>
-
-    <div class="clearfix visible-xs"></div>
-
-
-    <div class="clearfix visible-xs"></div>
-    <div class="container">
-        <div class="form-group">
-
-            <a href="/user/edit_profile" class="btn btn-primary btn-lg m-1" role="button">Edit Profile</a>
-            <a href="/logout" class="btn btn-danger btn-lg m-1" role="button">Logout</a>
-        </div>
-
-    </div>
-	</div>
 
 </article>
