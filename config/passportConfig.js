@@ -23,13 +23,13 @@ module.exports.setup = function () {
                 if (passwordsMatch) {
                     return done(null,user)
                 } else {
-                    return done(null,false,{error:'Invalid Password'});
+                    return done(null,false,req.flash("error",'Invalid Password'))
                 }
             } else {
-                return done(null,false,{error:`User doesn't exist`});
+                return done(null,false,req.flash("error",`User doesn' exist`));
             }
         } catch(e) {
-            return done(null,false,{error:'Invalid Password'});
+            return done(null,false,req.flash("error",'Invalid Password'));
         }
     }))
     } ,
