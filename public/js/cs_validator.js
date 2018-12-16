@@ -12,4 +12,4 @@ let check = function(e) {
        document.getElementById("signupbtn").disabled = true;
 
     }
-  }
+}
