@@ -1,7 +1,7 @@
 <div class="updateProjectForm" id="updateProjectForm">
     <div class="add-form">
-        <form action="/user/profile/project/edit/{{project._id}}" method="post">
-            <h2>We only support projects with URLs at the moment...</h2>
+        <form action="/user/profile/new_project" method="post">
+            <h1>We only support projects with URLs at the moment...</h1>
 
             <div class="form-group">
                 <label for="name">Name</label>
@@ -17,13 +17,13 @@
 
             <div class="form-group">
                 <label for="startDate">Start Date</label>
-                <input id="startDate" type="date" name="startDate" placeholder="Enter Start Date (Required)" value="{{project.startDate}}"
+                <input id="startDate" type="date" name="startDate" value="{{project.startDate}}"
                     class="form-control" />
             </div>
 
             <div class="form-group">
                 <label for="endDate">End Date</label>
-                <input id="endDate" type="date" name="endDate" placeholder="Enter End Date" value="{{project.endDate}}"
+                <input id="endDate" type="date" name="endDate" value="{{project.endDate}}"
                     class="form-control" />
             </div>
 

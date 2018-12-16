@@ -8,34 +8,26 @@
         <a class="navbar-brand" href="#">JATracker</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="sr-only"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                {{#if session.user}}
                 <li class="nav-item">
-                    <a class="nav-link {{#if active.profile}} active {{/if}}" href="/user/view_profile">View Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/application">Applications <span class="sr-only">(current)</span></a>
+                    <a class="nav-link {{#if active.allApplications}} active {{/if}}" href="/application">Applications
+                        <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{#if active.newApplication}} active {{/if}}" href="/application/new">Create
                         New Application</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/logout">Logout</a>
+                <li class="nav-item">
+                    <a class="nav-link {{#if active.futureApplications}} active {{/if}}" href="/application/future">Future
+                        Applications</a>
                 </li>
-                {{else}}
-                {{/if}}
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li>
-                    <a class="nav-link" href="/user/view_profile"><i class="fa fa-user"></i> Your Profile</a>
+                    <a class="nav-link {{#if active.profile}} active {{/if}}" href="/user/view_profile"><i class="fa fa-user"></i>
+                        Your Profile</a>
                 </li>
             </ul>
         </div>

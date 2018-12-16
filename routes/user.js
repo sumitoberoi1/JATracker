@@ -23,14 +23,12 @@ const multerObject = multer(multerConfig).fields([
   name: 'resume', maxCount: 1
   }, 
   {
-  name: 'coverLetter', maxCount: 1
+  name: 'coverletter', maxCount: 1
 }])
 
 router.get("/edit_profile", async (req, res) => {
   const profile = req.user;
   const active = {profile:true}
-  // console.log(profile.resume.originalname)
-  // console.log(profile.coverLetter.originalname)
   res.render("user/edit_profile",{title:'Edit Profile', active, profile: profile})
 });
 
@@ -51,7 +49,7 @@ router.get("/profile/work_experience/edit/:id", async (req, res) => {
       currWorkExperience = workExperiences[i];
     }
   }
-  res.render("user/edit_work_experience", {workExperience : currWorkExperience});
+  res.render("user/edit_work_experience", {title:'Edit Work Experience', workExperience : currWorkExperience});
 });
 
 router.get("/profile/project/edit/:id", async (req, res) => {
@@ -63,7 +61,7 @@ router.get("/profile/project/edit/:id", async (req, res) => {
       currProject = userprojects[i];
     }
   }
-  res.render("user/edit_project", {project : currProject});
+  res.render("user/edit_project", {title:'Edit Project', project : currProject});
 });
 
 router.get("/profile/work_experience/delete/:id", async (req, res) => {
@@ -97,12 +95,16 @@ router.get("/profile/project/delete/:id", async (req, res) => {
 });
 
 router.post("/edit_profile", multerObject, async (req, res) => {
+  console.log(`Here in edit profile`)
   let newProfile = {};
   const userdata = req.user
   newProfile.fullName = req.body.fullName;
   newProfile.school = req.body.school;
   newProfile.skills = req.body.skills;
   newProfile.presentJob = req.body.presentJob;
+  newProfile.gitHubLink = req.body.gitHubLink;
+  newProfile.linkedinLink = req.body.linkedinLink;
+  newProfile.stackOverflowLink = req.body.stackOverflowLink;
   newProfile.workExperience = userdata.profile.workExperience;
   newProfile.projects = userdata.profile.projects;
   let resume = null
@@ -115,9 +117,9 @@ router.post("/edit_profile", multerObject, async (req, res) => {
     else if (userdata.resume) {
       resume = userdata.resume
     }
-    if (req.files.coverLetter && req.files.coverLetter.length > 0) {
+    if (req.files.coverletter && req.files.coverletter.length > 0) {
         console.log(`In coverLetter`)
-        coverLetter = req.files.coverLetter[0]
+        coverLetter = req.files.coverletter[0]
     }
     else if (userdata.coverLetter) {
       coverLetter = userdata.coverLetter

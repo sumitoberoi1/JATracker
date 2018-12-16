@@ -1,13 +1,18 @@
 const express = require("express");
+const passport = require("passport");
 const router = express.Router();
 const userData = require("../data/users");
 let signUpData = {layout:false, title:'Sign Up'}
 
 router.get("/", async(req, res) => {
-	res.render("signup",signUpData);
+    if (req.isAuthenticated()) {
+        res.redirect("/application")
+    } else {
+        res.render("signup",signUpData);
+    }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
 	const username = req.body.username;
     const password = req.body.password;
     const repeated_password = req.body.repeatedPassword;
@@ -41,8 +46,16 @@ router.post("/", async (req, res) => {
     }
     try {
         signup = await userData.signUp(username, password, email);
-        console.log(`Success signedUp`)
-        res.redirect("/user/edit_profile");
+
+        passport.authenticate('local', function(err, user, info) {
+            if (err) { return next(err); }
+            if (!user) { return res.redirect('/login'); }
+            req.logIn(user, function(err) {
+              if (err) { return next(err); }
+              return res.redirect("/user/edit_profile");
+            });
+          })(req, res, next);
+
     } catch (e) {
         signUpData.error = e
         res.render("signup", signUpData);

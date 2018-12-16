@@ -7,7 +7,10 @@
             {{jobrole}}</h3>
         <p class="card-text">Status: {{applicationStatus}}</p>
         <p class="card-text">Source: {{jobSource}}</p>
-        <p>Applied On/To Apply Date: {{appliedDate}}</p>
+        <p>Applied On/To Apply Date: {{formatDate appliedDate}}</p>
+        {{#if notes}}
+        <p>Job Notes: {{notes}}</p>
+        {{/if}}
     </div>
     <div class="card-footer">
         {{#if resume}}

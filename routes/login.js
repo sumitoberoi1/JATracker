@@ -3,6 +3,7 @@ const userData = require("../data/users");
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const passport = require("passport");
+const errorValidation = require('../helpers/errorValdation')
 let loginData = {layout:false,title:'Login'}
 router.get("/", async (req, res) => {
     if (req.cookies.AuthCookie) {
@@ -31,6 +32,9 @@ router.post("/",passport.authenticate("local", {
      failureRedirect: "/login",
     failureFlash: true
   }))
+
+
+
 
 // router.post("/", async (req, res) => {
 //     const username = req.body.username;

@@ -1,64 +1,79 @@
 const mongoCollections = require("../config/mongoCollections");
 const applications = mongoCollections.applications;
 const uuid = require('uuid/v4');
-const createApplication = async (applicationData) => {
+const createApplication = async (applicationData,userID) => {
     const applicationCollection = await applications();
-    const {companyName,jobrole,appliedDate,applicationStatus,
+    const {companyName,role,applyDate,applicationStatus,
         jobSource,resume,coverletter,notes} = applicationData
+    const jobID = uuid()
     const newApplication = {
         companyName: companyName,
         jobrole: role,
-        appliedDate: applyDate,
+        appliedDate: new Date(applyDate),
         applicationStatus:applicationStatus,
         jobSource:jobSource,
         resume:resume,
         coverletter:coverletter,
         notes:notes,
-        _id: uuid()
+        _id: jobID,
+        userID:userID
     };
-    const newApplicationMongo = await applicationCollection.insertOne(newApplication);
-    const newId = newApplicationMongo.insertedId;
-    return await getApplicationByID(newId);
+    await applicationCollection.insertOne(newApplication);
+    return await getApplicationByID(jobID,userID);
 }
-const getApplicationByID = async (id) => {
+const getApplicationByID = async (id,userID) => {
     const applicationCollection = await applications();
     const application = await applicationCollection.findOne({
-        _id: id
+        _id: id,
+        userID:userID
     });
-    if (!application) throw "Application not found";
+    if (!application) { 
+        throw "Application not found";
+    }
     return application;
 }
 
-const editApplication = async (id, updatedApplicationData) => {
+const editApplication = async (id, updatedApplicationData,userID) => {
     const query = {
-        _id: id
+        _id: id,
+        userID:userID
     };
     const {companyName,role,applyDate,applicationStatus,
         jobSource,resume,coverletter,notes} = updatedApplicationData
     const editApplication = {
         companyName: companyName,
         jobrole: role,
-        appliedDate: applyDate,
+        appliedDate: new Date(applyDate),
         applicationStatus:applicationStatus,
         jobSource:jobSource,
         resume:resume,
         coverletter:coverletter,
-        notes:notes
+        notes:notes,
+        userID:userID
     }
     const applicationCollection = await applications();
     await applicationCollection.updateOne(query, {
         $set: editApplication
     });
-    return await getApplicationByID(id);
+    return await getApplicationByID(id,userID);
 }
 
-const getAllApplications = async() => {
+const getAllApplications = async(userID) => {
     const applicationCollection = await applications();
-    return await applicationCollection.find({}).sort({ appliedDate: -1 }).toArray();
+    return await applicationCollection.find({userID:userID}).sort({ appliedDate: -1 }).toArray();
 }
-const deleteApplication = async(id) => {
+
+const getFutureApplications =  async(userID) => {
     const applicationCollection = await applications();
-    const deletionInfo = await applicationCollection.removeOne({ _id: id });
+    let query = {userID:userID,appliedDate:{
+        $gte: new Date()
+    }}
+
+    return await applicationCollection.find(query).sort({ appliedDate: -1 }).toArray();
+}
+const deleteApplication = async(id,userID) => {
+    const applicationCollection = await applications();
+    const deletionInfo = await applicationCollection.removeOne({ _id: id,userID:userID });
     if (deletionInfo.deletedCount === 0) {
         throw `Could not delete post with id of ${id}`;
     } 
@@ -68,5 +83,6 @@ module.exports = {
     getApplicationByID,
     getAllApplications,
     editApplication,
-    deleteApplication
+    deleteApplication,
+    getFutureApplications
 }
