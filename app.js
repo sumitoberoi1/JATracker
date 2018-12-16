@@ -63,6 +63,26 @@ app.use(passport.session());
 app.engine("handlebars", viewEngine);
 app.set("view engine", "handlebars"); 
 
+const doesUserHaveProfile = (req,res,next) => {
+   if (req.isAuthenticated()) {
+      const user = req.user 
+      if (user && user.profile && user.profile.fullName) {
+        next()
+      } else {
+        if (req.method === 'GET' && req.originalUrl === path) {
+          console.log(`If`)
+          next()
+        } else {
+          console.log(`Else`)
+          res.redirect("/user/edit_profile")
+        }
+      }
+   } else {
+     next()
+   } 
+}
+//app.use(doesUserHaveProfile)
+
 configRoutes(app);
 app.listen(3000, () => {
   console.log("Your server is now listening on port 3000! Navigate to http://localhost:3000 to access it");

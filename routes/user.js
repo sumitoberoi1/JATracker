@@ -23,7 +23,7 @@ const multerObject = multer(multerConfig).fields([
   name: 'resume', maxCount: 1
   }, 
   {
-  name: 'coverLetter', maxCount: 1
+  name: 'coverletter', maxCount: 1
 }])
 
 router.get("/edit_profile", async (req, res) => {
@@ -111,9 +111,9 @@ router.post("/edit_profile", multerObject, async (req, res) => {
     else if (userdata.resume) {
       resume = userdata.resume
     }
-    if (req.files.coverLetter && req.files.coverLetter.length > 0) {
+    if (req.files.coverletter && req.files.coverletter.length > 0) {
         console.log(`In coverLetter`)
-        coverLetter = req.files.coverLetter[0]
+        coverLetter = req.files.coverletter[0]
     }
     else if (userdata.coverLetter) {
       coverLetter = userdata.coverLetter
