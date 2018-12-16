@@ -64,6 +64,7 @@ app.engine("handlebars", viewEngine);
 app.set("view engine", "handlebars"); 
 
 const doesUserHaveProfile = (req,res,next) => {
+  const path = "/user/edit_profile"
    if (req.isAuthenticated()) {
       const user = req.user 
       if (user && user.profile && user.profile.fullName) {
@@ -86,7 +87,7 @@ app.use(function (req, res, next) {
   console.log(`Errors ${res.locals.errors}`)
   next();
 });
-//app.use(doesUserHaveProfile)
+app.use(doesUserHaveProfile)
 
 configRoutes(app);
 app.listen(3000, () => {
