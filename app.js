@@ -42,8 +42,9 @@ const viewEngine = exphbs({
         return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
       },
       formDateFormat: function(dateString) {
-        let date = new Date(dateString) 
-        return `${date.getFullYear()}-${("0" + date.getDate()).slice(-2)}-${("0" + (date.getMonth() + 1)).slice(-2)}`
+        // let date = new Date(dateString) 
+        // return `${date.getUTCFullYear()}-${("0" + date.getDate()).slice(-2)}-${("0" + (date.getMonth() + 1)).slice(-2)}`
+        return dateString.toISOString().substring(0, 10)
       }
   },
   defaultLayout: "main",
