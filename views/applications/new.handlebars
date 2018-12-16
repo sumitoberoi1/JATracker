@@ -4,7 +4,8 @@
   </div>
   <div class="container">
     {{#if application}}
-    <form action="/application/editApplication" method="POST" class="md-form" id="edit-application-submission" enctype="multipart/form-data">
+    <form action="/application/editApplication" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data"
+      onsubmit="">
       {{else}}
       <form action="/application" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data">
         {{/if}}
@@ -95,5 +96,6 @@
       </form>
   </div>
 </article>
+<script src="/public/js/newApplication.js"></script>
 <!-- add Error State -->
 <!-- add Clear form State -->

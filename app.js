@@ -81,6 +81,11 @@ const doesUserHaveProfile = (req,res,next) => {
      next()
    } 
 }
+app.use(function (req, res, next) {
+  res.locals.errors = req.flash('error');
+  console.log(`Errors ${res.locals.errors}`)
+  next();
+});
 //app.use(doesUserHaveProfile)
 
 configRoutes(app);

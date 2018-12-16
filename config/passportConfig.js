@@ -23,13 +23,12 @@ module.exports.setup = function () {
                 if (passwordsMatch) {
                     return done(null,user)
                 } else {
-                    return done(null,false,{message:'Invalid Password'});
+                    return done(null,false,{error:'Invalid Password'});
                 }
             } else {
-                return done(null,false,{message:`User doesn't exist`});
+                return done(null,false,{error:`User doesn't exist`});
             }
         } catch(e) {
-            console.log(`Error in authenticating ${e}`)
             return done(null,false,{error:'Invalid Password'});
         }
     }))
