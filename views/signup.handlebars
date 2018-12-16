@@ -15,8 +15,8 @@
             </div>
             {{/if}}
             <div class="form-group">
-                <label for="username">Username</label>
-                <input class="form-control" type="text" name="username" id="username" placeholder="Username" required>
+                <label for="username">Username (letters and numbers only)</label>
+                <input class="form-control" type="text" name="username" id="username" pattern="[A-Za-z0-9]+" placeholder="Username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -29,7 +29,6 @@
                     onkeyup='check();' maxlength="20" minlength="8" required>
                 <span id='message'></span>
             </div>
-            <span id='message'></span>
 
 
             <div class="form-group">
@@ -37,7 +36,7 @@
                 <input class="form-control" type="email" name="email" id="email" placeholder="Email" required>
             </div>
 
-            <button id="signupbtn" type="submit" class="btn btn-lg btn-primary btn-block" disabled="false">Sign up</button>
+            <button id="signupbtn" type="submit" class="btn btn-lg btn-primary btn-block" disabled="disabled">Sign up</button>
             <a id="login" class="btn btn-lg btn-secondary btn-block" href="/login">Go back to Login</a>
 
         </form>
