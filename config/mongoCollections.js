@@ -7,15 +7,12 @@ const getCollectionFn = collection => {
   let _col = undefined;
 
   return async () => {
-    try {
+    
     if (!_col) {
       const db = await dbConnection();
       _col = await db.collection(collection);
       }
       return _col;
-    } catch (e) {
-      throw e
-    }
   };
 };
 

@@ -77,7 +77,7 @@ router.delete("/:id",async (req,res) => {
     try {
         const application = await applicationData.getApplicationByID(id,req.user._id)
         if (application) {
-            await applicationData.deleteApplication(id)
+            await applicationData.deleteApplication(id,req.user._id)
             res.status = 201
             res.json({redirect:'/application'})
         }

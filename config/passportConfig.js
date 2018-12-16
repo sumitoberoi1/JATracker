@@ -32,7 +32,7 @@ module.exports.setup = function () {
             return done(null,false,req.flash("error",'Invalid Password'));
         }
     }))
-    } ,
+ } 
     
 
 module.exports.ensureAuthenticated = (req,res,next) => {
