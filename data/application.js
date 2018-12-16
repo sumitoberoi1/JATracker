@@ -1,6 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const applications = mongoCollections.applications;
 const uuid = require('uuid/v4');
+const errorValidator = require('../helpers/errorValdation')
 const createApplication = async (applicationData,userID) => {
     const applicationCollection = await applications();
     const {companyName,role,applyDate,applicationStatus,
@@ -18,9 +19,14 @@ const createApplication = async (applicationData,userID) => {
         _id: jobID,
         userID:userID
     };
-    await applicationCollection.insertOne(newApplication);
-    return await getApplicationByID(jobID,userID);
+    if (errorValidator.isValidApplicationData(applicationData) && errorValidator.dataValidString(jobID) && errorValidator.dataValidString(userID)) {
+        await applicationCollection.insertOne(newApplication);
+        return await getApplicationByID(jobID,userID);
+    } else {
+        throw 'Invalid Data'
+    }    
 }
+
 const getApplicationByID = async (id,userID) => {
     const applicationCollection = await applications();
     const application = await applicationCollection.findOne({
@@ -51,11 +57,16 @@ const editApplication = async (id, updatedApplicationData,userID) => {
         notes:notes,
         userID:userID
     }
-    const applicationCollection = await applications();
-    await applicationCollection.updateOne(query, {
-        $set: editApplication
-    });
-    return await getApplicationByID(id,userID);
+    if(errorValidator.isValidApplicationData(updatedApplicationData) && errorValidator.dataValidString(id) && errorValidator.dataValidString(userID)) {
+         const applicationCollection = await applications();
+        await applicationCollection.updateOne(query, {
+            $set: editApplication
+        });
+        return await getApplicationByID(id,userID);
+    } else {
+        throw 'Invalid Data'
+    }
+    
 }
 
 const getAllApplications = async(userID) => {
@@ -72,11 +83,17 @@ const getFutureApplications =  async(userID) => {
     return await applicationCollection.find(query).sort({ appliedDate: -1 }).toArray();
 }
 const deleteApplication = async(id,userID) => {
-    const applicationCollection = await applications();
-    const deletionInfo = await applicationCollection.removeOne({ _id: id,userID:userID });
-    if (deletionInfo.deletedCount === 0) {
-        throw `Could not delete post with id of ${id}`;
-    } 
+    if (errorValidator.dataValidString(id) && errorValidator.dataValidString(userID)) {
+        const applicationCollection = await applications();
+        const deletionInfo = await applicationCollection.removeOne({ _id: id,userID:userID });
+
+        if (deletionInfo.deletedCount === 0) {
+            throw `Could not delete post with id of ${id}`;
+        } 
+    } else {
+        throw 'Invalid data'
+    }
+    
 }
 module.exports = {
     createApplication,
