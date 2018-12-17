@@ -36,7 +36,29 @@ $(document).on("click", ".deleteProjectButton", function(e){
         url: `profile/project/delete/${delID}`,
         success: function(result) {
             alert('Project Deleted')
-            if (typeof result.redirect == 'string') {
+            if (result.redirect && typeof result.redirect == 'string') {
+                window.location = result.redirect
+            }
+        },
+        error: function(result) {
+            alert('Errror in deleting application')
+        }
+    })
+    e.preventDefault()
+});
+
+$(document).on("click", ".deleteWorkExperienceButton", function(e){
+    console.log(`Here I come`)
+    const closestInput = $(this).next('input')
+    const delID = closestInput.val()
+    console.log(`id: ${delID}`)
+    $.ajax({
+        type: "DELETE",
+        url: `profile/work_experience/delete/${delID}`,
+        success: function(result) {
+            alert('Work Experience Deleted')
+            console.log(`Result Redirect ${result}`)
+            if (result.redirect && typeof result.redirect == 'string') {
                 window.location = result.redirect
             }
         },

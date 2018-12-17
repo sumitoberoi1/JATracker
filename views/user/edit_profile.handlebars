@@ -90,7 +90,8 @@
         <p class="card-text">{{#if this.description}}Description: {{this.description}}{{/if}}</p>
         <div class="tags">
           <a href="/user/profile/work_experience/edit/{{this._id}}" class="btn btn-primary" role="button">Edit</a>
-          <a href="/user/profile/work_experience/delete/{{this._id}}" class="btn btn-danger" role="button">Delete</a>
+          <a href="" class="btn btn-danger deleteWorkExperienceButton" role="button">Delete</a>
+          <input type="hidden" value="{{this._id}}">
         </div>
         <div class="clear"></div>
         <hr>

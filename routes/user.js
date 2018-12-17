@@ -39,6 +39,7 @@ router.get("/view_profile", async (req, res) => {
 });
 
 router.get("/profile/work_experience/edit/:id", (req, res) => {
+  console.log(`I choose you`)
   const user = req.user
   const profile = user.profile;
   const workExperiences = profile.workExperience;
@@ -63,15 +64,17 @@ router.get("/profile/project/edit/:id", async (req, res) => {
   res.render("user/edit_project", {title:'Edit Project', project : currProject});
 });
 
-router.get(`/profile/work_experience/delete/:id`, async (req, res) => {
+router.delete(`/profile/work_experience/delete/:id`, async (req, res) => {
+  console.log('Here in delete')
   try 
   {
-    user = await userData.deleteWorkExperience(req.user._id, req.params.id);
-    req.user = user
-    res.redirect('/user/edit_profile')
+    await userData.deleteWorkExperience(req.user._id, req.params.id);
+    res.status = 201
+    res.json({redirect:'/user/edit_profile'})
   } 
   catch (e) 
   {
+    console.log(`Error in deleting Work Experience ${req.params.id}`)
     res.status(500).render("error/500",errorActive)
     return;
   }
@@ -121,7 +124,7 @@ router.post("/edit_profile", multerObject, async (req, res) => {
   }
   try 
   {
-    user = await userData.updateUserProfile(req.user._id, newProfile, resume, coverLetter)  
+    let user = await userData.updateUserProfile(req.user._id, newProfile, resume, coverLetter)  
     req.session.user = user;
     res.redirect('/user/view_profile');
   } 
@@ -143,7 +146,7 @@ router.post("/profile/new_work_experience", async (req, res) => {
   newWorkExperience.description = req.body.description;
   try 
   {
-    user = await userData.addUserWorkExperience(req.user._id, newWorkExperience);
+    let user = await userData.addUserWorkExperience(req.user._id, newWorkExperience);
     req.session.user = user;
     res.redirect('/user/edit_profile');
   } 
@@ -164,7 +167,7 @@ router.post("/profile/new_project", async (req, res) => {
   newProject.description = req.body.projectdescription;
   try 
   {
-    user = await userData.addUserProject(req.user._id, newProject);
+    let user = await userData.addUserProject(req.user._id, newProject);
     req.session.user = user;
     res.redirect('/user/edit_profile');
   } 
@@ -193,7 +196,7 @@ router.post("/profile/work_experience/edit/:id", async (req, res) => {
         workExperience[i] = updatedWorkExperience;
       }
     }
-    curruser = await userData.editUserWorkExperience(req.user._id, workExperience);
+    let curruser = await userData.editUserWorkExperience(req.user._id, workExperience);
     req.session.user = curruser;
     res.redirect('/user/edit_profile');
   } 
@@ -221,7 +224,7 @@ router.post("/profile/project/edit/:id", async (req, res) => {
         projects[i] = updatedProject;
       }
     }
-    curruser = await userData.editUserProject(req.user._id, projects);
+    let curruser = await userData.editUserProject(req.user._id, projects);
     req.session.user = curruser;
     res.redirect('/user/edit_profile');
   } 
