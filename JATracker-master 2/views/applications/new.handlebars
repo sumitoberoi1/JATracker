@@ -1,0 +1,113 @@
+<article>
+  <div class="jumbotron text-center">
+    <h1>{{title}}</h1>
+  </div>
+  <div class="container">
+    {{#if errors}}
+    <div class="alert alert-danger" role="alert">
+      {{{errors}}}
+    </div>
+    {{/if}}
+    {{#if application}}
+    <form action="/application/editApplication" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data"
+      onsubmit="">
+      <input type="hidden" value={{application._id}} name="id" id="applicationID" />
+      {{else}}
+      <form action="/application" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data">
+        {{/if}}
+
+        <div class="form-group">
+          <label for="companyName">
+            Company Name </label>
+          <input id="companyName" type="text" name="companyName" placeholder="Enter Company Name" value="{{application.companyName}}"
+            class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="role">
+            Job Role</label>
+          <input id="role" type="text" name="role" placeholder="Enter Job Role" value="{{application.jobrole}}" class="form-control"
+            required />
+        </div>
+        <div class="form-group">
+          <label for="applyDate">Enter Applied Date or Date you will apply On</label>
+          {{#if application}}
+          <input id="applyDate" type="date" name="applyDate" class="form-control" required value="{{formDateFormat application.appliedDate}}" />
+          {{else}}
+          <input id="applyDate" type="date" name="applyDate" class="form-control" required />
+          {{/if}}
+        </div>
+        <div class="form-group">
+          <label for="applicationStatus">
+            Application Status
+          </label>
+          <select id="applicationStatus" class="form-control" name="applicationStatus">
+            {{#select application.applicationStatus}}
+            <option value="Application Submitted">Application Submitted</option>
+            <option value="Not Submitted">Not Submitted</option>
+            <option value="Under Review">Under Review</option>
+            <option value="First Round">First Round</option>
+            <option value="Second Round">Second Round</option>
+            <option value="Third Round">Third Round</option>
+            <option value="Post Third Round">Post Third Round</option>
+            <option value="Offer Recieved">Offer Recieved</option>
+            <option value="No Offer">No Offer</option>
+            <option value="Pending">Pending</option>
+            <option value="Offer Rejected">Offer Rejected</option>
+            {{/select}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="jobSource">
+            Job Source</label>
+          <input id="jobSource" type="text" name="jobSource" placeholder="Source for job" value="{{application.jobSource}}"
+            class="form-control" required />
+        </div>
+        <div class="form-group">
+          <div class="custom-file">
+            <input id="resume" type="file" accept=".doc,.docx,application/pdf" name="resume" class="custom-file-input" />
+            <label for="resume" class="custom-file-label">
+              {{#if application.resume.originalname}}
+              {{application.resume.originalname}}
+              {{else}}
+              Upload Resume used
+              {{/if}}
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="custom-file">
+            <input id="coverletter" type="file" name="coverletter" class="custom-file-input" accept=".doc,.docx,application/pdf" />
+            <label for="coverletter" class="custom-file-label">
+              {{#if application.coverletter.originalname}}
+              {{application.coverletter.originalname}}
+              {{else}}
+              Upload Cover Letter used
+              {{/if}}
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="notes">
+            Notes
+          </label>
+          <textarea id="notes" name="notes" rows="4" placeholder="Any Other Notes" class="form-control">{{application.notes}}</textarea>
+        </div>
+        {{#if application}}
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-inline">Edit Application</button>
+          <button type="button" class="btn btn-danger btn-inline" id="deleteApplicationButton">Delete
+            Application</button>
+        </div>
+        {{else}}
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block">Create New Job Application</button>
+        </div>
+        {{/if}}
+
+      </form>
+  </div>
+</article>
+<script src="/public/js/newApplication.js"></script>
+<script src="/public/js/resumeUploadCheck.js"></script>
+<!-- add Error State -->
+<!-- add Clear form State -->
