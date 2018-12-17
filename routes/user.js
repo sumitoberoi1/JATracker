@@ -27,19 +27,31 @@ const multerObject = multer(multerConfig).fields([
 }])
 
 router.get("/edit_profile", async (req, res) => {
-  const profile = req.user;
-  const active = {profile:true}
-  res.render("user/edit_profile",{title:'Edit Profile', active, profile: profile})
+  try {
+    const profile = req.user;
+    const active = {profile:true}
+    res.render("user/edit_profile",{title:'Edit Profile', active, profile: profile})
+  }
+  catch (e) {
+    res.status(404).render("error/404",errorActive)
+  }
 });
 
 
 router.get("/view_profile", async (req, res) => {
+  try {
   const profile = req.user;
   const active = {profile:true}
   res.render("user/view_profile", {title:'View Profile', active, profile: profile})
+  }
+  catch (e) {
+  res.status(404).render("error/404",errorActive)
+  }
 });
 
+
 router.get("/profile/work_experience/edit/:id", (req, res) => {
+  try {
   const user = req.user
   const profile = user.profile;
   const workExperiences = profile.workExperience;
@@ -49,7 +61,10 @@ router.get("/profile/work_experience/edit/:id", (req, res) => {
       currWorkExperience = workExperiences[i];
     }
   }
-  res.render("user/edit_work_experience", {title:'Edit Work Experience', workExperience : currWorkExperience});
+  res.render("user/edit_work_experience", {title:'Edit Work Experience', workExperience : currWorkExperience});}
+  catch (e) {
+    res.status(404).render("error/404")
+    }
 });
 
 router.get("/profile/project/edit/:id", async (req, res) => {
@@ -222,11 +237,12 @@ router.post("/profile/project/edit/:id", async (req, res) => {
   updatedProject._id = req.params.id;
   updatedProject.name = req.body.name;
   updatedProject.position = req.body.position;
-  updatedProject.startDate = req.body.projectstartDate;
-  updatedProject.endDate = req.body.projectendDate;
-  updatedProject.description = req.body.projectdescription;
+  updatedProject.startDate = req.body.startDate;
+  updatedProject.endDate = req.body.endDate;
+  updatedProject.description = req.body.description;
   try 
   {
+    console.log(updatedProject)
     const userdata = req.user
     let projects = userdata.profile.projects;
     for(let i=0; i < projects.length; i++){

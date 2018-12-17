@@ -3,6 +3,7 @@ const users = mongoCollections.users;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const uuid = require('uuid/v4');
+const errorValidator = require('../helpers/errorValdation')
 
 
 async function getUserByID(_id) 
@@ -112,36 +113,37 @@ async function addUserWorkExperience(id, newWorkExperience) {
       throw error;
   }
 }
-
 async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
-  try {
-    console.log(JSON.stringify(InfoToUpdate))
-    const userCollection = await users();
-    const currUser = await userCollection.findOneAndUpdate(
-                    { "_id" :  id},
-                    { $set: 
-                      {
-                        "profile" : InfoToUpdate,
-                        "resume": resume,
-                        "coverLetter": coverLetter
-                      }
+  if (errorValidator.dataValidString(id) && errorValidator.isValidProfiletData(InfoToUpdate)) {
+
+
+  const userCollection = await users();
+  const currUser = await userCollection.findOneAndUpdate(
+                  { "_id" :  id},
+                  { $set: 
+                    {
+                      "profile" : InfoToUpdate,
+                      "resume": resume,
+                      "coverLetter": coverLetter
                     }
-                );
-    if (currUser === null) {
-        throw "Fail to update profile!";
-    }
-    return await this.getUserByID(id);
+                  }
+              );
+  if (currUser === null) {
+      throw "Fail to update profile!";
   }
-  catch(error) {
-      throw error;
-  }
+  return await this.getUserByID(id);
+}
+else {
+  throw 'Invalid Data';
+} 
 }
 
 
+
 async function addUserProject(id, newProject) {
-  try {
-    const userCollection = await users();
-    newProject._id = uuid();
+  const userCollection = await users();
+  newProject._id = uuid();
+  if (errorValidator.dataValidString(id) && errorValidator.isValidProjectData(newProject)) {
     const currUser = await userCollection.findOneAndUpdate(
                     { "_id" : id},
                     { $push: 
@@ -156,14 +158,19 @@ async function addUserProject(id, newProject) {
         throw "Fail to update profile!";
     }
     return await this.getUserByID(id);
-  }
-  catch(error) {
-      throw error;
-  }
+}
+else {
+  throw 'Invalid Data';
+}
 }
 
 async function editUserWorkExperience(id, workExperience) {
-  try {
+  if(errorValidator.dataValidString(id)) {
+    for (var i = 0; i< workExperience.length; i++) {
+      if (!errorValidator.isValidWorkExperienceData(workExperience[i])) {
+        throw 'Invalid Data'
+      }
+    }
     const userCollection = await users();
     const currUser = await userCollection.findOneAndUpdate(
                     { "_id" :  id},
@@ -176,13 +183,19 @@ async function editUserWorkExperience(id, workExperience) {
     }
     return await this.getUserByID(id);
   }
-  catch(error) {
-      throw error;
+  else {
+    throw 'Invalid Data'
   }
 }
 
 async function editUserProject(id, projects) {
-  try {
+  if(errorValidator.dataValidString(id)) {
+    for (var i = 0; i< projects.length; i++) {
+      console.log("project!!!!!!!", projects[i]);
+      if (!errorValidator.isValidProjectData(projects[i])) {
+        throw 'Invalid Data'
+      }
+    }
     const userCollection = await users();
     const currUser = await userCollection.findOneAndUpdate(
                     { "_id" :  id},
@@ -195,48 +208,37 @@ async function editUserProject(id, projects) {
     }
     return await this.getUserByID(id);
   }
-  catch(error) {
-      throw error;
+  else {
+    throw 'Invalid Data'
   }
 }
 
-
 async function deleteWorkExperience(userId, workExperienceId) {
-  try {
-    const userCollection = await users();
-    const currUser = await userCollection.findOneAndUpdate(
-                    { "_id" : userId},
-                    { $pull: 
-                      {"profile.workExperience": {"_id": workExperienceId}}
-                    }
-    );
-    if (currUser === null) {
-        throw "Fail to delete profile!";
-    }
-    return await this.getUserByID(userId);
+  const userCollection = await users();
+  const currUser = await userCollection.findOneAndUpdate(
+                  { "_id" : userId},
+                  { $pull: 
+                    {"profile.workExperience": {"_id": workExperienceId}}
+                  }
+  );
+  if (currUser === null) {
+      throw "Fail to delete profile!";
   }
-  catch(error) {
-      throw error;
-  }
+  return await this.getUserByID(userId);
 }
 
 async function deleteProject(userId, projectId) {
-  try {
-    const userCollection = await users();
-    const currUser = await userCollection.findOneAndUpdate(
-                    { "_id" : userId},
-                    { $pull: 
-                      {"profile.projects": {"_id": projectId}}
-                    }
-    );
-    if (currUser === null) {
-        throw "Fail to delete profile!";
-    }
-    return await this.getUserByID(userId);
+  const userCollection = await users();
+  const currUser = await userCollection.findOneAndUpdate(
+                  { "_id" : userId},
+                  { $pull: 
+                    {"profile.projects": {"_id": projectId}}
+                  }
+  );
+  if (currUser === null) {
+      throw "Fail to delete profile!";
   }
-  catch(error) {
-      throw error;
-  }
+  return await this.getUserByID(userId);
 }
 
 module.exports = {
