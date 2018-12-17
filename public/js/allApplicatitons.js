@@ -84,7 +84,7 @@ createHTMLForApplication =  (fileteredApplications) => {
         ${application.jobrole}</h3>\n`
         createHTML += `<p class="card-text">Status: ${application.applicationStatus}</p>\n`
         createHTML += `<p class="card-text">Source: ${application.jobSource}</p>\n`
-        createHTML += `<p class="card-text">Applied On/To Apply Date: ${application.appliedDate}</p>\n`
+        createHTML += `<p class="card-text">Applied On/To Apply Date: ${formatDate(application.appliedDate)}</p>\n`
         createHTML += `</div>\n`
         createHTML += `<div class="card-footer">\n`
         if (application.resume) {
@@ -101,5 +101,8 @@ createHTMLForApplication =  (fileteredApplications) => {
     createHTML += `</ul>`
     return createHTML
 }
-
+const formatDate = function(dateString) {
+    let date = new Date(dateString) 
+    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+}
 
