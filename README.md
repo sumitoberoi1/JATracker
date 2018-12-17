@@ -1,8 +1,9 @@
 
 
 1. To start the application you first need to install the dependencies using command :"npm install" and to start it the command "npm start" needs to be executed
-
-2. Below mentioned are the mandatory fields for the input forms
+2. To seed data run "npm run seed"
+    Default user => username: patrickhill password:greatteacher
+3. Below mentioned are the mandatory fields for the input forms
 
 Name of the Form: Create New Application
 Required fields:
@@ -13,7 +14,6 @@ Required fields:
  
 Name of the Form: Edit Application:
 Required fields:
-
 Company Name
 Job Role
 Enter Applied Date or Date you will apply On
