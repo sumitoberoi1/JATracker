@@ -27,6 +27,7 @@ getAllApplications = (path)  => {
         url: path,
         success: function(result) {
             allApplications = result.applications
+            console.log(`All Applicattion ${JSON.stringify(allApplications)}`)
         },
         error: function(result) {
             alert('Errror in fetching application')
@@ -46,10 +47,10 @@ searchBar.on('input',function(e){
 
 const getFilteredList = () => {
    return allApplications.filter(application => {
-        if (application.companyName.toLowerCase().indexOf(searchBar.val().toLowerCase()) !== -1) {
+        if (application.companyName.toLowerCase().replace(/ /g,'').indexOf(searchBar.val().toLowerCase().replace(/ /g,'')) !== -1) {
             return true
         } 
-        if (application.jobrole.indexOf(searchBar.val().toLowerCase()) !== -1) {
+        if (application.jobrole.toLowerCase().replace(/ /g,'').indexOf(searchBar.val().toLowerCase().replace(/ /g,'')) !== -1) {
             return true
         }
     })
@@ -91,7 +92,7 @@ createHTMLForApplication =  (fileteredApplications) => {
             createHTML += `<a href="${application.coverletter.path}" download="${application.coverletter.originalname}" class="card-link">Cover
             Letter</a>`
         }
-        createHTML += `<a href="/application/edit/"${application._id} class="card-link">Edit Application</a> \n`
+        createHTML += `<a href="/application/edit/${application._id}"class="card-link">Edit Application</a> \n`
         createHTML += `</div>`
         createHTML += '</div>'
     });

@@ -212,9 +212,9 @@ router.post("/profile/project/edit/:id", async (req, res) => {
   updatedProject._id = req.params.id;
   updatedProject.name = req.body.name;
   updatedProject.position = req.body.position;
-  updatedProject.startDate = req.body.projectstartDate;
-  updatedProject.endDate = req.body.projectendDate;
-  updatedProject.description = req.body.projectdescription;
+  updatedProject.startDate = req.body.startDate;
+  updatedProject.endDate = req.body.endDate;
+  updatedProject.description = req.body.description;
   try 
   {
     const userdata = req.user
