@@ -12,7 +12,6 @@ const multerConfig = {
         next(null, __dirname + '/../userFiles');
       },
       filename: function(req, file, next){
-        console.log('file', file);
         const ext = file.mimetype.split('/')[1];
         next(null, file.fieldname + '-' + Date.now() + '.'+  ext);
       }
@@ -81,21 +80,18 @@ router.get(`/profile/work_experience/delete/:id`, async (req, res) => {
 router.delete("/profile/project/delete/:id", async (req, res) => {
   try 
   {
-    console.log(`ID: to delete ${req.user}`)
     await userData.deleteProject(req.user._id, req.params.id);
     res.status = 201
     res.json({redirect:'/user/edit_profile'})
   } 
   catch (e) 
   {
-    console.log(`Error in deleting ${e}`)
     res.status(404).render("error/404",errorActive)
     return;
   }
 });
 
 router.post("/edit_profile", multerObject, async (req, res) => {
-  console.log(`Here in edit profile`)
   let newProfile = {};
   const userdata = req.user
   newProfile.fullName = req.body.fullName;
@@ -111,14 +107,12 @@ router.post("/edit_profile", multerObject, async (req, res) => {
   let coverLetter = null
   if (req.files) {
     if (req.files.resume && req.files.resume.length > 0) {
-        console.log(`In resume`)
         resume = req.files.resume[0]
     }
     else if (userdata.resume) {
       resume = userdata.resume
     }
     if (req.files.coverletter && req.files.coverletter.length > 0) {
-        console.log(`In coverLetter`)
         coverLetter = req.files.coverletter[0]
     }
     else if (userdata.coverLetter) {
@@ -128,7 +122,6 @@ router.post("/edit_profile", multerObject, async (req, res) => {
   try 
   {
     user = await userData.updateUserProfile(req.user._id, newProfile, resume, coverLetter)  
-    console.log(user)
     req.session.user = user;
     res.redirect('/user/view_profile');
   } 
@@ -156,7 +149,6 @@ router.post("/profile/new_work_experience", async (req, res) => {
   } 
   catch (e) 
   {
-    console.log(e)
     res.status(500).render("error/500",errorActive)
     return;
   }
@@ -172,15 +164,12 @@ router.post("/profile/new_project", async (req, res) => {
   newProject.description = req.body.projectdescription;
   try 
   {
-    console.log("user" + JSON.stringify(req.user))
-    console.log(JSON.stringify(newProject))
     user = await userData.addUserProject(req.user._id, newProject);
     req.session.user = user;
     res.redirect('/user/edit_profile');
   } 
   catch (e) 
   {
-    console.log(e)
     res.status(500).render("error/500",active)
     return;
   }
@@ -204,14 +193,12 @@ router.post("/profile/work_experience/edit/:id", async (req, res) => {
         workExperience[i] = updatedWorkExperience;
       }
     }
-    console.log(JSON.stringify(workExperience))
     curruser = await userData.editUserWorkExperience(req.user._id, workExperience);
     req.session.user = curruser;
     res.redirect('/user/edit_profile');
   } 
   catch (e) 
   {
-    console.log(e)
     res.status(500).render("error/500",active)
     return;
   }
@@ -240,7 +227,6 @@ router.post("/profile/project/edit/:id", async (req, res) => {
   } 
   catch (e) 
   {
-    console.log(e)
     res.status(500).render("error/500",errorActive)
     return;
   }

@@ -54,7 +54,6 @@ const isValidApplicationData = (data) => {
         jobSource,
         notes
     } = data;
-    console.log(`Instance of date ${typeof applyDate}`)
     if (dataValidString(companyName) && dataValidString(role) && dataValidString(applicationStatus) && dataValidString(jobSource) && isValidDate(applyDate)) {
         if (notes) {
             if (dataValidString(notes)) {

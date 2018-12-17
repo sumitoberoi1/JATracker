@@ -7,7 +7,7 @@ let handleBarHTMl;
 $(document).ready(()=>{
     //Call get Application
     //Store the application data
-    console.log(`Path name ${location.pathname}`)
+    
 
     if (location.pathname === '/application') {
         getAllApplications('/application/all')
@@ -27,7 +27,6 @@ getAllApplications = (path)  => {
         url: path,
         success: function(result) {
             allApplications = result.applications
-            console.log(`All application ${allApplications}`)
         },
         error: function(result) {
             alert('Errror in fetching application')
@@ -36,7 +35,6 @@ getAllApplications = (path)  => {
 }
 
 searchBar.on('input',function(e){
-    console.log(`I am changed ${searchBar.val()}`)
     let val = searchBar.val
     if (val.length > 0) {
         const filteredList = getFilteredList()
@@ -58,7 +56,6 @@ const getFilteredList = () => {
 }
 
 $('#sort-dropdown a').click((e) => {
-    console.log(e.target.innerHTML)
     if (e.target.innerHTML === `Recent Apply Date First`) {
         let filteredList = getFilteredList().sort((first,second) => {
             return first.appliedDate > second.appliedDate

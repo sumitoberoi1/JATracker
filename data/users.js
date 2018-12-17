@@ -115,7 +115,6 @@ async function addUserWorkExperience(id, newWorkExperience) {
 
 async function updateUserProfile(id, InfoToUpdate, resume, coverLetter) {
   try {
-    console.log(JSON.stringify(InfoToUpdate))
     const userCollection = await users();
     const currUser = await userCollection.findOneAndUpdate(
                     { "_id" :  id},

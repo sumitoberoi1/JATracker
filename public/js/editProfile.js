@@ -36,7 +36,6 @@ $(document).on("click", ".deleteProjectButton", function(e){
         url: `profile/project/delete/${delID}`,
         success: function(result) {
             alert('Project Deleted')
-            console.log(`Result ${JSON.stringify(result)}`)
             if (typeof result.redirect == 'string') {
                 window.location = result.redirect
             }

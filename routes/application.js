@@ -13,7 +13,7 @@ const multerConfig = {
           next(null, __dirname + '/../userFiles');
         },
         filename: function(req, file, next){
-          console.log(file);
+          
           const ext = file.mimetype.split('/')[1];
           next(null, file.fieldname + '-' + Date.now() + '.'+ext);
         }
@@ -41,7 +41,7 @@ router.get("/future",async (req,res) => {
         const applications= await applicationData.getFutureApplications(req.user._id)
         res.render("applications/allApplications",{title:'Track Applications',applications:applications,active})
       } catch (e) {
-        console.log(`Error ${e}`)
+        
         res.status(500).render("error/404",active)
     }
 })
@@ -63,7 +63,6 @@ router.get("/all",async(req,res) => {
         const applications= await applicationData.getAllApplications(req.user._id);
         res.json({'applications':applications})
       } catch (e) {
-      console.log(`Error ${e}`)
         res.status(500).json({
           error: e
       });
@@ -75,7 +74,6 @@ router.get("/all/future",async(req,res) => {
         const applications= await applicationData.getFutureApplications(req.user._id);
         res.json({'applications':applications})
       } catch (e) {
-      console.log(`Error ${e}`)
         res.status(500).json({
           error: e
       });
@@ -126,7 +124,6 @@ multerObject,async (req,res) => {
     try {
         if (req.files) {
             if (req.files.resume && req.files.resume.length > 0) {
-                console.log(`In resume ${req.files.resume}`)
                 const resume = req.files.resume[0]
                 applicationPostData.resume = resume
             }
@@ -154,7 +151,6 @@ multerObject,async (req,res) => {
 router.post("/editApplication",multerObject,async (req, res) => {
     const id = req.body.id
     const application = await applicationData.getApplicationByID(id,req.user._id)
-    console.log(`Here in applicatioonnEDIt`)
     try {
         const appplicationToSaveData = req.body
         if (req.files) {

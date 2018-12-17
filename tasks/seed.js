@@ -6,12 +6,7 @@ const users = data.users;
 async function main() {
   const db = await dbConnection();
   await db.dropDatabase();
-
-
-await data.signUp("patrickhill","greatteacher","patrick.hill@stevens.edu");
-
-  console.log("Done seeding database");
- 
+    const user = await data.signUp("patrickhill","greatteacher","patrick.hill@stevens.edu");
   await db.serverConfig.close();
 }
 

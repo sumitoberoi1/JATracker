@@ -8,7 +8,6 @@ const passportConfig = require('../config/passportConfig');
 const routes = app => {
   passportConfig.setup()
   app.get('/',passportConfig.ensureAuthenticated, async function (req, res) {
-    console.log(`Req user ${req.user}`)
     if (req.isAuthenticated()) {
       res.redirect('/application');
     } else {
