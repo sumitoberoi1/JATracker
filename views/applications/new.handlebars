@@ -11,10 +11,11 @@
     {{#if application}}
     <form action="/application/editApplication" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data"
       onsubmit="">
+      <input type="hidden" value={{application._id}} name="id" id="applicationID" />
       {{else}}
       <form action="/application" method="POST" class="md-form" id="application-submission" enctype="multipart/form-data">
         {{/if}}
-        <input type="hidden" value={{application._id}} name="id" id="applicationID" />
+
         <div class="form-group">
           <label for="companyName">
             Company Name </label>
@@ -63,8 +64,7 @@
         </div>
         <div class="form-group">
           <div class="custom-file">
-            <input id="resume" type="file" accept=".doc,.docx,application/pdf" name="resume" class="custom-file-input"
-              "{{resume.originalname}}" />
+            <input id="resume" type="file" accept=".doc,.docx,application/pdf" name="resume" class="custom-file-input" />
             <label for="resume" class="custom-file-label">
               {{#if application.resume.originalname}}
               {{application.resume.originalname}}
