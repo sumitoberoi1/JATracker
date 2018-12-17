@@ -16,7 +16,7 @@ $(document).ready(()=>{
     }  
     handleBarHTMl = allApplicationContainer.innerHTML;
     
-    allDropDownValues = $('#sort-dropdown').children('option').map(function(i, e){
+    allDropDownValues = $('#sort-dropdown').children('a').map(function(i, e){
         return e.value || e.innerText;
     }).get();
 })
@@ -57,7 +57,7 @@ const getFilteredList = () => {
     })
 }
 
-$('#sort-dropdown option').click((e) => {
+$('#sort-dropdown a').click((e) => {
     console.log(e.target.innerHTML)
     if (e.target.innerHTML === `Recent Apply Date First`) {
         let filteredList = getFilteredList().sort((first,second) => {
