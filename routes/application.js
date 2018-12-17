@@ -70,6 +70,18 @@ router.get("/all",async(req,res) => {
     }
 });
 
+router.get("/all/future",async(req,res) => {
+    try {
+        const applications= await applicationData.getFutureApplications(req.user._id);
+        res.json({'applications':applications})
+      } catch (e) {
+      console.log(`Error ${e}`)
+        res.status(500).json({
+          error: e
+      });
+    }
+});
+
 router.get("/:id",async (req,res) => {
     try {
         const id = req.params.id

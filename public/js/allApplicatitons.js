@@ -7,22 +7,33 @@ let handleBarHTMl;
 $(document).ready(()=>{
     //Call get Application
     //Store the application data
+    console.log(`Path name ${location.pathname}`)
+
+    if (location.pathname === '/application') {
+        getAllApplications('/application/all')
+    } else if (location.pathname === '/application/future') {
+        getAllApplications('/application/all/future')
+    }  
     handleBarHTMl = allApplicationContainer.innerHTML;
-    $.ajax({
-        type: "GET",
-        url: `/application/all`,
-        success: function(result) {
-            allApplications = result.applications
-            console.log(`application ${JSON.stringify(allApplications)}`)
-        },
-        error: function(result) {
-            alert('Errror in deleting application')
-        }
-    })
+    
     allDropDownValues = $('#sort-dropdown').children('option').map(function(i, e){
         return e.value || e.innerText;
     }).get();
 })
+
+getAllApplications = (path)  => {
+    $.ajax({
+        type: "GET",
+        url: path,
+        success: function(result) {
+            allApplications = result.applications
+            console.log(`All application ${allApplications}`)
+        },
+        error: function(result) {
+            alert('Errror in fetching application')
+        }
+    })
+}
 
 searchBar.on('input',function(e){
     console.log(`I am changed ${searchBar.val()}`)
@@ -37,10 +48,10 @@ searchBar.on('input',function(e){
 
 const getFilteredList = () => {
    return allApplications.filter(application => {
-        if (application.companyName.indexOf(searchBar.val()) !== -1) {
+        if (application.companyName.toLowerCase().indexOf(searchBar.val().toLowerCase()) !== -1) {
             return true
         } 
-        if (application.jobrole.indexOf(searchBar.val()) !== -1) {
+        if (application.jobrole.indexOf(searchBar.val().toLowerCase()) !== -1) {
             return true
         }
     })
