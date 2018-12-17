@@ -1,0 +1,25 @@
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">{{companyName}}</h1>
+    </div>
+    <div class="card-body">
+        <h2 class="card-subtitle mb-2 text-mutedcard-subtitle mb-2 text-muted">Role:
+            {{jobrole}}</h2>
+        <p class="card-text">Status: {{applicationStatus}}</p>
+        <p class="card-text">Source: {{jobSource}}</p>
+        <p>Applied On/To Apply Date: {{formatDate appliedDate}}</p>
+        {{#if notes}}
+        <p>Job Notes: {{notes}}</p>
+        {{/if}}
+    </div>
+    <div class="card-footer">
+        {{#if resume}}
+        <a href="{{resume.path}}" download="{{resume.originalname}}" class="card-link">Resume</a>
+        {{/if}}
+        {{#if coverletter}}
+        <a href="{{coverletter.path}}" download="{{coverletter.originalname}}" class="card-link">Cover
+            Letter</a>
+        {{/if}}
+        <a href={{concat "/application/edit/" _id }} class="card-link">Edit Application</a>
+    </div>
+</div>

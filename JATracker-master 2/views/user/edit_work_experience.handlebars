@@ -1,0 +1,57 @@
+<div class="updateWorkForm" id="updateWorkForm">
+    <div class="add-form">
+        <form action="/user/profile/work_experience/edit/{{workExperience._id}}" method="post">
+            <h1>Edit your current or previous job experience...</h1>
+
+            <div class="form-group">
+                <label for="jobTittle">Job Tittle</label>
+                <input id="jobTittle" type="text" name="jobTittle" placeholder="Enter Job Tittle" value="{{workExperience.jobTittle}}"
+                    class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="employer">Employer</label>
+                <input id="employer" type="text" name="employer" value="{{workExperience.employer}}" class="form-control"
+                    required />
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input id="startDate" type="date" name="startDate" value="{{workExperience.startDate}}" class="form-control"
+                    required />
+            </div>
+
+
+            <div class="checkbox">
+                <label class="checkbox-custom">
+                    <input type="checkbox" name="present_job" id="present_job" value="yes">
+                    <i class="fa fa-fw fa-square-o"></i> Present Job
+                </label>
+            </div>
+            <div class="form-group">
+
+                <div class="input" id="endDateinput">
+                    <label for="endDate">End Date</label>
+                    <input id="endDate" type="date" name="endDate" value="{{workExperience.endDate}}" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input id="location" type="text" name="location" placeholder="Enter the city you worked..." value="{{workExperience.location}}"
+                    class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" class="form-control" rows="4" placeholder="Any Other Description" name="description">{{workExperience.description}}</textarea>
+            </div>
+
+            <button id="cancel" name="cancel" class="btn btn-danger" type="button" onclick="window.location='/user/edit_profile';">Cancel</button>
+            <button id="save" name="save" class="btn btn-primary" type="submit">Save</button>
+        </form>
+    </div>
+</div>
+<script src="/public/js/Present_job.js"></script>

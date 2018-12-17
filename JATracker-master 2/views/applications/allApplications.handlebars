@@ -1,0 +1,64 @@
+<article>
+    <div class="jumbotron text-center">
+        <h1>All Applications </h1>
+    </div>
+    {{#if message}}
+    <div class="alert alert-primary" role="alert">
+        {{message}}
+    </div>
+    {{/if}}
+    {{#if applications}}
+    <div class="container">
+        <div class="input-group">
+            <label for="SeachApplicationSearchBar">Search Bar</label>
+            <input type="text" id="SeachApplicationSearchBar" class="form-control m-1" placeholder="Search for Role or companyName..">
+            {{#unless active.futureApplications}}
+            <div class="dropdown m-1">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Filter
+                </button>
+
+                <div class="dropdown-menu" id="sort-dropdown" aria-labelledby="dropdownMenuButton">
+                    <option class="dropdown-item">Recent Apply Date First</option>
+                    <option class="dropdown-item" value="Not Submitted">Not Submitted</option>
+                    <option class="dropdown-item" class="dropdown-item" value="Under Review">Under Review</option>
+                    <option class="dropdown-item" value="First Round">First Round</option>
+                    <option class="dropdown-item" value="Second Round">Second Round</option>
+                    <option class="dropdown-item" value="Third Round">Third Round</option>
+                    <option class="dropdown-item" value="Post Third Round">Post Third Round</option>
+                    <option class="dropdown-item" value="Offer Recieved">Offer Recieved</option>
+                    <option class="dropdown-item" value="No Offer">No Offer</option>
+                    <option class="dropdown-item" value="Pending">Pending</option>
+                    <option class="dropdown-item" value="Offer Rejected">Offer Rejected</option>
+                </div>
+                {{/unless}}
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    {{/if}}
+    <div class="container" id='allApplicationContainer'>
+        {{#if applications}}
+        <ul class="list-group">
+            {{#each applications}}
+            <li class="list-group-item">
+                {{> applicationPartial}}
+            </li>
+            {{/each}}
+        </ul>
+        {{else}}
+        <div class="card">
+            <div class="card-body">
+                <p class="text-center"> No Application is found .
+                    Please click on button below to create a new application </p>
+
+                <p class="text-center"> <a class="btn btn-primary btn-xs" href="/application/new" role="button">Create
+                        New Job Application</a> </p>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</article>
+<script src="/public/js/allApplicatitons.js"></script>
+<link rel="stylesheet" href="/public/css/allApplications.css">
